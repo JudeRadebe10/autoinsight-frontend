@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Estimator - AutoInsight ZA (Skeleton)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; }
+        .box { border: 2px solid #000; padding: 20px; margin-bottom: 20px; }
+        .box-label { font-weight: bold; text-transform: uppercase; font-size: 12px; margin-bottom: 10px; }
+        .nav { border: 2px solid #000; padding: 15px; margin-bottom: 30px; display: flex; justify-content: space-between; }
+        .hero { border: 2px solid #000; padding: 40px; margin-bottom: 30px; text-align: center; }
+        .form-container { max-width: 700px; margin: 0 auto; border: 2px solid #000; padding: 30px; }
+        .step-indicator { display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; }
+        .step { border: 1px solid #000; padding: 10px 20px; }
+        .step.active { border: 3px solid #000; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #000; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .button-group { display: flex; gap: 10px; margin-top: 30px; }
+        .button-group button { padding: 10px 20px; border: 1px solid #000; background: none; cursor: pointer; }
+        .results-card { border: 2px solid #000; padding: 30px; margin-top: 30px; text-align: center; }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <strong>Logo: AutoInsight ZA</strong>
+        <div>Home | How It Works | Browse Cars | Price Estimator | Market Insights</div>
+    </nav>
+
+    <div class="hero">
+        <div class="box-label">PAGE HERO</div>
+        <h1>Get Your Car's Fair Value</h1>
+        <p>Our AI analyzes 70,000+ listings to give you an accurate price estimate in seconds</p>
+    </div>
+
+    <div class="form-container">
+        <div class="box-label">MULTI-STEP FORM</div>
+        
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            <div class="step active">Step 1 of 3<br>Vehicle Basics</div>
+            <div class="step">Step 2 of 3<br>Details</div>
+            <div class="step">Step 3 of 3<br>Results</div>
+        </div>
+
+        <!-- STEP 1: Vehicle Basics -->
+        <div id="step1">
+            <h2>Step 1: Vehicle Basics</h2>
+            
+            <div class="form-group">
+                <label>Make *</label>
+                <select required>
+                    <option value="">Select make...</option>
+                    <option>Toyota</option>
+                    <option>BMW</option>
+                    <option>Mercedes-Benz</option>
+                    <option>Volkswagen</option>
+                    <option>Ford</option>
+                    <option>Audi</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Model * (depends on make)</label>
+                <select required>
+                    <option value="">Select model...</option>
+                    <option>Corolla</option>
+                    <option>Hilux</option>
+                    <option>RAV4</option>
+                    <option>Fortuner</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Year *</label>
+                <select required>
+                    <option value="">Select year...</option>
+                    <option>2024</option>
+                    <option>2023</option>
+                    <option>2022</option>
+                    <option>2021</option>
+                    <option>2020</option>
+                    <option>2019</option>
+                    <option>2018</option>
+                </select>
+            </div>
+
+            <div class="button-group">
+                <button disabled>Previous</button>
+                <button>Next →</button>
+            </div>
+        </div>
+
+        <!-- STEP 2: Vehicle Details (hidden initially) -->
+        <div id="step2" style="display: none;">
+            <h2>Step 2: Vehicle Details</h2>
+            
+            <div class="form-group">
+                <label>Mileage (km) *</label>
+                <input type="number" placeholder="e.g., 45000" required>
+                <small>Enter the current odometer reading</small>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Transmission *</label>
+                    <div>
+                        <label><input type="radio" name="transmission" value="Automatic"> Automatic</label><br>
+                        <label><input type="radio" name="transmission" value="Manual"> Manual</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Fuel Type *</label>
+                    <select required>
+                        <option value="">Select...</option>
+                        <option>Petrol</option>
+                        <option>Diesel</option>
+                        <option>Hybrid</option>
+                        <option>Electric</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Body Type *</label>
+                    <select required>
+                        <option value="">Select...</option>
+                        <option>Sedan</option>
+                        <option>SUV</option>
+                        <option>Hatchback</option>
+                        <option>Bakkie</option>
+                        <option>Coupe</option>
+                        <option>Wagon</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Province *</label>
+                    <select required>
+                        <option value="">Select...</option>
+                        <option>Gauteng</option>
+                        <option>Western Cape</option>
+                        <option>KwaZulu-Natal</option>
+                        <option>Eastern Cape</option>
+                        <option>Free State</option>
+                        <option>Limpopo</option>
+                        <option>Mpumalanga</option>
+                        <option>North West</option>
+                        <option>Northern Cape</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button>← Previous</button>
+                <button>Get Estimate →</button>
+            </div>
+        </div>
+
+        <!-- STEP 3: Results (hidden initially) -->
+        <div id="step3" style="display: none;">
+            <div class="box-label">LOADING STATE</div>
+            <div style="text-align: center; padding: 40px;">
+                <p>[Loading Spinner Animation]</p>
+                <p>Analyzing market data...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Card (shown after API response) -->
+    <div class="results-card" style="max-width: 700px; margin: 30px auto; display: none;">
+        <div class="box-label">RESULTS DISPLAY</div>
+        <h2>Estimated Fair Value</h2>
+        <div style="font-size: 48px; font-weight: bold; margin: 20px 0;">R 245,000</div>
+        
+        <div style="border: 1px solid #000; padding: 20px; margin: 20px 0;">
+            <p><strong>Confidence Range:</strong></p>
+            <p>R 230,000 - R 260,000</p>
+        </div>
+
+        <div style="border: 1px solid #000; padding: 20px; margin: 20px 0;">
+            <p><strong>Market Position:</strong></p>
+            <p>This vehicle is priced 15% below market average</p>
+            <p>[Badge: Fair Deal]</p>
+        </div>
+
+        <div style="border: 1px solid #000; padding: 20px; margin: 20px 0;">
+            <p><strong>Based on analysis of:</strong></p>
+            <p>2,340 similar vehicles</p>
+            <p>2020 Toyota Corolla | Gauteng | Automatic | 40,000-50,000 km</p>
+        </div>
+
+        <div style="margin-top: 30px; border: 1px solid #000; padding: 20px;">
+            <div class="box-label">VISUAL CHART/GRAPH</div>
+            <p>[Distribution chart showing price range]</p>
+            <p>[Your estimate marked on the chart]</p>
+        </div>
+
+        <div class="button-group" style="justify-content: center; margin-top: 30px;">
+            <button>Try Again</button>
+            <button>View Similar Vehicles</button>
+        </div>
+    </div>
+
+    <section class="box" style="max-width: 700px; margin: 30px auto;">
+        <div class="box-label">ADDITIONAL INFO</div>
+        <h3>How We Calculate Fair Value</h3>
+        <ul>
+            <li>Analyze 70,000+ active listings across SA</li>
+            <li>Filter for exact make, model, year match</li>
+            <li>Adjust for mileage, condition, location</li>
+            <li>Machine learning predicts fair market value</li>
+            <li>Provide confidence range based on data quality</li>
+        </ul>
+    </section>
+
+    <footer class="box">
+        <div class="box-label">FOOTER</div>
+        <p>About | Platform | Resources | Company</p>
+        <p>© 2026 AutoInsight ZA</p>
+    </footer>
+</body>
+</html>
