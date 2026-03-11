@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Header_v1.0</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+
+:root {
+  --ink:       #0a0f1e;
+  --ink-2:     #1c2542;
+  --surface:   #f5f7ff;
+  --card:      #ffffff;
+  --accent:    #0047ff;
+  --accent-2:  #00c896;
+  --accent-3:  #0099ff;
+  --muted:     #6b7a99;
+  --border:    #e2e7f7;
+  --r-sm:      10px;
+  --r-md:      16px;
+  --sh-sm:     0 2px 8px rgba(0,71,255,.07);
+  --sh-md:     0 8px 32px rgba(0,71,255,.12);
+  --font:      'Gotham', 'Montserrat', -apple-system, sans-serif;
+  --t:         0.2s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: var(--surface); }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 20px; border-radius: var(--r-sm);
+  font-family: var(--font); font-weight: 700; font-size: 13px;
+  cursor: pointer; border: none; transition: all var(--t); white-space: nowrap;
+}
+.btn-primary  { background: var(--accent); color: #fff; }
+.btn-primary:hover  { background: #003de0; transform: translateY(-1px); }
+.btn-secondary { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); }
+.btn-secondary:hover { background: rgba(0,71,255,.06); }
+.btn-sm { padding: 8px 16px; font-size: 12.5px; }
+
+
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(245,247,255,.93);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: all var(--t);
+}
+.nav.scrolled {
+  background: rgba(245,247,255,.98);
+  box-shadow: var(--sh-sm);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px;
+  max-width: 1280px; margin: 0 auto; padding: 0 32px;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 900; font-size: 19px; letter-spacing: -.4px; color: var(--ink);
+}
+.nav-logo .logo-icon {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-3));
+  border-radius: 10px; display: grid; place-items: center;
+  color: #fff; font-size: 15px; flex-shrink: 0;
+}
+.nav-logo .za { color: var(--accent); }
+
+.nav-links { display: flex; align-items: center; gap: 2px; }
+.nav-links a {
+  padding: 8px 15px; border-radius: var(--r-sm);
+  font-size: 13.5px; font-weight: 500; color: var(--muted);
+  transition: all var(--t);
+}
+.nav-links a:hover { color: var(--ink); background: rgba(0,71,255,.06); }
+.nav-links a.active {
+  color: var(--accent); background: rgba(0,71,255,.08); font-weight: 700;
+}
+
+.nav-right { display: flex; gap: 8px; align-items: center; }
+
+
+.preview-wrap {
+  padding: 104px 32px 32px;
+  max-width: 900px; margin: 0 auto;
+  font-family: var(--font); color: var(--ink);
+}
+.preview-title {
+  font-size: 22px; font-weight: 900; margin-bottom: 8px;
+}
+.preview-sub {
+  font-size: 14px; color: var(--muted); font-weight: 300;
+  margin-bottom: 32px; line-height: 1.65;
+}
+.code-block {
+  background: var(--ink); border-radius: var(--r-md);
+  padding: 24px; font-family: 'Courier New', monospace;
+  font-size: 13px; color: rgba(255,255,255,.7); line-height: 1.9;
+  overflow-x: auto;
+}
+.code-block .cmt  { color: #6b9a6b; }
+.code-block .tag  { color: #7dd3fc; }
+.code-block .attr { color: #fca5a5; }
+.code-block .val  { color: #86efac; }
+
+
+@media (max-width: 768px) {
+  .nav-links, .nav-right .btn { display: none; }
+  .nav-mobile-btn { display: block; }
+}
+
+
+.logo-img {
+  height: 60px;
+  margin-left: -50px;
+  vertical-align: middle;
+}
+</style>
+</head>
+<body>
+
+
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+
+
+    <a href="index.html" class="nav-logo">
+  <img src="https://raw.githubusercontent.com/Damian-naidoo-07/Image_Host_Monster/main/AutoInsight_Logo_v3.1.png" 
+       alt="AutoInsight ZA Logo" 
+       class="logo-img">
+  AutoInsight <span class="za">ZA</span>
+</a>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class=active >Home</a></li>
+      <li><a href="about.html">How It Works</a></li>
+      <li><a href="estimator.html">Price Estimator</a></li>
+      <li><a href="search.html">Browse Cars</a></li>
+      <li><a href="dashboard.html">Market Insights</a></li>
+    </ul>
+
+
+    <div class="nav-right">
+      <a href="login.html" class="btn btn-secondary btn-sm">Sign In</a>
+      <a href="estimator.html" class="btn btn-primary btn-sm">
+        <i class="fas fa-calculator"></i> Get Fair Value
+      </a>
+    </div>
+
+  </div>
+</nav>
+
+
+
+<script>
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+</script>
+
+</body>
+</html>
