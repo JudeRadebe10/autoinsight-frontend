@@ -83,20 +83,6 @@ ul{list-style:none}
 .hero-stat-val{font-size:30px;font-weight:900;color:#fff;letter-spacing:-.5px;line-height:1}
 .hero-stat-lbl{font-size:12.5px;color:rgba(255,255,255,.45);margin-top:4px;font-weight:400}
 
-/* Hero visual: floating card */
-.hero-visual{position:relative;padding:20px 0}
-.hero-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);backdrop-filter:blur(20px);border-radius:var(--r-lg);padding:28px;color:#fff;animation:floatCard 3.4s ease-in-out infinite}
-@keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-.mini-card{position:absolute;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(16px);border-radius:var(--r-md);padding:14px 18px;color:#fff;font-size:12.5px}
-.mc-1{bottom:-80px;left:-36px;animation:floatCard 3.4s ease-in-out infinite 0.6s}
-.mc-2{top:-80px;right:-16px;animation:floatCard 3.4s ease-in-out infinite 0.6s}
-.meta-pill{background:rgba(255,255,255,.12);border-radius:99px;padding:3px 10px;font-size:11.5px;display:inline-block;margin:2px}
-.fair-badge{background:rgba(0,200,150,.2);border:1px solid rgba(0,200,150,.4);color:#00e8a8;border-radius:var(--r-sm);padding:5px 12px;font-size:12px;font-weight:700}
-.fv-bar-wrap{margin-top:14px}
-.fv-bar-labels{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.4);margin-bottom:5px}
-.fv-bar{height:7px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden}
-.fv-fill{height:100%;width:72%;background:linear-gradient(90deg,#0af5c2,#0099ff);border-radius:99px}
-
 /* SEARCH BOX */
 .search-section{margin-top:-44px;position:relative;z-index:10;padding-bottom:88px}
 .search-box{background:var(--card);border-radius:var(--r-lg);box-shadow:var(--sh-lg);padding:32px}
@@ -184,7 +170,6 @@ ul{list-style:none}
 
 /* PROVINCES */
 .provinces-section{background:var(--ink-2);padding:88px 0}
-/* Loading skeleton for province pills */
 .prov-pill.skeleton .prov-name,.prov-pill.skeleton .prov-count,.prov-pill.skeleton .prov-label{
   background:rgba(255,255,255,.08);color:transparent;border-radius:4px;
   animation:shimmer 1.4s ease-in-out infinite alternate}
@@ -609,10 +594,7 @@ ul{list-style:none}
         <a href="dashboard.html" class="btn btn-ghost">View Market Insights <i class="fas fa-arrow-right"></i></a>
       </div>
       <!--
-        id="provinceGrid" - replaced by loadProvinceStats() which calls
-        GET /api/filters/provinces → { provinces: [ { province, count } ] }
-        Returns real listing counts from the DB sorted by count DESC.
-        Skeleton pills are shown while the API call is in-flight.
+        Skeleton pills are shown while the API call is being fetched
       -->
       <div class="province-grid reveal" id="provinceGrid">
         <div class="prov-pill skeleton"><div class="prov-name">&nbsp;</div><div class="prov-count">&nbsp;&nbsp;&nbsp;&nbsp;</div><div class="prov-label">&nbsp;</div></div>
@@ -699,7 +681,7 @@ const ro=new IntersectionObserver(entries=>entries.forEach(e=>{
 }),{threshold:.08});
 document.querySelectorAll('.reveal').forEach(r=>ro.observe(r));
 
-// FORMATTERS
+// FORMATTING
 const fmtR    = n => n>=1_000_000?`R${(n/1_000_000).toFixed(1)}M`:n>=1_000?`R${Math.round(n/1_000)}K`:`R${Math.round(n).toLocaleString()}`;
 const fmtFull = n => 'R '+Math.round(n).toLocaleString('en-ZA');
 const fmtKM   = n => n>=1000?`${Math.round(n/1000).toLocaleString()}K+`:(n?.toLocaleString()??'—');
@@ -734,7 +716,7 @@ const PROV_SHORT={
 };
 function provDisplayName(p){ return PROV_SHORT[p]||p; }
 
-// BUILD CAR CARD
+// CAR CARD
 function buildCarCard(v, idx) {
   const badge   = BADGES[idx % BADGES.length];
   const bg      = CARD_BGSRC[idx % CARD_BGSRC.length];
@@ -777,11 +759,6 @@ function buildCarCard(v, idx) {
 }
 
 // LOAD HERO STATS
-/*
-  GET /api/homepage/stats
-  Updates: #statListings, #statMakes, #statMarketVal,
-           #heroCardAvgPrice, #heroEyebrow, #heroBrowseBtn
-*/
 async function loadHeroStats() {
   try {
     const res  = await fetch(`${API}/api/homepage/stats`);
@@ -804,7 +781,6 @@ async function loadHeroStats() {
 }
 
 // LOAD FEATURED VEHICLES
-/*  GET /api/homepage/featured-vehicles → replaces #featuredGrid  */
 async function loadFeaturedVehicles() {
   try {
     const res  = await fetch(`${API}/api/homepage/featured-vehicles`);
@@ -817,7 +793,6 @@ async function loadFeaturedVehicles() {
 }
 
 // LOAD POPULAR BRANDS 
-/*  GET /api/homepage/popular-brands → replaces #popularTagsRow  */
 async function loadPopularBrands() {
   try {
     const res  = await fetch(`${API}/api/homepage/popular-brands`);
@@ -832,14 +807,6 @@ async function loadPopularBrands() {
 }
 
 // LOAD PROVINCE STATS 
-/*
-  GET /api/filters/provinces
-  Returns { provinces: [{ province, count }, …] } sorted by count DESC.
-  Replaces the skeleton pills in #provinceGrid with real DB counts.
-  • First (highest) province gets the "hot" highlight.
-  • Province names shortened via PROV_SHORT map.
-  • Each pill links to search.html?province=<name>.
-*/
 async function loadProvinceStats() {
   const grid = document.getElementById('provinceGrid');
   if (!grid) return;
@@ -862,7 +829,6 @@ async function loadProvinceStats() {
     ro.observe(grid);
   } catch(e) {
     console.warn('Province stats:',e);
-    // Graceful fallback: show pills with "—" counts
     grid.innerHTML = [
       'Gauteng','Western Cape','KZN','Eastern Cape','Limpopo',
       'Mpumalanga','North West','Free State','N. Cape'
@@ -875,7 +841,7 @@ function initQuickSearch() {
   const input = document.querySelector('.fl-input[placeholder*="Toyota"]');
   if (!input) return;
 
-  // Autocomplete dropdown
+  // DROPDOWN
   const dd = document.createElement('div');
   dd.style.cssText = 'position:absolute;top:100%;left:0;right:0;background:#fff;border:1.5px solid var(--border);border-top:none;border-radius:0 0 var(--r-sm) var(--r-sm);box-shadow:var(--sh-md);z-index:100;max-height:240px;overflow-y:auto;display:none';
   input.parentElement.style.position = 'relative';
