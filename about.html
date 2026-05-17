@@ -496,7 +496,9 @@ ul{list-style:none}
 <script src="auth.js"></script>
 <script>
 // API 
-const API = 'https://autoinsight-backend-wp42.onrender.com';
+const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://127.0.0.1:8765'
+  : 'https://autoinsight-backend-wp42.onrender.com';
 
 // Nav 
 const nav = document.getElementById('mainNav');

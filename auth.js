@@ -2,7 +2,9 @@
 //  AutoInsight ZA – Global Authentication & Navbar Integrator
 // ─────────────────────────────────────────────────────────────
 
-const BACKEND_API = 'https://autoinsight-backend-wp42.onrender.com';
+const BACKEND_API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://127.0.0.1:8765'
+  : 'https://autoinsight-backend-wp42.onrender.com';
 
 // Globally exposed helper to log out
 function logoutUser() {
@@ -27,7 +29,7 @@ async function checkAuthAndPopulateNavbar() {
       }
     });
 
-    if (response.status === 401) {
+    if (response.status === 401 || response.status === 403) {
       // Token is invalid/expired
       localStorage.removeItem('access_token');
       localStorage.removeItem('user_role');

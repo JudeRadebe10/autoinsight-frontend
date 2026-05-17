@@ -242,7 +242,11 @@ function updateDateRange(){
 
 <!-- Fetch live data from backend -->
 <script>
-fetch("https://autoinsight-backend-wp42.onrender.com/api/dashboard", { credentials: 'include' })
+const BACKEND_API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://127.0.0.1:8765'
+  : 'https://autoinsight-backend-wp42.onrender.com';
+
+fetch(`${BACKEND_API}/api/dashboard`, { credentials: 'include' })
   .then(res => res.json())
   .then(data => {
     document.getElementById('liveListings').textContent = data.live_listings.toLocaleString();
