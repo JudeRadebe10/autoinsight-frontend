@@ -81,13 +81,26 @@ function updateNavbarToAuthenticated(user) {
     </div>
   `;
 
+  const userName = user.full_name || user.email.split('@')[0];
+
   const mobileMarkup = `
-    <a href="settings.html" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center;gap:6px">
-      <i class="fas fa-cog"></i> Settings
-    </a>
-    <button onclick="logoutUser()" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center;background:none;border:1.5px solid var(--border);color:var(--muted);gap:6px">
-      <i class="fas fa-sign-out-alt"></i> Sign Out
-    </button>
+    <div style="padding: 12px 16px; background: rgba(0,71,255,0.05); border-radius: var(--r-sm); margin-bottom: 12px; text-align: center; border: 1px solid rgba(0,71,255,0.1);">
+      <span style="font-size: 12px; color: var(--muted); font-weight: 500;">Signed in as</span><br>
+      <strong style="color: var(--ink); font-size: 15px; display: inline-flex; align-items: center; gap: 6px; margin-top: 2px;">
+        <i class="fas fa-user-circle" style="color: var(--accent);"></i> ${userName}
+      </strong>
+      ${primaryRole === 'super_admin' || primaryRole === 'admin' ? `
+        <span style="display:inline-block; margin-top:6px; background:var(--accent); color:#fff; font-size:10px; padding:3px 8px; border-radius:6px; font-weight:700; letter-spacing:0.5px;">${primaryRole.toUpperCase()}</span>
+      ` : ''}
+    </div>
+    <div style="display:flex; gap:8px;">
+      <a href="settings.html" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center;gap:6px">
+        <i class="fas fa-cog"></i> Settings
+      </a>
+      <button onclick="logoutUser()" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center;background:none;border:1.5px solid var(--border);color:var(--muted);gap:6px">
+        <i class="fas fa-sign-out-alt"></i> Sign Out
+      </button>
+    </div>
   `;
 
   // Desktop Navbar Integration
