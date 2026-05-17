@@ -1,968 +1,300 @@
-<html lang="en"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Market Insights | AutoInsight ZA</title>
-<meta name="description" content="Real-time South African used car market intelligence. Provincial pricing, brand trends, fair value distribution, and historical price analysis.">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<!--dashboard.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AutoInsight ZA - Market Insights</title>
+<!-- Your CSS styles -->
 <style>
-:root{
-  --ink:#0a0f1e;--ink-2:#1c2542;--ink-3:#0f1835;
-  --surface:#f5f7ff;--card:#fff;
-  --accent:#0047ff;--accent-2:#00c896;--accent-3:#0099ff;
-  --warn:#ff5e3a;--gold:#f5a623;
-  --muted:#6b7a99;--border:#e2e7f7;
-  --r-xs:4px;--r-sm:10px;--r-md:16px;--r-lg:24px;--r-xl:36px;
-  --sh-sm:0 2px 8px rgba(0,71,255,.07);
-  --sh-md:0 8px 32px rgba(0,71,255,.12);
-  --font:'Montserrat',-apple-system,sans-serif;
-  --t:.2s ease;
+/* Basic Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--font);background:var(--surface);color:var(--ink);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-a{text-decoration:none;color:inherit}
-ul{list-style:none}
-.w{max-width:1280px;margin:0 auto;padding:0 32px}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:var(--r-sm);font-family:var(--font);font-weight:700;font-size:13.5px;cursor:pointer;border:none;transition:all var(--t);white-space:nowrap}
-.btn-primary{background:var(--accent);color:#fff}
-.btn-primary:hover{background:#003de0;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,71,255,.35)}
-.btn-secondary{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
-.btn-secondary:hover{background:rgba(0,71,255,.06)}
-.btn-ghost{background:rgba(255,255,255,.1);color:#fff;border:1.5px solid rgba(255,255,255,.22);backdrop-filter:blur(8px)}
-.btn-ghost:hover{background:rgba(255,255,255,.2)}
-.btn-white{background:#fff;color:var(--accent)}
-.btn-sm{padding:8px 16px;font-size:12.5px}
-.btn-lg{padding:15px 30px;font-size:15px;border-radius:var(--r-md)}
-
-/* Nav */
-.nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(245,247,255,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all var(--t)}
-.nav.scrolled{background:rgba(245,247,255,.98);box-shadow:var(--sh-sm)}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1280px;margin:0 auto;padding:0 32px}
-.nav-logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:19px;letter-spacing:-.4px;color:var(--ink)}
-.nav-logo .logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--accent),var(--accent-3));border-radius:10px;display:grid;place-items:center;color:#fff;font-size:15px;flex-shrink:0}
-.nav-logo .za{color:var(--accent)}
-.nav-links{display:flex;align-items:center;gap:2px}
-.nav-links a{padding:8px 15px;border-radius:var(--r-sm);font-size:13.5px;font-weight:500;color:var(--muted);transition:all var(--t)}
-.nav-links a:hover{color:var(--ink);background:rgba(0,71,255,.06)}
-.nav-links a.active{color:var(--accent);background:rgba(0,71,255,.08);font-weight:700}
-.nav-right{display:flex;gap:8px;align-items:center}
-.nav-mobile-btn{display:none;background:none;border:none;font-size:20px;color:var(--ink);cursor:pointer}
-.mobile-nav{display:none;position:fixed;top:72px;left:0;right:0;background:var(--card);border-bottom:1px solid var(--border);box-shadow:var(--sh-md);z-index:999;padding:16px;flex-direction:column;gap:4px}
-.mobile-nav.open{display:flex}
-.mobile-nav a{padding:12px 16px;border-radius:var(--r-sm);font-size:14px;font-weight:500;color:var(--muted)}
-.mobile-nav a.active{color:var(--accent);background:rgba(0,71,255,.07);font-weight:700}
-.mobile-nav-actions{display:flex;gap:8px;padding:12px 0 4px;border-top:1px solid var(--border);margin-top:8px}
-
-/* Hero */
-.hero{background:linear-gradient(145deg,#050a1c 0%,#0c1a45 52%,#091e30 100%);padding:80px 0 48px;margin-top:72px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 75% 60% at 70% 45%,rgba(0,71,255,.26) 0%,transparent 60%),radial-gradient(ellipse 50% 55% at 15% 80%,rgba(0,200,150,.14) 0%,transparent 55%)}
-.hero::after{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:26px 26px}
-.hero-inner{position:relative;z-index:1}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(0,200,150,.12);border:1px solid rgba(0,200,150,.25);color:var(--accent-2);border-radius:99px;padding:5px 15px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
-.hero-dot{width:6px;height:6px;border-radius:50%;background:var(--accent-2);animation:pulse 1.6s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.hero-title{font-size:clamp(28px,3.5vw,48px);font-weight:900;color:#fff;margin-bottom:8px;letter-spacing:-.5px}
-.hero-title .grad{background:linear-gradient(90deg,#0af5c2,#0095ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero-sub{font-size:15px;color:rgba(255,255,255,.5);max-width:520px;font-weight:300;margin-bottom:28px;line-height:1.7}
-
-/* Filter bar */
-.filter-bar{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:var(--r-md);padding:12px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.fb-select{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:var(--r-sm);padding:8px 14px;font-family:var(--font);font-size:13px;color:#fff;outline:none;cursor:pointer;-webkit-appearance:none;font-weight:500}
-.fb-select option{background:var(--ink-2);color:#fff}
-.filter-pills{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
-/* Active-filter indicator - toggled by updateFilterNotice() */
-.filter-active-notice{font-size:11px;color:var(--accent-2);font-weight:600;display:none;align-items:center;gap:6px;margin-left:auto}
-.filter-active-notice.visible{display:inline-flex}
-/* KPI loading fade */
-.kpi-val{transition:opacity .25s ease}
-
-
-/* KPI ROW (floating out of hero) */
-.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:-36px;position:relative;z-index:10;padding:0 0 8px}
-.kpi-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 18px;box-shadow:var(--sh-md)}
-.kpi-label{font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
-.kpi-val{font-size:26px;font-weight:900;color:var(--ink);letter-spacing:-.5px;line-height:1}
-.kpi-change{font-size:12px;margin-top:5px;display:flex;align-items:center;gap:4px;font-weight:600}
-.kpi-change.up{color:var(--accent-2)}.kpi-change.down{color:var(--warn)}.kpi-change.neutral{color:var(--muted)}
-
-/* Sections */
-.section{padding:28px 0}
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;box-shadow:var(--sh-sm)}
-.card-title{font-size:15.5px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:8px}
-.card-title i{color:var(--accent)}
-.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
-.tab-group{display:flex;gap:4px}
-.tab{padding:6px 14px;border-radius:var(--r-sm);font-size:12px;font-weight:600;color:var(--muted);background:var(--surface);border:none;cursor:pointer;transition:all var(--t);font-family:var(--font)}
-.tab:hover,.tab.active{background:var(--accent);color:#fff}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-
-/* Province bar chart */
-.prov-bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.prov-bar-row:last-child{margin-bottom:0}
-.prov-name{font-size:12.5px;font-weight:600;color:var(--ink);width:110px;flex-shrink:0}
-.prov-bar-track{flex:1;height:26px;background:var(--surface);border-radius:var(--r-sm);overflow:hidden;position:relative}
-.prov-bar-fill{height:100%;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:flex-end;padding-right:10px;transition:width 1s cubic-bezier(.34,1.56,.64,1)}
-.prov-bar-val{font-size:12px;font-weight:700;color:#fff}
-.prov-count{font-size:11.5px;color:var(--muted);width:62px;text-align:right;font-weight:500}
-
-/* Makes grid */
-.makes-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
-.make-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:18px 12px;text-align:center;transition:all var(--t)}
-.make-card:hover{box-shadow:var(--sh-sm);border-color:rgba(0,71,255,.18);transform:translateY(-2px)}
-.make-logo{font-size:28px;margin-bottom:8px}
-.make-name{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
-.make-count{font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:400}
-.make-trend{font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:3px}
-.make-trend.up{color:var(--accent-2)}.make-trend.down{color:var(--warn)}
-
-/* Insight cards */
-.insight-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.ic{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:22px}
-.ic-icon{width:44px;height:44px;border-radius:var(--r-sm);display:grid;place-items:center;font-size:18px;margin-bottom:14px}
-.ic-icon.blue{background:rgba(0,71,255,.1);color:var(--accent)}
-.ic-icon.green{background:rgba(0,200,150,.1);color:var(--accent-2)}
-.ic-icon.gold{background:rgba(245,166,35,.1);color:#c8840a}
-.ic-title{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
-.ic-val{font-size:34px;font-weight:900;letter-spacing:-.5px;line-height:1;margin-bottom:4px}
-.ic-desc{font-size:13px;color:var(--muted);font-weight:300}
-
-/* Province table */
-.ptable{width:100%;border-collapse:collapse}
-.ptable th{text-align:left;padding:10px 16px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);border-bottom:2px solid var(--border)}
-.ptable td{padding:14px 16px;border-bottom:1px solid var(--border);font-size:13.5px}
-.ptable tr:last-child td{border-bottom:none}
-.ptable tr:hover{background:var(--surface)}
-.prov-flag{width:22px;height:14px;background:linear-gradient(135deg,#007749 33%,#ffb81c 33%,#ffb81c 66%,#de3831 66%);border-radius:2px;flex-shrink:0}
-.trend-bar{height:6px;background:var(--border);border-radius:99px;overflow:hidden;width:80px}
-.trend-fill{height:100%;border-radius:99px}
-.trend-fill.up{background:var(--accent-2)}.trend-fill.down{background:var(--warn)}.trend-fill.neutral{background:var(--muted)}
-
-/* Loading overlay */
-.chart-loading{display:none;align-items:center;justify-content:center;gap:8px;padding:32px;color:var(--muted);font-size:13px;font-weight:600}
-.chart-loading.visible{display:flex}
-.chart-spinner{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-/* Filter active notice */
-.filter-active-notice{font-size:11px;color:var(--accent-2);font-weight:600;display:none;margin-left:6px;align-items:center;gap:6px}
-.filter-active-notice.visible{display:inline-flex}
-/* Filter label */
-.fb-label{font-size:11px;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.8px;white-space:nowrap}
-/* Power BI embed */
-.pbi-wrapper{background:var(--card);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--sh-md)}
-.pbi-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:var(--ink);border-bottom:1px solid rgba(255,255,255,.1)}
-.pbi-logo{display:flex;align-items:center;gap:8px;color:#fff;font-size:13px;font-weight:700}
-.pbi-logo-icon{width:24px;height:24px;background:linear-gradient(135deg,#f2c811,#f2a811);border-radius:5px;display:grid;place-items:center;font-size:11px;font-weight:900;color:var(--ink)}
-.pbi-actions{display:flex;gap:8px}
-.pbi-placeholder{min-height:420px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:linear-gradient(135deg,#f5f7ff,#eef1ff);padding:48px}
-.pbi-placeholder i{font-size:48px;color:var(--border)}
-.pbi-placeholder h3{font-size:18px;font-weight:700;color:var(--muted)}
-.pbi-placeholder p{font-size:14px;color:var(--muted);text-align:center;max-width:400px;font-weight:300;line-height:1.65}
-.pbi-placeholder code{background:rgba(0,71,255,.07);padding:3px 8px;border-radius:4px;font-size:13px;color:var(--accent)}
-
-/* Data strip */
-.data-strip{background:var(--ink);padding:40px 0}
-.data-strip-title{font-size:13px;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
-.data-tags{display:flex;flex-wrap:wrap;gap:8px}
-.dtag{padding:6px 12px;border-radius:var(--r-sm);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);font-size:12px;font-weight:600;color:rgba(255,255,255,.6);font-family:'Courier New',monospace;transition:all .15s}
-.dtag:hover{background:rgba(0,71,255,.18);border-color:rgba(0,71,255,.35);color:#fff}
-.dtag.cat{background:rgba(0,200,150,.08);border-color:rgba(0,200,150,.2);color:var(--accent-2);font-family:var(--font)}
-
-/* Cta */
-.cta-strip{background:linear-gradient(135deg,var(--accent) 0%,var(--accent-3) 100%);padding:72px 0;position:relative;overflow:hidden}
-.cta-strip::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:22px 22px}
-.cta-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center}
-.cta-title{font-size:clamp(22px,3vw,34px);font-weight:900;color:#fff;line-height:1.1}
-.cta-sub{font-size:15px;color:rgba(255,255,255,.7);margin-top:8px;font-weight:300}
-.cta-actions{display:flex;flex-direction:column;gap:10px}
-.cta-actions .btn{justify-content:center;min-width:200px}
-
-/* Footer */
-.footer{background:var(--ink);padding:64px 0 28px}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:44px}
-.footer-brand{font-size:21px;font-weight:900;color:#fff;margin-bottom:10px}
-.footer-brand span{color:var(--accent)}
-.footer-desc{font-size:13.5px;color:rgba(255,255,255,.4);line-height:1.72;max-width:290px;font-weight:300}
-.social-row{display:flex;gap:10px;margin-top:20px}
-.social-icon{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:grid;place-items:center;color:rgba(255,255,255,.5);font-size:13px;transition:all var(--t)}
-.social-icon:hover{background:var(--accent);border-color:var(--accent);color:#fff}
-.footer-heading{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#fff;margin-bottom:16px}
-.footer-links{display:flex;flex-direction:column;gap:10px}
-.footer-links a{font-size:13.5px;color:rgba(255,255,255,.42);transition:color var(--t);font-weight:300}
-.footer-links a:hover{color:#fff}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:20px;display:flex;justify-content:space-between;font-size:12.5px;color:rgba(255,255,255,.3)}
-
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-@media(max-width:1024px){
-  .kpi-row{grid-template-columns:repeat(3,1fr)}
-  .two-col,.three-col{grid-template-columns:1fr}
-  .insight-cards{grid-template-columns:1fr 1fr}
-  .makes-grid{grid-template-columns:repeat(3,1fr)}
-  .footer-grid{grid-template-columns:1fr 1fr}
-  .cta-inner{grid-template-columns:1fr;text-align:center}
-  .cta-actions{align-items:center}
-}
-@media(max-width:768px){
-  .nav-links,.nav-right .btn{display:none}
-  .nav-mobile-btn{display:block}
-  .w{padding:0 20px}
-  .kpi-row{grid-template-columns:1fr 1fr}
-  .insight-cards{grid-template-columns:1fr}
-  .makes-grid{grid-template-columns:repeat(2,1fr)}
-  .footer-grid{grid-template-columns:1fr}
-  .footer-bottom{flex-direction:column;gap:8px;text-align:center}
+body {
+  font-family: 'Gotham', 'Montserrat', sans-serif;
+  background-color: #f5f7ff;
+  color: #0a0f1e;
+  padding: 20px;
 }
 
-.logo-img{height:60px;margin-left:-50px;vertical-align:middle}
+/* Add any specific styles for the About page here */
+h1 {
+  margin-bottom: 20px;
+}
+p {
+  line-height: 1.6;
+}
+
+/* Dashboard styles */
+.dashboard-hero{
+    text-align:center;
+    margin-bottom:40px;
+}
+.dashboard-hero h2{
+    font-size:2rem;
+    margin-bottom:10px;
+}
+.dashboard-hero p{
+    color:#555;
+    font-size:1rem;
+}
+
+.dashboard-cards{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+.dashboard-card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    text-align:center;
+    min-width:180px;
+}
+.dashboard-card h3{
+    color:#0047ff;
+    font-size:1.6rem;
+    margin-bottom:5px;
+}
+.dashboard-card p{
+    margin:0;
+    color:#555;
+}
+
+.powerbi-container{
+    margin-top:40px;
+}
+.powerbi-container iframe{
+    width:100%;
+    height:600px;
+    border:none;
+}
+
+.loader{
+    display:block;
+    text-align:center;
+    margin:15px 0;
+}
+.error{
+    background:#ffe5e5;
+    color:#d8000c;
+    padding:10px;
+    border-radius:6px;
+    text-align:center;
+    margin-top:10px;
+}
+.refresh-btn{
+    padding:10px 18px;
+    background:#0047ff;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    margin-top:20px;
+}
+.refresh-btn:hover{
+    opacity:.9;
+}
+.date-filter{
+    text-align:center;
+    margin-bottom:20px;
+}
+.date-filter select{
+    padding:6px;
+}
+
 </style>
 </head>
 <body>
+<script src="auth.js"></script>
+<div id="header"></div>
 
-<!-- NAV -->
-<nav class="nav" id="mainNav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-  <img src="https://raw.githubusercontent.com/Damian-naidoo-07/Image_Host_Monster/main/AutoInsight_Logo_v3.1.png" alt="AutoInsight ZA Logo" class="logo-img">
-  AutoInsight <span class="za">ZA</span>
-</a>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">How It Works</a></li>
-      <li><a href="estimator.html">Price Estimator</a></li>
-      <li><a href="search.html">Browse Cars</a></li>
-      <li><a href="dashboard.html" class="active">Market Insights</a></li>
-    </ul>
-    <div class="nav-right">
-      <a href="login.html" class="btn btn-secondary btn-sm">Sign In</a>
-      <a href="estimator.html" class="btn btn-primary btn-sm"><i class="fas fa-calculator"></i> Get Fair Value</a>
-      <button class="nav-mobile-btn" onclick="toggleNav()"><i class="fas fa-bars" id="navIcon"></i></button>
-    </div>
-  </div>
-</nav>
-<div class="mobile-nav" id="mobileNav">
-  <a href="index.html">Home</a><a href="about.html">How It Works</a>
-  <a href="estimator.html">Price Estimator</a><a href="search.html">Browse Cars</a>
-  <a href="dashboard.html" class="active">Market Insights</a>
-  <div class="mobile-nav-actions">
-    <a href="login.html" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center">Sign In</a>
-    <a href="estimator.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center"><i class="fas fa-calculator"></i> Fair Value</a>
-  </div>
-</div>
+<!-- Auth guard -->
+<script src="auth.js"></script>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="w">
-    <div class="hero-inner">
-      <div class="hero-eyebrow"><span class="hero-dot"></span> Live Market Data</div>
-      <h1 class="hero-title">South African Car Market<br><span class="grad">Real-Time Intelligence</span></h1>
-      <p class="hero-sub">Pricing trends, provincial analysis, brand performance, and fair value distribution - all driven by 70,000+ live scraped listings.</p>
-      <div class="filter-bar">
-        <!-- Makes: populated from /api/filters/makes by populateFilters() -->
-        <select class="fb-select" id="fbMake">
-          <option value="">All Makes</option>
-        </select>
-        <!-- Provinces: populated from /api/filters/provinces by populateFilters() -->
-        <select class="fb-select" id="fbProvince">
-          <option value="">All Provinces</option>
-        </select>
-        <!-- Time period: drives "days" param on all API calls -->
-        <select class="fb-select" id="fbPeriod">
-          <option value="">All Time</option>
-          <option value="90">Last 3 Months</option>
-          <option value="180">Last 6 Months</option>
-          <option value="365">Last 12 Months</option>
-        </select>
+<!-- Placeholder for header -->
+<div id="header"></div>
 
-        <!-- Shown when any filter is active -->
-        <span class="filter-active-notice" id="filterNotice">
-          <i class="fas fa-filter" style="font-size:10px"></i> Filters active
-          <button onclick="clearFilters()" style="background:none;border:none;color:var(--accent-2);cursor:pointer;font-size:11px;font-weight:700;margin-left:4px">Clear</button>
-        </span>
-      </div>
-    </div>
-  </div>
+<h1>Market Insights</h1>
+<p>Here you can get Market Insights</p>
+
+<!--dashboard start-->
+<div class="dashboard-container">
+
+<section class="dashboard-hero">
+<h2>South African Car Market Real-Time Intelligence</h2>
+<p>Pricing trends, provincial analysis, brand performance, and fair value distribution | all driven by 85,000+ live scraped listings.</p>
 </section>
 
-<!-- KPI ROW -->
-<div class="w">
-  <div class="kpi-row">
-    <div class="kpi-card reveal visible"><div class="kpi-label">Live Listings</div><div class="kpi-val" id="kpiListings">84,599</div><div class="kpi-change up" id="kpiListingsChange"><i class="fas fa-arrow-up"></i> +11,806 this week</div></div>
-    <div class="kpi-card reveal delay-1 visible"><div class="kpi-label">SA Median Price</div><div class="kpi-val" id="kpiMedian">R 308K</div><div class="kpi-change up" id="kpiMedianChange"><i class="fas fa-arrow-up"></i> +2.1% vs last month</div></div>
-    <div class="kpi-card reveal delay-2 visible"><div class="kpi-label">Top Make</div><div class="kpi-val" id="kpiTopMake">Toyota</div><div class="kpi-change neutral" id="kpiTopMakeShare"><i class="fas fa-minus"></i> 14.1% market share</div></div>
-    <div class="kpi-card reveal delay-3 visible"><div class="kpi-label">Most Listings</div><div class="kpi-val" id="kpiTopProv">Gauteng</div><div class="kpi-change neutral" id="kpiTopProvCount"><i class="fas fa-minus"></i> 47,950 listings</div></div>
-    <div class="kpi-card reveal delay-4 visible"><div class="kpi-label">Avg Price (Month)</div><div class="kpi-val" id="kpiAvgMonth">R 412K</div><div class="kpi-change neutral" id="kpiAvgMonthChange"><i class="fas fa-minus"></i> current month average</div></div>
-  </div>
+<!-- DATE RANGE FILTER -->
+<div class="date-filter">
+<label for="dateRange">Select Date Range:</label>
+<select id="dateRange" onchange="updateDateRange()">
+<option value="7">Last 7 days</option>
+<option value="30">Last 30 days</option>
+<option value="90">Last 90 days</option>
+<option value="all">All time</option>
+</select>
 </div>
 
-<!-- POWER BI SECTION -->
-<div class="w section">
-  <div class="pbi-wrapper reveal visible">
-    <div class="pbi-bar">
-      <div class="pbi-logo">
-        <div class="pbi-logo-icon">PBI</div>
-        AutoInsight ZA · Advanced Analytics Dashboard
-      </div>
-      <div class="pbi-actions">
-        <button class="btn btn-ghost btn-sm" onclick="openPBI()"><i class="fas fa-external-link-alt"></i> Full Screen</button>
-        <button class="btn btn-ghost btn-sm"><i class="fas fa-download"></i> Export</button>
-      </div>
-    </div>
-    <iframe id="pbiFrame" src="about:blank" style="width:100%;height:600px;border:none;display:none"></iframe>
-    <div class="pbi-placeholder" id="pbiPlaceholder">
-      <i class="fas fa-chart-pie"></i>
-      <h3>Advanced Analytics Dashboard</h3>
-      <button class="btn btn-primary" onclick="activatePBI()"><i class="fas fa-plug"></i> Connect Dashboard</button>
-    </div>
-  </div>
+<div style="text-align:center;">
+<button class="refresh-btn" onclick="refreshDashboard()">Refresh Dashboard</button>
 </div>
 
-<!-- INSIGHTS CARDS -->
-<div class="w section" style="padding-top:0">
-  <div class="insight-cards reveal">
-    <div class="ic"><div class="ic-icon blue"><i class="fas fa-store"></i></div><div class="ic-title">Dealer Premium</div><div class="ic-val" id="icDealerPremium" style="color:var(--accent)">+12.4%</div><div class="ic-desc">Average price premium of dealerships over private sellers for equivalent vehicles</div></div>
-    <div class="ic"><div class="ic-icon green"><i class="fas fa-clock"></i></div><div class="ic-title">New This Week</div><div class="ic-val" id="icNewWeek" style="color:var(--accent-2)">11,806</div><div class="ic-desc">Fresh listings added in the past 7 days across all South African platforms</div></div>
-    <div class="ic"><div class="ic-icon gold"><i class="fas fa-tag"></i></div><div class="ic-title">Avg Listed Price</div><div class="ic-val" id="icAvgPrice" style="color:#c8840a">R 412K</div><div class="ic-desc">Current month's average asking price across all active listings in the database</div></div>
-  </div>
+<!-- CARDS -->
+<section class="dashboard-cards">
+<!-- API-->
+
+
+<div class="dashboard-card">
+<h3 id="liveListings">85,096</h3>
+<p>Live Listings</p>
 </div>
 
-<!-- PROVINCIAL + MAKES ANALYSIS -->
-<div class="w section" style="padding-top:0">
-  <div class="two-col reveal">
-    <!-- Province chart -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title"><i class="fas fa-map-location-dot"></i> Avg Price by Province</div>
-        <div class="tab-group" id="provTabGroup">
-          <button class="tab active" onclick="setProvMode(this,'price')">Price</button>
-          <button class="tab" onclick="setProvMode(this,'listings')">Listings</button>
-        </div>
-      </div>
-      <div class="chart-loading" id="provChartLoading"><div class="chart-spinner"></div> Loading…</div>
-      <div id="provChart"><div class="prov-bar-row">
-      <span class="prov-name">Gauteng</span>
-      <div class="prov-bar-track">
-        <div class="prov-bar-fill" style="width:85%;background:linear-gradient(90deg,var(--accent),var(--accent-3))">
-          <span class="prov-bar-val">R 409&nbsp;306</span>
-        </div>
-      </div>
-      <span class="prov-count">47,917</span>
-    </div><div class="prov-bar-row">
-      <span class="prov-name">Western Cape</span>
-      <div class="prov-bar-track">
-        <div class="prov-bar-fill" style="width:85%;background:linear-gradient(90deg,var(--accent),var(--accent-3))">
-          <span class="prov-bar-val">R 409&nbsp;858</span>
-        </div>
-      </div>
-      <span class="prov-count">13,998</span>
-    </div><div class="prov-bar-row">
-      <span class="prov-name">Kwazulu</span>
-      <div class="prov-bar-track">
-        <div class="prov-bar-fill" style="width:86%;background:linear-gradient(90deg,var(--accent),var(--accent-3))">
-          <span class="prov-bar-val">R 411&nbsp;767</span>
-        </div>
-      </div>
-      <span class="prov-count">10,404</span>
-    </div><div class="prov-bar-row">
-      <span class="prov-name">Mpumalanga</span>
-      <div class="prov-bar-track">
-        <div class="prov-bar-fill" style="width:100%;background:linear-gradient(90deg,var(--accent-3),var(--accent-2))">
-          <span class="prov-bar-val">R 488&nbsp;780</span>
-        </div>
-      </div>
-      <span class="prov-count">3,347</span>
-    </div><div class="prov-bar-row">
-      <span class="prov-name">Eastern Cape</span>
-      <div class="prov-bar-track">
-        <div class="prov-bar-fill" style="width:76%;background:linear-gradient(90deg,var(--accent-3),var(--accent-2))">
-          <span class="prov-bar-val">R 359&nbsp;153</span>
-        </div>
-      </div>
-      <span class="prov-count">2,417</span>
-    </div><div class="prov-bar-row">
-      <span class="prov-name">North</span>
-      <div class="prov-bar-track">
-        <div class="prov-bar-fill" style="width:86%;background:linear-gradient(90deg,var(--accent-3),var(--accent-2))">
-          <span class="prov-bar-val">R 411&nbsp;802</span>
-        </div>
-      </div>
-      <span class="prov-count">2,389</span>
-    </div><div class="prov-bar-row">
-      <span class="prov-name">Free State</span>
-      <div class="prov-bar-track">
-        <div class="prov-bar-fill" style="width:85%;background:linear-gradient(90deg,var(--accent-2),#00d8a5)">
-          <span class="prov-bar-val">R 406&nbsp;333</span>
-        </div>
-      </div>
-      <span class="prov-count">1,785</span>
-    </div><div class="prov-bar-row">
-      <span class="prov-name">Limpopo</span>
-      <div class="prov-bar-track">
-        <div class="prov-bar-fill" style="width:95%;background:linear-gradient(90deg,var(--accent-2),#00d8a5)">
-          <span class="prov-bar-val">R 463&nbsp;012</span>
-        </div>
-      </div>
-      <span class="prov-count">1,483</span>
-    </div><div class="prov-bar-row">
-      <span class="prov-name">Northern</span>
-      <div class="prov-bar-track">
-        <div class="prov-bar-fill" style="width:81%;background:linear-gradient(90deg,var(--accent-2),#00d8a5)">
-          <span class="prov-bar-val">R 385&nbsp;310</span>
-        </div>
-      </div>
-      <span class="prov-count">323</span>
-    </div></div>
-    </div>
-    <!-- Price distribution -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title"><i class="fas fa-chart-bar"></i> Price Distribution</div>
-      </div>
-      <div class="chart-loading" id="priceDistLoading"><div class="chart-spinner"></div> Loading…</div>
-      <div id="priceDistChart" style="display:flex;flex-direction:column;gap:10px"><div class="prov-bar-row">
-      <span class="prov-name" style="width:90px;font-size:11.5px">Under R100k</span>
-      <div class="prov-bar-track">
-        <div class="prov-bar-fill" style="width:17%;background:linear-gradient(90deg,var(--accent),var(--accent-3))">
-          <span class="prov-bar-val">3,197</span>
-        </div>
-      </div>
-    </div><div class="prov-bar-row">
-      <span class="prov-name" style="width:90px;font-size:11.5px">R100k – R200k</span>
-      <div class="prov-bar-track">
-        <div class="prov-bar-fill" style="width:69%;background:linear-gradient(90deg,var(--accent),var(--accent-3))">
-          <span class="prov-bar-val">16,650</span>
-        </div>
-      </div>
-    </div><div class="prov-bar-row">
-      <span class="prov-name" style="width:90px;font-size:11.5px">R200k – R300k</span>
-      <div class="prov-bar-track">
-        <div class="prov-bar-fill" style="width:90%;background:linear-gradient(90deg,var(--accent),var(--accent-3))">
-          <span class="prov-bar-val">22,132</span>
-        </div>
-      </div>
-    </div><div class="prov-bar-row">
-      <span class="prov-name" style="width:90px;font-size:11.5px">R300k – R500k</span>
-      <div class="prov-bar-track">
-        <div class="prov-bar-fill" style="width:93%;background:linear-gradient(90deg,var(--accent-3),var(--accent-2))">
-          <span class="prov-bar-val">22,913</span>
-        </div>
-      </div>
-    </div><div class="prov-bar-row">
-      <span class="prov-name" style="width:90px;font-size:11.5px">R500k – R1M</span>
-      <div class="prov-bar-track">
-        <div class="prov-bar-fill" style="width:66%;background:linear-gradient(90deg,var(--accent-2),#00d8a5)">
-          <span class="prov-bar-val">15,797</span>
-        </div>
-      </div>
-    </div><div class="prov-bar-row">
-      <span class="prov-name" style="width:90px;font-size:11.5px">Above R1M</span>
-      <div class="prov-bar-track">
-        <div class="prov-bar-fill" style="width:20%;background:linear-gradient(90deg,var(--accent-2),#00d8a5)">
-          <span class="prov-bar-val">3,910</span>
-        </div>
-      </div>
-    </div></div>
-    </div>
-  </div>
+<div class="dashboard-card">
+<h3 id="medianPrice">R 310K</h3>
+<p>SA Median Price</p>
 </div>
 
-<!-- TRENDING MAKES -->
-<div class="w section" style="padding-top:0">
-  <div class="card reveal">
-    <div class="card-header">
-      <div class="card-title"><i class="fas fa-fire" style="color:var(--warn)"></i> Trending Makes</div>
-      <a href="search.html" class="btn btn-secondary btn-sm">View All <i class="fas fa-arrow-right"></i></a>
-    </div>
-    <div class="makes-grid" id="makesGrid"><div class="make-card" onclick="location.href='search.html?make=Toyota'" style="cursor:pointer">
-        <div class="make-logo">🚗</div>
-        <div class="make-name">Toyota</div>
-        <div class="make-count">11,910 listings</div>
-        <div class="make-trend neutral"><i class="fas fa-minus"></i> R 453K avg</div>
-      </div><div class="make-card" onclick="location.href='search.html?make=Volkswagen'" style="cursor:pointer">
-        <div class="make-logo">🚙</div>
-        <div class="make-name">Volkswagen</div>
-        <div class="make-count">11,401 listings</div>
-        <div class="make-trend neutral"><i class="fas fa-minus"></i> R 373K avg</div>
-      </div><div class="make-card" onclick="location.href='search.html?make=Ford'" style="cursor:pointer">
-        <div class="make-logo">🚗</div>
-        <div class="make-name">Ford</div>
-        <div class="make-count">8,259 listings</div>
-        <div class="make-trend neutral"><i class="fas fa-minus"></i> R 451K avg</div>
-      </div><div class="make-card" onclick="location.href='search.html?make=Suzuki'" style="cursor:pointer">
-        <div class="make-logo">🚗</div>
-        <div class="make-name">Suzuki</div>
-        <div class="make-count">5,807 listings</div>
-        <div class="make-trend neutral"><i class="fas fa-minus"></i> R 257K avg</div>
-      </div><div class="make-card" onclick="location.href='search.html?make=Hyundai'" style="cursor:pointer">
-        <div class="make-logo">🚗</div>
-        <div class="make-name">Hyundai</div>
-        <div class="make-count">4,634 listings</div>
-        <div class="make-trend neutral"><i class="fas fa-minus"></i> R 260K avg</div>
-      </div><div class="make-card" onclick="location.href='search.html?make=BMW'" style="cursor:pointer">
-        <div class="make-logo">🏎️</div>
-        <div class="make-name">BMW</div>
-        <div class="make-count">4,142 listings</div>
-        <div class="make-trend neutral"><i class="fas fa-minus"></i> R 608K avg</div>
-      </div></div>
-  </div>
+<div class="dashboard-card">
+<h3 id="topMake">Toyota</h3>
+<p>Top Make</p>
 </div>
 
-<!-- DATA STRIP -->
-<div class="data-strip">
-  <div class="w">
-    <div class="data-strip-title">Data Powering These Insights</div>
-    <div class="data-tags">
-      <span class="dtag cat">Vehicle</span><span class="dtag">year</span><span class="dtag">make</span><span class="dtag">model</span><span class="dtag">variant</span><span class="dtag">price</span><span class="dtag">mileage</span><span class="dtag">fuel_type</span><span class="dtag">body_type</span>
-      <span class="dtag cat">Seller</span><span class="dtag">seller_id</span><span class="dtag">seller_rating</span><span class="dtag">agent_nada_member</span>
-      <span class="dtag cat">Location</span><span class="dtag">province</span><span class="dtag">agent_coords_lat</span><span class="dtag">agent_coords_lng</span>
-      <span class="dtag cat">Metadata</span><span class="dtag">created_at</span><span class="dtag">updated_at</span>
-    </div>
-  </div>
+<div class="dashboard-card">
+<h3 id="mostListingsProvince">Gauteng</h3>
+<p>Most Listings</p>
 </div>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="w">
-    <div class="footer-grid">
-      <div><div class="footer-brand">AutoInsight <span>ZA</span></div><p class="footer-desc">South Africa's first AI-powered car buying intelligence platform.</p><div class="social-row"><a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-icon"><i class="fab fa-x-twitter"></i></a><a href="#" class="social-icon"><i class="fab fa-instagram"></i></a><a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a></div></div>
-      <div><div class="footer-heading">Platform</div><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="about.html">How It Works</a></li><li><a href="estimator.html">Price Estimator</a></li><li><a href="search.html">Browse Cars</a></li><li><a href="dashboard.html">Market Insights</a></li></ul></div>
-      <div><div class="footer-heading">Resources</div><ul class="footer-links"><li><a href="#">Buying Guide</a></li><li><a href="#">Car Reviews</a></li><li><a href="#">Financing Guide</a></li><li><a href="#">FAQs</a></li></ul></div>
-      <div><div class="footer-heading">Company</div><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li></ul></div>
-    </div>
-    <div class="footer-bottom"><span>© 2026 AutoInsight ZA. All rights reserved.</span><span>Built for South African car buyers 🇿🇦</span></div>
-  </div>
-</footer>
+<div class="dashboard-card">
+<h3 id="avgPrice">R 415K</h3>
+<p>Average Price</p>
+</div>
 
-<script src="auth.js"></script>
+</section>
+
+<!-- LOADER -->
+<div id="iframeLoader" class="loader">Loading Dashboard...</div>
+
+<!-- POWER BI -->
+<section class="powerbi-container">
+<!--POWER BI IFRAME HERE -->
+
+
+<iframe id="powerbi" src="" onload="hideLoader()" onerror="showIframeError()"></iframe>
+</section>
+
+<div id="iframeError" class="error" style="display:none;">
+Dashboard temporarily unavailable. Please refresh the page or try again later.
+<br><br>
+<button onclick="refreshDashboard()">Retry</button>
+</div>
+
+</div>
+
 <script>
-/* Config */
-const API = 'http://localhost:8765';
-
-/* Nav */
-const nav = document.getElementById('mainNav');
-window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
-function toggleNav() {
-  const mn = document.getElementById('mobileNav'), ic = document.getElementById('navIcon');
-  mn.classList.toggle('open');
-  ic.className = mn.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+function refreshDashboard(){
+    const iframe = document.getElementById('powerbi');
+    document.getElementById('iframeLoader').style.display = "block";
+    iframe.src = iframe.src;
 }
 
-/* Scroll reveal */
-const ro = new IntersectionObserver(e => e.forEach(en => {
-  if (en.isIntersecting) { en.target.classList.add('visible'); ro.unobserve(en.target); }
-}), { threshold: .06 });
-document.querySelectorAll('.reveal').forEach(r => ro.observe(r));
-
-/* Formatters */
-const fmtR    = n => { if (!n) return '-'; if (n >= 1e6) return 'R ' + (n/1e6).toFixed(1) + 'M'; if (n >= 1000) return 'R ' + Math.round(n/1000) + 'K'; return 'R ' + Math.round(n).toLocaleString('en-ZA'); };
-const fmtFull = n => n ? 'R\u00a0' + Math.round(n).toLocaleString('en-ZA') : '-';
-
-/* Filter state */
-const filters = { make: '', province: '', days: null };
-let provMode        = 'price';
-let priceDistSeller = '';
-let allProvData     = [];
-
-/* Filter bar */
-document.getElementById('fbMake').addEventListener('change', function () {
-  filters.make = this.value;
-  updateFilterNotice();
-  applyFilters();
-});
-
-document.getElementById('fbProvince').addEventListener('change', function () {
-  filters.province = this.value;
-  updateFilterNotice();
-  applyFilters();
-});
-
-document.getElementById('fbPeriod').addEventListener('change', function () {
-  filters.days = this.value ? parseInt(this.value) : null;
-  updateFilterNotice();
-  applyFilters();
-});
-
-function updateFilterNotice() {
-  const active = !!(filters.make || filters.province || filters.days);
-  document.getElementById('filterNotice').classList.toggle('visible', active);
-
-
-  const listingsLabel = document.querySelector('#kpiListings')?.closest('.kpi-card')?.querySelector('.kpi-label');
-  const medianLabel   = document.querySelector('#kpiMedian')?.closest('.kpi-card')?.querySelector('.kpi-label');
-  const topMakeLabel  = document.querySelector('#kpiTopMake')?.closest('.kpi-card')?.querySelector('.kpi-label');
-  const topProvLabel  = document.querySelector('#kpiTopProv')?.closest('.kpi-card')?.querySelector('.kpi-label');
-  const avgMonLabel   = document.querySelector('#kpiAvgMonth')?.closest('.kpi-card')?.querySelector('.kpi-label');
-
-  if (filters.make) {
-    if (listingsLabel) listingsLabel.textContent = `Listings – ${filters.make}`;
-    if (medianLabel)   medianLabel.textContent   = `Median Price – ${filters.make}`;
-    if (topMakeLabel)  topMakeLabel.textContent  = `Selected Make`;
-    if (topProvLabel)  topProvLabel.textContent  = `Top Province – ${filters.make}`;
-    if (avgMonLabel)   avgMonLabel.textContent   = `Avg Price (Month) – ${filters.make}`;
-  } else {
-    if (listingsLabel) listingsLabel.textContent = 'Live Listings';
-    if (medianLabel)   medianLabel.textContent   = 'SA Median Price';
-    if (topMakeLabel)  topMakeLabel.textContent  = 'Top Make';
-    if (topProvLabel)  topProvLabel.textContent  = 'Most Listings';
-    if (avgMonLabel)   avgMonLabel.textContent   = 'Avg Price (Month)';
-  }
+function hideLoader(){
+    document.getElementById('iframeLoader').style.display = "none";
 }
 
-function clearFilters() {
-  filters.make = '';
-  filters.province = '';
-  filters.days = null;
-  document.getElementById('fbMake').value     = '';
-  document.getElementById('fbProvince').value = '';
-  document.getElementById('fbPeriod').value   = '';
-  updateFilterNotice();
-  applyFilters();
+function showIframeError(){
+    document.getElementById('iframeError').style.display = "block";
 }
 
-/* Power BI embed */
-function activatePBI() {
-  const url = prompt('Enter Power BI embed URL:');
-  if (url) {
-    document.getElementById('pbiFrame').src = url;
-    document.getElementById('pbiFrame').style.display = 'block';
-    document.getElementById('pbiPlaceholder').style.display = 'none';
-  }
+function updateDateRange(){
+    const range = document.getElementById("dateRange").value;
+    console.log("Date range selected:", range);
+    refreshDashboard();
 }
-function openPBI() {
-  const f = document.getElementById('pbiFrame');
-  if (f.src && f.src !== 'about:blank' && f.requestFullscreen) f.requestFullscreen();
-}
+</script>
+<!--dashboard end-->
 
-/* Apply ALL filters */
 
-function applyFilters() {
-  Promise.all([
-    loadKPIs(),
-    loadProvincialAnalysis(),
-    loadPriceDistribution(priceDistSeller),
-    loadTrendingMakes(),
-  ]);
-}
-
-/* Building query string */
-function buildParams(extra = {}, { skipDays = false } = {}) {
-  const p = new URLSearchParams();
-  if (filters.make)                     p.set('make',     filters.make);
-  if (filters.province)                 p.set('province', filters.province);
-  if (filters.days && !skipDays)        p.set('days',     filters.days);
-  Object.entries(extra).forEach(([k, v]) => { if (v !== '' && v != null) p.set(k, v); });
-  return p.toString() ? '?' + p.toString() : '';
-}
-
-/* KPI cards - all 5, filter-aware */
-
-async function loadKPIs() {
-
-  ['kpiListings','kpiMedian','kpiTopMake','kpiTopProv','kpiAvgMonth'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.style.opacity = '0.45';
-  });
-
-  try {
-    const qs  = buildParams();
-    const d   = await (await fetch(`${API}/api/dashboard/summary${qs}`)).json();
-
-    const total = d.total_listings || 0;
-    document.getElementById('kpiListings').textContent    = total.toLocaleString('en-ZA');
-    document.getElementById('kpiListingsChange').innerHTML = `<i class="fas fa-arrow-up"></i> +${(d.new_this_week||0).toLocaleString('en-ZA')} this week`;
-    document.getElementById('kpiListingsChange').className = 'kpi-change up';
-
-    if (d.median_price) {
-      document.getElementById('kpiMedian').textContent = fmtR(d.median_price);
-    }
-    if (d.price_change_pct != null) {
-      const up = d.price_change_pct >= 0;
-      document.getElementById('kpiMedianChange').className = `kpi-change ${up ? 'up' : 'down'}`;
-      document.getElementById('kpiMedianChange').innerHTML =
-        `<i class="fas fa-arrow-${up ? 'up' : 'down'}"></i> ${up ? '+' : ''}${d.price_change_pct}% vs last month`;
-    }
-
-    if (d.most_popular_make) {
-      document.getElementById('kpiTopMake').textContent = d.most_popular_make;
-      if (filters.make) {
-        // When filtered to a specific make, show listing count for that make
-        document.getElementById('kpiTopMakeShare').innerHTML =
-          `<i class="fas fa-car"></i> ${(d.popular_make_count||0).toLocaleString('en-ZA')} listings`;
+<!-- Script for toggling FAQ answers -->
+<script>
+  document.querySelectorAll('.question').forEach(function(question) {
+    question.addEventListener('click', function() {
+      const answer = this.nextElementSibling;
+      const arrow = this.querySelector('span:last-child');
+      if (answer.style.display === 'none') {
+        answer.style.display = 'block';
+        arrow.innerHTML = '&#9660;'; // down arrow
       } else {
-        document.getElementById('kpiTopMakeShare').innerHTML =
-          d.popular_make_share != null
-            ? `<i class="fas fa-minus"></i> ${d.popular_make_share}% market share`
-            : `<i class="fas fa-minus"></i> ${(d.popular_make_count||0).toLocaleString('en-ZA')} listings`;
+        answer.style.display = 'none';
+        arrow.innerHTML = '&#9654;'; // right arrow
       }
-    }
-
-    if (d.top_province) {
-      document.getElementById('kpiTopProv').textContent = d.top_province;
-      document.getElementById('kpiTopProvCount').innerHTML =
-        `<i class="fas fa-minus"></i> ${(d.top_province_count||0).toLocaleString('en-ZA')} listings`;
-    }
-
-    if (d.avg_price_month) {
-      document.getElementById('kpiAvgMonth').textContent = fmtR(d.avg_price_month);
-    }
-
-  } catch(e) { console.warn('KPI load failed', e); }
-  finally {
-    ['kpiListings','kpiMedian','kpiTopMake','kpiTopProv','kpiAvgMonth'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.opacity = '1';
     });
-  }
-}
-
-/* INSIGHT CARDS (global - not filtered) */
-async function loadInsightCards() {
-  try {
-    const [statsRes, dpRes] = await Promise.all([
-      fetch(`${API}/api/homepage/stats`),
-      fetch(`${API}/api/dashboard/dealer-vs-private`)
-    ]);
-    const stats = await statsRes.json();
-    const dp    = await dpRes.json();
-    if (dp.dealer_premium_pct != null) {
-      const sign = dp.dealer_premium_pct >= 0 ? '+' : '';
-      document.getElementById('icDealerPremium').textContent = `${sign}${dp.dealer_premium_pct}%`;
-    }
-    if (stats.new_this_week)
-      document.getElementById('icNewWeek').textContent = stats.new_this_week.toLocaleString('en-ZA');
-    if (stats.avg_price)
-      document.getElementById('icAvgPrice').textContent = fmtR(stats.avg_price);
-  } catch(e) {}
-}
-
-/* Provincial analysis chart */
-/*
-  GET /api/dashboard/provincial-analysis?make=&province=&days=
-
-  When province is active the chart naturally shows just that one province,
-  which is the correct behaviour (user asked to filter to that province).
-  When make is active it shows avg price / listings per province for that make.
-*/
-async function loadProvincialAnalysis() {
-  const loadEl = document.getElementById('provChartLoading');
-  loadEl.classList.add('visible');
-  try {
-    const qs   = buildParams();
-    const data = await (await fetch(`${API}/api/dashboard/provincial-analysis${qs}`)).json();
-    allProvData = data.provinces || [];
-    renderProvChart(allProvData);
-    renderProvinceTable(allProvData);
-  } catch(e) { console.warn('Province data failed', e); }
-  finally { loadEl.classList.remove('visible'); }
-}
-
-/* Province chart renderer - mode switch re-renders cached data, no API call */
-const PROV_GRADS = [
-  'linear-gradient(90deg,var(--accent),var(--accent-3))',
-  'linear-gradient(90deg,var(--accent-3),var(--accent-2))',
-  'linear-gradient(90deg,var(--accent-2),#00d8a5)',
-];
-function renderProvChart(provinces) {
-  const chart = document.getElementById('provChart');
-  if (!provinces.length) {
-    chart.innerHTML = '<p style="color:var(--muted);padding:20px 0">No data for the selected filters.</p>';
-    return;
-  }
-
-  if (provMode === 'price') {
-    const max = Math.max(...provinces.map(p => p.avg_price || 0));
-    chart.innerHTML = provinces.map((p, i) => {
-      const pct  = max > 0 ? Math.round((p.avg_price / max) * 88) + 10 : 10;
-      const grad = PROV_GRADS[i < 3 ? 0 : i < 6 ? 1 : 2];
-      const name = p.province.length > 14 ? p.province.split(' ').slice(0, 2).join(' ') : p.province;
-      return `<div class="prov-bar-row">
-        <span class="prov-name" title="${p.province}">${name}</span>
-        <div class="prov-bar-track"><div class="prov-bar-fill" style="width:${pct}%;background:${grad}">
-          <span class="prov-bar-val">${fmtFull(p.avg_price)}</span>
-        </div></div>
-        <span class="prov-count">${p.count.toLocaleString('en-ZA')}</span>
-      </div>`;
-    }).join('');
-
-  } else {
-    /* Listings mode: bar = count, right label = avg price */
-    const max = Math.max(...provinces.map(p => p.count || 0));
-    chart.innerHTML = provinces.map((p, i) => {
-      const pct  = max > 0 ? Math.round((p.count / max) * 88) + 10 : 10;
-      const grad = PROV_GRADS[i < 3 ? 0 : i < 6 ? 1 : 2];
-      const name = p.province.length > 14 ? p.province.split(' ').slice(0, 2).join(' ') : p.province;
-      return `<div class="prov-bar-row">
-        <span class="prov-name" title="${p.province}">${name}</span>
-        <div class="prov-bar-track"><div class="prov-bar-fill" style="width:${pct}%;background:${grad}">
-          <span class="prov-bar-val">${p.count.toLocaleString('en-ZA')}</span>
-        </div></div>
-        <span class="prov-count">${fmtR(p.avg_price)}</span>
-      </div>`;
-    }).join('');
-  }
-}
-
-function setProvMode(btn, mode) {
-  document.getElementById('provTabGroup').querySelectorAll('.tab')
-    .forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  provMode = mode;
-  renderProvChart(allProvData);
-}
-
-/* Province table */
-function renderProvinceTable(provinces) {
-  const tbody = document.getElementById('provinceTableBody');
-  if (!provinces.length) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px">No data for selected filters.</td></tr>';
-    return;
-  }
-  const maxPrice = Math.max(...provinces.map(p => p.avg_price || 0));
-  tbody.innerHTML = provinces.map(p => {
-    const trendW = maxPrice > 0 ? Math.round((p.avg_price / maxPrice) * 80) + 10 : 50;
-    return `<tr>
-      <td><div style="display:flex;align-items:center;gap:8px;font-weight:600"><div class="prov-flag"></div>${p.province}</div></td>
-      <td>${p.count.toLocaleString('en-ZA')}</td>
-      <td><strong>${fmtFull(p.avg_price)}</strong></td>
-      <td><div class="trend-bar"><div class="trend-fill up" style="width:${trendW}%"></div></div></td>
-      <td>${p.top_make || '-'}</td>
-      <td><span style="color:var(--accent-2);font-weight:700">-</span></td>
-    </tr>`;
-  }).join('');
-}
-
-/* Price distribution */
-
-async function loadPriceDistribution(sellerType) {
-  const loadEl = document.getElementById('priceDistLoading');
-  loadEl.classList.add('visible');
-  try {
-    const qs   = buildParams({ seller_type: sellerType });
-    const data = await (await fetch(`${API}/api/dashboard/price-ranges${qs}`)).json();
-    renderPriceDist(data.price_ranges || []);
-  } catch(e) { console.warn('Price dist failed', e); }
-  finally { loadEl.classList.remove('visible'); }
-}
-
-function setPriceDistTab(btn, sellerType) {
-  document.getElementById('priceDistTabGroup').querySelectorAll('.tab')
-    .forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  priceDistSeller = sellerType;
-  loadPriceDistribution(sellerType);
-}
-
-const DIST_GRADS = [
-  'linear-gradient(90deg,var(--accent),var(--accent-3))',
-  'linear-gradient(90deg,var(--accent),var(--accent-3))',
-  'linear-gradient(90deg,var(--accent),var(--accent-3))',
-  'linear-gradient(90deg,var(--accent-3),var(--accent-2))',
-  'linear-gradient(90deg,var(--accent-2),#00d8a5)',
-  'linear-gradient(90deg,var(--accent-2),#00d8a5)',
-];
-function renderPriceDist(ranges) {
-  const chart = document.getElementById('priceDistChart');
-  if (!ranges.length) {
-    chart.innerHTML = '<p style="color:var(--muted);padding:20px 0">No data for the selected filters.</p>';
-    return;
-  }
-  const maxCount = Math.max(...ranges.map(r => r.count || 0));
-  chart.innerHTML = ranges.map((r, i) => {
-    const pct = maxCount > 0 ? Math.round((r.count / maxCount) * 88) + 5 : 5;
-    return `<div class="prov-bar-row">
-      <span class="prov-name" style="width:90px;font-size:11.5px">${r.price_range}</span>
-      <div class="prov-bar-track"><div class="prov-bar-fill" style="width:${pct}%;background:${DIST_GRADS[i]||DIST_GRADS[DIST_GRADS.length-1]}">
-        <span class="prov-bar-val">${r.count.toLocaleString('en-ZA')}</span>
-      </div></div>
-    </div>`;
-  }).join('');
-}
-
-/* Trending makes */
-
-const MAKE_EMOJI = {
-  toyota:'🚗',volkswagen:'🚙',vw:'🚙',ford:'🛻',bmw:'🏎️',
-  'mercedes-benz':'🚘',mercedes:'🚘',hyundai:'🚗',kia:'🚗',
-  nissan:'🚙',audi:'🏎️',renault:'🚗',chevrolet:'🚙',
-  suzuki:'🚗',mazda:'🚙',isuzu:'🛻',haval:'🚙',chery:'🚙'
-};
-
-async function loadTrendingMakes() {
-  /*
-    GET /api/homepage/popular-brands?province=&days=
-  */
-  try {
-    const p = new URLSearchParams();
-    if (filters.province) p.set('province', filters.province);
-    if (filters.days)     p.set('days',     filters.days);
-    const qs   = p.toString() ? '?' + p.toString() : '';
-    const data = await (await fetch(`${API}/api/homepage/popular-brands${qs}`)).json();
-    const grid = document.getElementById('makesGrid');
-    const brands = data.brands || [];
-    if (!brands.length) {
-      grid.innerHTML = '<p style="color:var(--muted);padding:12px">No data for selected filters.</p>';
-      return;
-    }
-    grid.innerHTML = brands.map(b => {
-      const emoji      = MAKE_EMOJI[(b.make||'').toLowerCase()] || '🚗';
-      // Highlight the selected make; dim all others when a make filter is active
-      const isSelected = filters.make && b.make === filters.make;
-      const isDimmed   = filters.make && b.make !== filters.make;
-      const cardStyle  = isDimmed ? 'cursor:pointer;opacity:0.4;' : 'cursor:pointer;';
-      const borderStyle = isSelected ? 'border:2px solid var(--accent);box-shadow:0 0 0 3px rgba(0,71,255,.15);' : '';
-      return `<div class="make-card" onclick="location.href='search.html?make=${encodeURIComponent(b.make)}'"
-               style="${cardStyle}${borderStyle}">
-        <div class="make-logo">${emoji}</div>
-        <div class="make-name">${b.make}${isSelected ? ' <span style=\"font-size:9px;color:var(--accent);font-weight:700;\">FILTERED</span>' : ''}</div>
-        <div class="make-count">${b.count.toLocaleString('en-ZA')} listings</div>
-        <div class="make-trend neutral"><i class="fas fa-minus"></i> ${fmtR(b.avg_price)} avg</div>
-      </div>`;
-    }).join('');
-  } catch(e) { console.warn('Makes load failed', e); }
-}
-
-/* FILTER DROPDOWNS  */
-
-async function populateFilters() {
-  try {
-    const [makesRes, provsRes] = await Promise.all([
-      fetch(`${API}/api/filters/makes`),
-      fetch(`${API}/api/filters/provinces`)
-    ]);
-    const makesData = await makesRes.json();
-    const provsData = await provsRes.json();
-
-    const makesSel = document.getElementById('fbMake');
-    (makesData.makes || []).forEach(m => {
-      const o = document.createElement('option');
-      o.value       = m.make;
-      o.textContent = `${m.make} (${m.count.toLocaleString('en-ZA')})`;
-      makesSel.appendChild(o);
-    });
-
-    const provsSel = document.getElementById('fbProvince');
-    (provsData.provinces || []).forEach(p => {
-      const o = document.createElement('option');
-      o.value       = p.province;
-      o.textContent = `${p.province} (${p.count.toLocaleString('en-ZA')})`;
-      provsSel.appendChild(o);
-    });
-  } catch(e) { console.warn('Filter dropdowns failed', e); }
-}
-
-/*  INIT */
-document.addEventListener('DOMContentLoaded', () => {
-  loadInsightCards();    // global / unfiltered - only called once
-  populateFilters();     // fill the dropdowns from API
-  loadKPIs();            // filtered KPIs (unfiltered on first call)
-  loadProvincialAnalysis();
-  loadPriceDistribution('');
-  loadTrendingMakes();
-});
+  });
 </script>
 
+<!-- Fetch live data from backend -->
+<script>
+fetch("https://autoinsight-backend-wp42.onrender.com/api/dashboard", { credentials: 'include' })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('liveListings').textContent = data.live_listings.toLocaleString();
+    document.getElementById('medianPrice').textContent = 'R ' + (data.median_price / 1000).toFixed(0) + 'K';
+    document.getElementById('topMake').textContent = data.top_make;
+    document.getElementById('mostListingsProvince').textContent = data.most_listings_province;
+    document.getElementById('avgPrice').textContent = 'R ' + (data.avg_price / 1000).toFixed(0) + 'K';
+  })
+  .catch(err => console.error('Dashboard API error:', err));
+</script>
 
-</body></html>
+<!-- Script to load header and footer -->
+<script>
+  function loadHTML(id, url) {
+    return fetch(url)
+      .then(response => response.text())
+      .then(data => { document.getElementById(id).innerHTML = data; });
+  }
+
+  function pathNormalize(path) {
+    return path.replace(/\/(index\.html)?$/, '/') || '/';
+  }
+
+  // Load header and footer, then guard page
+  Promise.all([
+    loadHTML('header', 'header.html'),
+    loadHTML('footer', 'footer.html')
+  ]).then(async () => {
+    const currentPath = window.location.pathname;
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      const linkPath = new URL(link.href, window.location.origin).pathname;
+      if (pathNormalize(linkPath) === pathNormalize(currentPath)) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+
+    // Guard: requires login
+    const user = await guardPage();
+    if (!user) return;
+    updateNav(user);
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const link = document.createElement('link');
+    link.rel = 'icon';
+    link.href = 'images/icon.ico';
+    document.head.appendChild(link);
+  });
+</script>
+<!-- Footer placeholder -->
+<div id="footer"></div>
+</body>
+</html>

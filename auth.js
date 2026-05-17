@@ -2,7 +2,7 @@
 //  AutoInsight ZA – Global Authentication & Navbar Integrator
 // ─────────────────────────────────────────────────────────────
 
-const BACKEND_API = 'http://localhost:8765';
+const BACKEND_API = 'https://autoinsight-backend-wp42.onrender.com';
 
 // Globally exposed helper to log out
 function logoutUser() {
