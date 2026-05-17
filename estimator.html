@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Price Estimator | AutoInsight ZA</title>
+<meta name="description" content="Get a data-driven fair value estimate for any used vehicle in South Africa. Know what you should pay before you negotiate.">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{
+  --ink:#0a0f1e;--ink-2:#1c2542;--ink-3:#0f1835;
+  --surface:#f5f7ff;--card:#fff;
+  --accent:#0047ff;--accent-2:#00c896;--accent-3:#0099ff;
+  --warn:#ff5e3a;--gold:#f5a623;
+  --muted:#6b7a99;--border:#e2e7f7;
+  --r-xs:4px;--r-sm:10px;--r-md:16px;--r-lg:24px;--r-xl:36px;
+  --sh-sm:0 2px 8px rgba(0,71,255,.07);
+  --sh-md:0 8px 32px rgba(0,71,255,.12);
+  --font:'Montserrat',-apple-system,sans-serif;
+  --t:.2s ease;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--surface);color:var(--ink);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+.container{max-width:1280px;margin:0 auto;padding:0 32px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:var(--r-sm);font-family:var(--font);font-weight:700;font-size:13.5px;cursor:pointer;border:none;transition:all var(--t);white-space:nowrap}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#003de0;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,71,255,.35)}
+.btn-secondary{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.btn-secondary:hover{background:rgba(0,71,255,.06)}
+.btn-ghost{background:rgba(255,255,255,.1);color:#fff;border:1.5px solid rgba(255,255,255,.22);backdrop-filter:blur(8px)}
+.btn-ghost:hover{background:rgba(255,255,255,.2)}
+.btn-white{background:#fff;color:var(--accent)}
+.btn-sm{padding:8px 16px;font-size:12.5px}
+.btn-lg{padding:15px 30px;font-size:15px;border-radius:var(--r-md)}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(245,247,255,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all var(--t)}
+.nav.scrolled{background:rgba(245,247,255,.98);box-shadow:var(--sh-sm)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1280px;margin:0 auto;padding:0 32px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:19px;letter-spacing:-.4px;color:var(--ink)}
+.nav-logo .logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--accent),var(--accent-3));border-radius:10px;display:grid;place-items:center;color:#fff;font-size:15px;flex-shrink:0}
+.nav-logo .za{color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{padding:8px 15px;border-radius:var(--r-sm);font-size:13.5px;font-weight:500;color:var(--muted);transition:all var(--t)}
+.nav-links a:hover{color:var(--ink);background:rgba(0,71,255,.06)}
+.nav-links a.active{color:var(--accent);background:rgba(0,71,255,.08);font-weight:700}
+.nav-right{display:flex;gap:8px;align-items:center}
+.nav-mobile-btn{display:none;background:none;border:none;font-size:20px;color:var(--ink);cursor:pointer}
+.mobile-nav{display:none;position:fixed;top:72px;left:0;right:0;background:var(--card);border-bottom:1px solid var(--border);box-shadow:var(--sh-md);z-index:999;padding:16px;flex-direction:column;gap:4px}
+.mobile-nav.open{display:flex}
+.mobile-nav a{padding:12px 16px;border-radius:var(--r-sm);font-size:14px;font-weight:500;color:var(--muted)}
+.mobile-nav a.active{color:var(--accent);background:rgba(0,71,255,.07);font-weight:700}
+.mobile-nav-actions{display:flex;gap:8px;padding:12px 0 4px;border-top:1px solid var(--border);margin-top:8px}
+
+/* Page hero */
+.page-hero{background:linear-gradient(145deg,#050a1c 0%,#0c1a45 52%,#091e30 100%);padding:80px 0 56px;margin-top:72px;position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 65% at 75% 45%,rgba(0,71,255,.26) 0%,transparent 60%),radial-gradient(ellipse 50% 55% at 15% 80%,rgba(0,200,150,.14) 0%,transparent 55%)}
+.page-hero::after{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:26px 26px}
+.page-hero-inner{position:relative;z-index:1;text-align:center}
+.page-hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(0,200,150,.12);border:1px solid rgba(0,200,150,.25);color:var(--accent-2);border-radius:99px;padding:5px 15px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:18px}
+.page-hero-title{font-size:clamp(30px,4vw,54px);font-weight:900;color:#fff;line-height:1.06;letter-spacing:-.5px;margin-bottom:14px}
+.page-hero-title .grad{background:linear-gradient(90deg,#0af5c2,#0095ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.page-hero-sub{font-size:16px;color:rgba(255,255,255,.55);font-weight:300;max-width:540px;margin:0 auto 28px;line-height:1.72}
+.page-hero-stats{display:flex;justify-content:center;gap:48px}
+.ph-stat-val{font-size:26px;font-weight:900;color:#fff;letter-spacing:-.3px}
+.ph-stat-lbl{font-size:11.5px;color:rgba(255,255,255,.42);margin-top:3px;font-weight:400}
+
+/* Main layout */
+.estimator-layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:40px 0 80px}
+.col-form,.col-result{display:flex;flex-direction:column;gap:20px}
+
+/* Form panel */
+.form-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r-xl);padding:32px;box-shadow:var(--sh-sm)}
+.form-panel-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px}
+.form-panel-title{font-size:19px;font-weight:900;color:var(--ink)}
+.form-panel-sub{font-size:13.5px;color:var(--muted);margin-bottom:24px;font-weight:300}
+.btn-reset{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--r-sm);font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);transition:all var(--t)}
+.btn-reset:hover{border-color:var(--warn);color:var(--warn);background:#fff0ed}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fl{display:flex;flex-direction:column;gap:6px;margin-bottom:4px}
+.fl-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px}
+.fl-label .required{color:var(--warn);margin-left:2px}
+.fl-input,.fl-select{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:var(--font);font-size:14px;color:var(--ink);background:var(--surface);transition:all var(--t);outline:none;-webkit-appearance:none}
+.fl-input:focus,.fl-select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,71,255,.09);background:#fff}
+.fl-input::placeholder{color:#b8c4d8;font-weight:300}
+.fl-input-icon{position:relative}
+.fl-input-icon .fl-input{padding-left:40px}
+.fl-input-icon i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;pointer-events:none}
+.divider-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);text-align:center;position:relative;margin:8px 0}
+.divider-label::before,.divider-label::after{content:'';position:absolute;top:50%;height:1px;background:var(--border);width:40%}
+.divider-label::before{left:0}.divider-label::after{right:0}
+.year-hint{font-size:11px;color:var(--accent-2);font-weight:600;margin-top:3px;display:none}
+.year-hint.visible{display:block}
+
+/* Body pills */
+.body-pills{display:flex;flex-wrap:wrap;gap:8px}
+.body-pill{padding:7px 14px;border-radius:var(--r-sm);border:1.5px solid var(--border);font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;transition:all var(--t);background:var(--surface);font-family:var(--font)}
+.body-pill:hover{border-color:var(--accent);color:var(--accent)}
+.body-pill.active{border-color:var(--accent);color:var(--accent);background:rgba(0,71,255,.07)}
+
+/* Seller toggle */
+.seller-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seller-opt{padding:12px;border-radius:var(--r-sm);border:1.5px solid var(--border);font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all var(--t);background:var(--surface);font-family:var(--font);display:flex;align-items:center;gap:8px;justify-content:center}
+.seller-opt:hover{border-color:var(--accent);color:var(--accent)}
+.seller-opt.active{border-color:var(--accent);color:var(--accent);background:rgba(0,71,255,.07)}
+
+/* Submit button */
+.submit-btn{background:var(--accent);color:#fff;border:none;padding:16px 32px;border-radius:var(--r-md);font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;gap:10px;transition:all var(--t);margin-top:4px;position:relative;overflow:hidden}
+.submit-btn:hover{background:#003de0;transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,71,255,.38)}
+.submit-btn .spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;display:none}
+.submit-btn.loading .spinner{display:block}
+.submit-btn.loading .btn-text{display:none}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+/* Error toast */
+.error-toast{display:none;background:#fff0ed;border:1.5px solid var(--warn);border-radius:var(--r-sm);padding:12px 16px;font-size:13px;color:var(--warn);font-weight:600;margin-top:10px;align-items:center;gap:8px}
+.error-toast.visible{display:flex}
+
+/* Result panel */
+.result-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--sh-sm);opacity:0;transform:translateY(16px);transition:all .45s ease}
+.result-card.visible{opacity:1;transform:translateY(0)}
+.result-header{background:linear-gradient(145deg,var(--ink),var(--ink-2));padding:28px 28px 24px;color:#fff}
+.result-eyebrow{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.45);margin-bottom:8px}
+.result-vehicle{font-size:18px;font-weight:700;margin-bottom:2px}
+.result-meta{font-size:12.5px;color:rgba(255,255,255,.45);margin-bottom:18px;font-weight:300}
+.result-price-row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.result-price{font-size:38px;font-weight:900;letter-spacing:-.5px;line-height:1}
+.result-price-sub{font-size:12.5px;color:rgba(255,255,255,.45);margin-top:5px;font-weight:300}
+/* CRITICAL: Badge wrapper never gets replaced - only inner content changes */
+.badge-wrap{flex-shrink:0}
+.result-badge{padding:8px 14px;border-radius:var(--r-sm);font-size:13px;font-weight:800;display:inline-block}
+.badge-steal{background:rgba(0,200,150,.2);border:1px solid rgba(0,200,150,.4);color:#00e8a8}
+.badge-fair{background:rgba(0,71,255,.25);border:1px solid rgba(0,71,255,.5);color:#70a0ff}
+.badge-over{background:rgba(255,94,58,.2);border:1px solid rgba(255,94,58,.4);color:#ff8a6e}
+
+/* Gauge */
+.fv-gauge-wrap{margin-top:16px}
+.fv-gauge-labels{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.38);margin-bottom:6px;font-weight:500}
+.fv-gauge{height:8px;background:rgba(255,255,255,.1);border-radius:99px;position:relative;overflow:visible}
+.fv-gauge-fill{height:100%;background:linear-gradient(90deg,var(--accent-2),var(--accent-3));border-radius:99px}
+.fv-marker{position:absolute;top:-4px;width:16px;height:16px;background:#fff;border-radius:50%;border:3px solid var(--accent);box-shadow:0 2px 8px rgba(0,71,255,.4);transform:translateX(-8px);transition:left .5s cubic-bezier(.34,1.56,.64,1)}
+
+/* Result body */
+.result-body{padding:24px 28px;display:flex;flex-direction:column;gap:20px}
+.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.rs-item{background:var(--surface);border-radius:var(--r-md);padding:14px;text-align:center}
+.rs-val{font-size:18px;font-weight:900;color:var(--ink);letter-spacing:-.3px}
+.rs-lbl{font-size:10.5px;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.7px;font-weight:600}
+.result-section{border-top:1px solid var(--border);padding-top:16px}
+.rs-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.rs-title i{color:var(--accent);font-size:11px}
+.comp-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)}
+.comp-row:last-child{border-bottom:none}
+.comp-label{font-size:13.5px;color:var(--muted);font-weight:400}
+.comp-val{font-size:13.5px;font-weight:700;color:var(--ink)}
+.comp-val.good{color:var(--accent-2)}
+.comp-val.bad{color:var(--warn)}
+.result-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* Confidence bar */
+.confidence-wrap{margin-top:4px}
+.confidence-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:5px;font-weight:600}
+.confidence-bar{height:6px;background:var(--border);border-radius:99px;overflow:hidden}
+.confidence-fill{height:100%;background:linear-gradient(90deg,var(--accent-2),var(--accent));border-radius:99px;transition:width .6s ease}
+
+/* Price Distribution section (replaces Market Trends) */
+.dist-section{border-top:1px solid var(--border);padding-top:16px}
+/* Percentile stat row */
+.dist-pct-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.dist-pct-card{background:var(--surface);border-radius:var(--r-sm);padding:10px 6px;text-align:center}
+.dist-pct-val{font-size:13px;font-weight:800;color:var(--ink)}
+.dist-pct-val.median{color:var(--accent)}
+.dist-pct-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-top:2px}
+/* Price band bar chart */
+.hist-wrap{display:flex;flex-direction:column;gap:5px;margin-top:10px}
+.hist-row{display:grid;grid-template-columns:110px 1fr 36px;align-items:center;gap:6px}
+.hist-lbl{font-size:10.5px;color:var(--muted);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hist-bar-outer{background:var(--border);border-radius:99px;height:7px;overflow:hidden}
+.hist-bar-inner{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent-3),var(--accent));transition:width .55s ease}
+.hist-count{font-size:10.5px;color:var(--muted);font-weight:600;text-align:right}
+.hist-row.hl .hist-bar-inner{background:linear-gradient(90deg,var(--accent-2),#00c8a0)}
+.hist-row.hl .hist-lbl{color:var(--accent-2);font-weight:700}
+.hist-row.hl .hist-count{color:var(--accent-2);font-weight:700}
+
+/* Finance calculator */
+.finance-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-xl);padding:28px;box-shadow:var(--sh-sm)}
+.finance-title{font-size:17px;font-weight:700;margin-bottom:4px;color:var(--ink)}
+.finance-sub{font-size:13px;color:var(--muted);margin-bottom:20px;font-weight:300}
+.slider-group{display:flex;flex-direction:column;gap:4px;margin-bottom:16px}
+.slider-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.slider-lbl{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.slider-val{font-size:14px;font-weight:700;color:var(--ink)}
+input[type=range]{width:100%;-webkit-appearance:none;height:5px;border-radius:99px;background:var(--border);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 2px 6px rgba(0,71,255,.3)}
+.finance-result{background:linear-gradient(135deg,var(--ink),var(--ink-2));border-radius:var(--r-lg);padding:20px;margin-top:4px;text-align:center}
+.finance-monthly-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,.45);margin-bottom:6px}
+.finance-monthly{font-size:36px;font-weight:900;color:#fff;letter-spacing:-.5px;line-height:1}
+.finance-pm-lbl{font-size:12px;color:rgba(255,255,255,.4);margin-top:4px;font-weight:300}
+.finance-total{font-size:12px;color:rgba(255,255,255,.35);margin-top:8px;font-weight:300}
+
+/* Placeholder */
+.placeholder-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-xl);padding:32px;box-shadow:var(--sh-sm)}
+.info-item{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--border)}
+.info-item:last-child{border-bottom:none}
+.info-icon{width:42px;height:42px;border-radius:var(--r-sm);background:rgba(0,71,255,.08);display:grid;place-items:center;color:var(--accent);font-size:16px;flex-shrink:0}
+.info-content h4{font-size:14.5px;font-weight:700;margin-bottom:3px;color:var(--ink)}
+.info-content p{font-size:13px;color:var(--muted);line-height:1.6;font-weight:300}
+
+/* No data notice */
+.no-data-notice{background:#fff8ed;border:1.5px solid var(--gold);border-radius:var(--r-sm);padding:14px 18px;font-size:13px;color:#7a5400;display:none}
+.no-data-notice.visible{display:block}
+
+/* Data strip */
+.data-strip{background:var(--ink);padding:40px 0}
+.data-strip-inner{max-width:1280px;margin:0 auto;padding:0 32px}
+.data-strip-title{font-size:14px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px}
+.data-tags{display:flex;flex-wrap:wrap;gap:8px}
+.data-tag{padding:6px 13px;border-radius:var(--r-sm);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);font-size:12px;font-weight:600;color:rgba(255,255,255,.6);font-family:'Courier New',monospace;cursor:default;transition:all .15s}
+.data-tag:hover{background:rgba(0,71,255,.15);border-color:rgba(0,71,255,.3);color:#fff}
+.data-tag.cat{background:rgba(0,200,150,.08);border-color:rgba(0,200,150,.2);color:var(--accent-2);font-family:var(--font)}
+
+/* Cta */
+.cta-strip{background:linear-gradient(135deg,var(--accent) 0%,var(--accent-3) 100%);padding:72px 0;position:relative;overflow:hidden}
+.cta-strip::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:22px 22px}
+.cta-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center}
+.cta-title{font-size:clamp(24px,3vw,38px);font-weight:900;color:#fff;line-height:1.1}
+.cta-sub{font-size:15px;color:rgba(255,255,255,.7);margin-top:8px;font-weight:300}
+.cta-actions{display:flex;flex-direction:column;gap:10px}
+.cta-actions .btn{justify-content:center;min-width:200px}
+
+/* Footer */
+.footer{background:var(--ink);padding:64px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:44px}
+.footer-brand{font-size:21px;font-weight:900;color:#fff;margin-bottom:10px}
+.footer-brand span{color:var(--accent)}
+.footer-desc{font-size:13.5px;color:rgba(255,255,255,.4);line-height:1.72;max-width:290px;font-weight:300}
+.social-row{display:flex;gap:10px;margin-top:20px}
+.social-icon{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:grid;place-items:center;color:rgba(255,255,255,.5);font-size:13px;transition:all var(--t)}
+.social-icon:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.footer-heading{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#fff;margin-bottom:16px}
+.footer-links{display:flex;flex-direction:column;gap:10px}
+.footer-links a{font-size:13.5px;color:rgba(255,255,255,.42);transition:color var(--t);font-weight:300}
+.footer-links a:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:20px;display:flex;justify-content:space-between;font-size:12.5px;color:rgba(255,255,255,.3)}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:1024px){
+  .estimator-layout{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .cta-inner{grid-template-columns:1fr;text-align:center}
+  .cta-actions{align-items:center}
+}
+@media(max-width:768px){
+  .container,.data-strip-inner{padding:0 20px}
+  .nav-links,.nav-right .btn-secondary{display:none}
+  .nav-mobile-btn{display:block}
+  .form-row{grid-template-columns:1fr}
+  .result-actions{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;gap:8px;text-align:center}
+  .page-hero-stats{gap:24px}
+  .dist-pct-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+.logo-img {
+  height: 60px;
+  margin-left: -50px;
+  vertical-align: middle;
+  
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+  <img src="https://raw.githubusercontent.com/Damian-naidoo-07/Image_Host_Monster/main/AutoInsight_Logo_v3.1.png" alt="AutoInsight ZA Logo" class="logo-img">
+  AutoInsight <span class="za">ZA</span>
+</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">How It Works</a></li>
+      <li><a href="estimator.html" class="active">Price Estimator</a></li>
+      <li><a href="search.html">Browse Cars</a></li>
+      <li><a href="dashboard.html">Market Insights</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="login.html" class="btn btn-secondary btn-sm">Sign In</a>
+      <a href="estimator.html" class="btn btn-primary btn-sm"><i class="fas fa-calculator"></i> Get Fair Value</a>
+      <button class="nav-mobile-btn" onclick="toggleNav()"><i class="fas fa-bars" id="navIcon"></i></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="about.html">How It Works</a>
+  <a href="estimator.html" class="active">Price Estimator</a>
+  <a href="search.html">Browse Cars</a>
+  <a href="dashboard.html">Market Insights</a>
+  <div class="mobile-nav-actions">
+    <a href="login.html" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center">Sign In</a>
+    <a href="estimator.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center"><i class="fas fa-calculator"></i> Fair Value</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container page-hero-inner">
+    <div class="page-hero-eyebrow"><i class="fas fa-calculator"></i> Data-Powered Valuation</div>
+    <h1 class="page-hero-title">Know What You Should Pay<br><span class="grad">Before You Negotiate</span></h1>
+    <p class="page-hero-sub">Enter any vehicle's details and we analyse real SA listings to give you an instant fair value estimate.</p>
+    <div class="page-hero-stats">
+      <div><div class="ph-stat-val" id="heroListings">-</div><div class="ph-stat-lbl">Listings Analysed</div></div>
+      <div><div class="ph-stat-val" id="heroMakes">-</div><div class="ph-stat-lbl">Car Brands</div></div>
+      <div><div class="ph-stat-val" id="heroAvgPrice">-</div><div class="ph-stat-lbl">Average Price</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ESTIMATOR LAYOUT -->
+<div class="container">
+  <div class="estimator-layout">
+
+    <!-- FORM COLUMN -->
+    <div class="col-form">
+      <div class="form-panel">
+
+        <!-- Panel header with Reset button -->
+        <div class="form-panel-head">
+          <div>
+            <div class="form-panel-title">Vehicle Details</div>
+          </div>
+          <button class="btn-reset" onclick="resetForm()" title="Clear all fields">
+            <i class="fas fa-rotate-left"></i> Reset
+          </button>
+        </div>
+        <div class="form-panel-sub">Fill in as much detail as possible for the most accurate estimate</div>
+
+        <!-- Make / Model -->
+        <div class="form-row">
+          <div class="fl">
+            <div class="fl-label">Make <span class="required">*</span></div>
+            <!--
+              Populated from GET /api/filters/makes on load.
+              onChange → loadModels() + resetYears()
+            -->
+            <select class="fl-select" id="makeSelect" onchange="onMakeChange()">
+              <option value="">Loading makes…</option>
+            </select>
+          </div>
+          <div class="fl">
+            <div class="fl-label">Model <span class="required">*</span></div>
+            <!--
+              Populated from GET /api/filters/models/{make} when make changes.
+              onChange → loadYearsForModel()
+            -->
+            <select class="fl-select" id="modelSelect" onchange="onModelChange()">
+              <option value="">Select Make first</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Year / Mileage -->
+        <div class="form-row">
+          <div class="fl">
+            <div class="fl-label">Year <span class="required">*</span></div>
+            <!--
+              Populated from GET /api/estimator/years/{make}/{model}
+              so only years that exist for the chosen make+model appear.
+            -->
+            <select class="fl-select" id="yearSelect">
+              <option value="">Select Model first</option>
+            </select>
+            <span class="year-hint" id="yearHint">
+              <i class="fas fa-circle-check" style="font-size:10px"></i>
+              Filtered to selected make &amp; model
+            </span>
+          </div>
+          <div class="fl">
+            <div class="fl-label">Mileage (km)</div>
+            <div class="fl-input-icon">
+              <i class="fas fa-tachometer-alt"></i>
+              <input type="number" class="fl-input" id="mileageInput" placeholder="e.g. 75 000" min="0" max="999999">
+            </div>
+          </div>
+        </div>
+
+        <div class="divider-label" style="margin:16px 0 12px">Specifications</div>
+
+        <!-- Fuel / Transmission -->
+        <div class="form-row">
+          <div class="fl">
+            <div class="fl-label">Fuel Type</div>
+            <!-- Populated from GET /api/filters/fuel-types -->
+            <select class="fl-select" id="fuelSelect">
+              <option value="">Any</option>
+            </select>
+          </div>
+          <div class="fl">
+            <div class="fl-label">Transmission</div>
+            <select class="fl-select" id="transmissionSelect">
+              <option value="">Any</option>
+              <option>Manual</option>
+              <option>Automatic</option>
+              <option>Semi-Auto</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Body Type pills -->
+        <div class="fl" style="margin-bottom:16px">
+          <div class="fl-label">Body Type</div>
+          <div class="body-pills">
+            <button class="body-pill active" onclick="setPill(this)" data-value="">Any</button>
+            <button class="body-pill" onclick="setPill(this)" data-value="Sedan">Sedan</button>
+            <button class="body-pill" onclick="setPill(this)" data-value="Hatchback">Hatchback</button>
+            <button class="body-pill" onclick="setPill(this)" data-value="SUV">SUV / Crossover</button>
+            <button class="body-pill" onclick="setPill(this)" data-value="Bakkie">Bakkie</button>
+            <button class="body-pill" onclick="setPill(this)" data-value="MPV">MPV</button>
+          </div>
+        </div>
+
+        <!-- Province / Condition -->
+        <div class="form-row">
+          <div class="fl">
+            <div class="fl-label">Province</div>
+            <!-- Populated from GET /api/filters/provinces -->
+            <select class="fl-select" id="provinceSelect">
+              <option value="">All Provinces</option>
+            </select>
+          </div>
+          <div class="fl">
+            <div class="fl-label">Condition</div>
+            <select class="fl-select" id="conditionSelect">
+              <option value="Used">Used</option>
+              <option value="Demo">Demo</option>
+              <option value="New">New</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="divider-label" style="margin:16px 0 12px">Optional Details</div>
+
+        <!-- Listed price -->
+        <div class="fl" style="margin-bottom:16px">
+          <div class="fl-label">Listed Price (if known)</div>
+          <div class="fl-input-icon">
+            <i class="fas fa-tag"></i>
+            <input type="number" class="fl-input" id="listedPrice" placeholder="e.g. 265 000" min="0">
+          </div>
+        </div>
+
+        <!-- Seller type -->
+        <div class="fl" style="margin-bottom:16px">
+          <div class="fl-label">Seller Type</div>
+          <div class="seller-toggle">
+            <button class="seller-opt active" onclick="setSellerType(this)" data-value="dealer">
+              <i class="fas fa-store"></i> Dealer
+            </button>
+            <button class="seller-opt" onclick="setSellerType(this)" data-value="private">
+              <i class="fas fa-user"></i> Private
+            </button>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button class="submit-btn" id="submitBtn" onclick="calculatePrice()">
+          <span class="btn-text"><i class="fas fa-calculator"></i> Get My Fair Value Estimate</span>
+          <span class="spinner"></span>
+        </button>
+
+        <!-- Error toast -->
+        <div class="error-toast" id="errorToast">
+          <i class="fas fa-triangle-exclamation"></i>
+          <span id="errorMsg">Something went wrong. Please try again.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS COLUMN -->
+    <div class="col-result">
+
+      <!-- Placeholder (shown before first estimate) -->
+      <div class="placeholder-card" id="placeholderCard">
+        <div style="font-size:16px;font-weight:700;margin-bottom:16px;color:var(--ink)">How Our Estimator Works</div>
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-database"></i></div>
+          <div class="info-content"><h4>Real Listing Data</h4><p>We analyse actual prices from thousands of SA car listings - dealer and private alike.</p></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-brain"></i></div>
+          <div class="info-content"><h4>Mileage-Adjusted Pricing</h4><p>Our model factors in make, model, year, mileage, and current market supply to produce a precise estimate.</p></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-shield-halved"></i></div>
+          <div class="info-content"><h4>Dealer vs Private Split</h4><p>We show you what dealers charge vs private sellers - so you know who's adding margin.</p></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-map-location-dot"></i></div>
+          <div class="info-content"><h4>Regional Intelligence</h4><p>Prices vary between provinces. We show Gauteng, Western Cape, and KZN averages side by side.</p></div>
+        </div>
+      </div>
+
+      <!-- No-data  -->
+      <div class="no-data-notice" id="noDataNotice">
+        <strong>⚠️ Insufficient data</strong> - We don't have enough listings for this exact make/model/year combination yet.
+        Try adjusting the year by ±1–2 years, or browse similar cars below.
+      </div>
+
+      <!-- Result card (hidden until estimate succeeds) -->
+      <div class="result-card" id="resultCard">
+        <div class="result-header">
+          <div class="result-eyebrow">Fair Value Estimate</div>
+          <div class="result-vehicle" id="rVehicle">-</div>
+          <div class="result-meta" id="rMeta">-</div>
+          <div class="result-price-row">
+            <div>
+              <div class="result-price" id="rPrice">-</div>
+              <div class="result-price-sub">Fair value range: <span id="rRange">-</span></div>
+            </div>
+
+            <div class="badge-wrap">
+              <div class="result-badge badge-fair" id="rBadge">Analysing…</div>
+            </div>
+          </div>
+          <div class="fv-gauge-wrap">
+            <div class="fv-gauge-labels">
+              <span>Below Market</span><span>Market Avg</span><span>Above Market</span>
+            </div>
+            <div class="fv-gauge">
+              <div class="fv-gauge-fill" style="width:100%"></div>
+              <div class="fv-marker" id="fvMarker" style="left:50%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-body">
+
+          <!-- Market avg / Dealer avg / Private avg -->
+          <div class="result-stats">
+            <div class="rs-item">
+              <div class="rs-val" id="rMarket">-</div>
+              <div class="rs-lbl">Market Avg</div>
+            </div>
+            <div class="rs-item">
+              <div class="rs-val" id="rDealer">-</div>
+              <div class="rs-lbl">Dealer Avg</div>
+            </div>
+            <div class="rs-item">
+              <div class="rs-val" id="rPrivate">-</div>
+              <div class="rs-lbl">Private Avg</div>
+            </div>
+          </div>
+
+          <!-- Confidence bar -->
+          <div class="confidence-wrap">
+            <div class="confidence-label">
+              <span>Estimate Confidence</span>
+              <span id="rConfidence">-</span>
+            </div>
+            <div class="confidence-bar">
+              <div class="confidence-fill" id="rConfidenceFill" style="width:0%"></div>
+            </div>
+          </div>
+
+          <!-- Price comparison -->
+          <div class="result-section">
+            <div class="rs-title"><i class="fas fa-scale-balanced"></i> Price Comparison</div>
+            <div class="comp-row">
+              <span class="comp-label">vs. Market Average</span>
+              <span class="comp-val" id="vsMarket">-</span>
+            </div>
+            <div class="comp-row">
+              <span class="comp-label">vs. Dealer Average</span>
+              <span class="comp-val" id="vsDealer">-</span>
+            </div>
+            <div class="comp-row">
+              <span class="comp-label">vs. Private Sellers</span>
+              <span class="comp-val" id="vsPrivate">-</span>
+            </div>
+            <div class="comp-row">
+              <span class="comp-label">Similar listings found</span>
+              <span class="comp-val" id="rCount">-</span>
+            </div>
+          </div>
+
+          <!--
+            PRICE DISTRIBUTION
+          -->
+          <div class="dist-section" id="distSection" style="display:none">
+            <div class="rs-title"><i class="fas fa-chart-column"></i> Market Price Distribution</div>
+
+            <!-- Four percentile stat cards -->
+            <div class="dist-pct-grid">
+              <div class="dist-pct-card">
+                <div class="dist-pct-val" id="dp25">-</div>
+                <div class="dist-pct-lbl">25th %ile</div>
+              </div>
+              <div class="dist-pct-card">
+                <div class="dist-pct-val median" id="dp50">-</div>
+                <div class="dist-pct-lbl">Median (p50)</div>
+              </div>
+              <div class="dist-pct-card">
+                <div class="dist-pct-val" id="dp75">-</div>
+                <div class="dist-pct-lbl">75th %ile</div>
+              </div>
+              <div class="dist-pct-card">
+                <div class="dist-pct-val" id="dp90">-</div>
+                <div class="dist-pct-lbl">90th %ile</div>
+              </div>
+            </div>
+
+            <!-- IQR price band + sample size -->
+            <div class="comp-row">
+              <span class="comp-label">Typical price band (IQR)</span>
+              <span class="comp-val" id="dIQR" style="color:var(--accent-2)">-</span>
+            </div>
+            <div class="comp-row" style="margin-bottom:12px">
+              <span class="comp-label">Sample size</span>
+              <span class="comp-val" id="dSampleCount">-</span>
+            </div>
+
+            <!-- Price bucket histogram - rendered by JS -->
+            <div class="hist-wrap" id="histWrap"></div>
+          </div>
+
+          <!-- Regional pricing -->
+          <div class="result-section">
+            <div class="rs-title"><i class="fas fa-map-location-dot"></i> Regional Pricing</div>
+            <div class="comp-row">
+              <span class="comp-label">🔵 Gauteng</span>
+              <span class="comp-val" id="rGP">-</span>
+            </div>
+            <div class="comp-row">
+              <span class="comp-label">🟢 Western Cape</span>
+              <span class="comp-val" id="rWC">-</span>
+            </div>
+            <div class="comp-row">
+              <span class="comp-label">🟡 KwaZulu-Natal</span>
+              <span class="comp-val" id="rKZN">-</span>
+            </div>
+          </div>
+
+          <div class="result-actions">
+            <a href="search.html" class="btn btn-primary" id="findSimilarBtn">
+              <i class="fas fa-search"></i> Find Similar Cars
+            </a>
+            <button class="btn btn-secondary" onclick="shareEstimate()">
+              <i class="fas fa-share-nodes"></i> Share
+            </button>
+          </div>
+        </div>
+      </div><!-- /.result-card -->
+
+      <!-- Finance Calculator -->
+      <div class="finance-card">
+        <div class="finance-title">Finance Calculator</div>
+        <div class="finance-sub">Estimate your monthly repayment</div>
+        <div class="slider-group">
+          <div class="slider-row">
+            <span class="slider-lbl">Vehicle Price</span>
+            <span class="slider-val" id="fcPriceVal">R 265,000</span>
+          </div>
+          <input type="range" min="50000" max="2000000" step="5000" value="265000" id="fcPrice" oninput="calcFinance()">
+        </div>
+        <div class="slider-group">
+          <div class="slider-row">
+            <span class="slider-lbl">Deposit</span>
+            <span class="slider-val" id="fcDepVal">R 26,500 (10%)</span>
+          </div>
+          <input type="range" min="0" max="50" step="1" value="10" id="fcDep" oninput="calcFinance()">
+        </div>
+        <div class="slider-group">
+          <div class="slider-row">
+            <span class="slider-lbl">Loan Term</span>
+            <span class="slider-val" id="fcTermVal">60 months</span>
+          </div>
+          <input type="range" min="12" max="84" step="6" value="60" id="fcTerm" oninput="calcFinance()">
+        </div>
+        <div class="slider-group">
+          <div class="slider-row">
+            <span class="slider-lbl">Interest Rate</span>
+            <span class="slider-val" id="fcRateVal">11.5%</span>
+          </div>
+          <input type="range" min="8" max="20" step="0.25" value="11.5" id="fcRate" oninput="calcFinance()">
+        </div>
+        <div class="finance-result">
+          <div class="finance-monthly-lbl">Est. Monthly Repayment</div>
+          <div class="finance-monthly" id="fcMonthly">R 5,842</div>
+          <div class="finance-pm-lbl">per month over <span id="fcTermOut">60</span> months</div>
+          <div class="finance-total" id="fcTotal">Total repayment: R 350,520</div>
+        </div>
+      </div>
+
+    </div><!-- /.col-result -->
+  </div><!-- /.estimator-layout -->
+</div><!-- /.container -->
+
+<!-- DATA STRIP -->
+<div class="data-strip">
+  <div class="data-strip-inner">
+    <div class="data-strip-title">Data Points Powering Your Estimate</div>
+    <div class="data-tags">
+      <span class="data-tag cat">Vehicle</span>
+      <span class="data-tag">year</span><span class="data-tag">make</span>
+      <span class="data-tag">model</span><span class="data-tag">variant</span>
+      <span class="data-tag">mileage</span><span class="data-tag">fuel_type</span>
+      <span class="data-tag">transmission</span><span class="data-tag">body_type</span>
+      <span class="data-tag">colour</span><span class="data-tag">condition</span>
+      <span class="data-tag cat">Pricing</span>
+      <span class="data-tag">price</span><span class="data-tag">monthly_price</span>
+      <span class="data-tag">finance_available</span>
+      <span class="data-tag cat">Seller</span>
+      <span class="data-tag">seller_type</span><span class="data-tag">seller_rating</span>
+      <span class="data-tag">seller_rating_count</span><span class="data-tag">agent_nada_member</span>
+      <span class="data-tag cat">Location</span>
+      <span class="data-tag">province</span><span class="data-tag">agent_locality</span>
+      <span class="data-tag">agent_coords_lat</span><span class="data-tag">agent_coords_lng</span>
+      <span class="data-tag cat">Metadata</span>
+      <span class="data-tag">created_at</span><span class="data-tag">updated_at</span>
+      <span class="data-tag">website_url</span>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-strip">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <div>
+        <h2 class="cta-title">Want to see what's available at your price?</h2>
+        <p class="cta-sub">Browse live listings and filter by exactly what you need.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="search.html" class="btn btn-ghost btn-lg"><i class="fas fa-search"></i> Browse Cars</a>
+        <a href="dashboard.html" class="btn btn-white btn-lg"><i class="fas fa-chart-column"></i> Market Insights</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">AutoInsight <span>ZA</span></div>
+        <p class="footer-desc">South Africa's data-powered car buying intelligence platform.</p>
+        <div class="social-row">
+          <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Platform</div>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">How It Works</a></li>
+          <li><a href="estimator.html">Price Estimator</a></li>
+          <li><a href="search.html">Browse Cars</a></li>
+          <li><a href="dashboard.html">Market Insights</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Resources</div>
+        <ul class="footer-links">
+          <li><a href="#">Buying Guide</a></li>
+          <li><a href="#">Car Reviews</a></li>
+          <li><a href="#">Financing Guide</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 AutoInsight ZA. All rights reserved.</span>
+      <span>Built for South African car buyers 🇿🇦</span>
+    </div>
+  </div>
+</footer>
+
+<script src="auth.js"></script>
+<script>
+/* Config */
+const API = 'http://localhost:8765';
+
+/* Nav */
+const navEl = document.getElementById('mainNav');
+window.addEventListener('scroll', () => navEl.classList.toggle('scrolled', window.scrollY > 40));
+function toggleNav() {
+  const mn = document.getElementById('mobileNav');
+  const ic = document.getElementById('navIcon');
+  mn.classList.toggle('open');
+  ic.className = mn.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+}
+
+/* Formatters */
+function fmt(n) {
+  if (n == null || isNaN(+n)) return '-';
+  return 'R\u00a0' + Math.round(n).toLocaleString('en-ZA');
+}
+function fmtShort(n) {
+  if (n == null || isNaN(+n)) return '-';
+  if (n >= 1_000_000) return 'R\u00a0' + (n / 1_000_000).toFixed(1) + 'M';
+  if (n >= 1_000)     return 'R\u00a0' + Math.round(n / 1_000) + 'K';
+  return fmt(n);
+}
+
+/* Page load */
+document.addEventListener('DOMContentLoaded', () => {
+  loadHeroStats();
+  loadMakes();
+  loadFuelTypes();
+  loadProvinces();
+  calcFinance();
+  parseUrlParams();
+});
+
+/* Hero stats */
+async function loadHeroStats() {
+  try {
+    const data = await apiFetch('/api/homepage/stats');
+    const lEl = document.getElementById('heroListings');
+    const mEl = document.getElementById('heroMakes');
+    const aEl = document.getElementById('heroAvgPrice');
+    if (lEl && data.total_listings != null)
+      lEl.textContent = data.total_listings >= 1000
+        ? (data.total_listings / 1000).toFixed(0) + 'K+' : String(data.total_listings);
+    if (mEl) mEl.textContent = data.total_makes  || '-';
+    if (aEl) aEl.textContent = fmt(data.avg_price);
+  } catch (e) { console.warn('Hero stats:', e); }
+}
+
+/* Generic fetch helper */
+async function apiFetch(path, opts = {}) {
+  const res = await fetch(API + path, opts);
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.detail || `HTTP ${res.status}`);
+  }
+  return res.json();
+}
+
+/* Makes dropdown */
+async function loadMakes() {
+  const sel = document.getElementById('makeSelect');
+  try {
+    const data = await apiFetch('/api/filters/makes');
+    sel.innerHTML = '<option value="">Select Make</option>';
+    (data.makes || []).forEach(r => {
+      const o = document.createElement('option');
+      o.value = r.make;
+      o.textContent = `${r.make} (${r.count.toLocaleString('en-ZA')})`;
+      sel.appendChild(o);
+    });
+  } catch (e) {
+    console.warn('Makes:', e);
+    sel.innerHTML = '<option value="">Could not load makes</option>';
+  }
+}
+
+
+async function onMakeChange() {
+  const make     = document.getElementById('makeSelect').value;
+  const modelSel = document.getElementById('modelSelect');
+  const yearSel  = document.getElementById('yearSelect');
+
+  // Reset downstream controls
+  modelSel.innerHTML = make ? '<option value="">Loading…</option>' : '<option value="">Select Make first</option>';
+  yearSel.innerHTML  = '<option value="">Select Model first</option>';
+  document.getElementById('yearHint').classList.remove('visible');
+
+  if (!make) return;
+
+  try {
+    const data = await apiFetch(`/api/filters/models/${encodeURIComponent(make)}`);
+    modelSel.innerHTML = '<option value="">Select Model</option>';
+    (data.models || []).forEach(r => {
+      const o = document.createElement('option');
+      o.value = r.model;
+      o.textContent = `${r.model} (${r.count.toLocaleString('en-ZA')})`;
+      modelSel.appendChild(o);
+    });
+  } catch (e) {
+    console.warn('Models:', e);
+    modelSel.innerHTML = '<option value="">Could not load models</option>';
+  }
+}
+
+
+async function onModelChange() {
+  const make     = document.getElementById('makeSelect').value;
+  const model    = document.getElementById('modelSelect').value;
+  const yearSel  = document.getElementById('yearSelect');
+  const yearHint = document.getElementById('yearHint');
+
+  yearSel.innerHTML = '<option value="">Loading years…</option>';
+  yearHint.classList.remove('visible');
+
+  if (!make || !model) {
+    yearSel.innerHTML = '<option value="">Select Model first</option>';
+    return;
+  }
+
+  try {
+    /*
+      GET /api/estimator/years/{make}/{model}
+    */
+    const data  = await apiFetch(`/api/estimator/years/${encodeURIComponent(make)}/${encodeURIComponent(model)}`);
+    const years = data.years || [];
+
+    yearSel.innerHTML = '<option value="">Select Year</option>';
+    years.forEach(y => {
+      const o = document.createElement('option');
+      o.value = y; o.textContent = y;
+      yearSel.appendChild(o);
+    });
+
+    if (years.length > 0) yearHint.classList.add('visible');
+
+  } catch (e) {
+    console.warn('Filtered years failed, using global fallback:', e);
+    // Fallback: global min/max year range
+    try {
+      const fb   = await apiFetch('/api/filters/years');
+      const minY = fb.min_year || 2000;
+      const maxY = fb.max_year || new Date().getFullYear();
+      yearSel.innerHTML = '<option value="">Select Year</option>';
+      for (let y = maxY; y >= minY; y--) {
+        const o = document.createElement('option');
+        o.value = y; o.textContent = y;
+        yearSel.appendChild(o);
+      }
+    } catch (e2) { console.warn('Fallback years:', e2); }
+  }
+}
+
+/* Fuel types */
+async function loadFuelTypes() {
+  const sel = document.getElementById('fuelSelect');
+  try {
+    const data = await apiFetch('/api/filters/fuel-types');
+    sel.innerHTML = '<option value="">Any</option>';
+    (data.fuel_types || []).forEach(r => {
+      const o = document.createElement('option');
+      o.value = r.fuel_type; o.textContent = r.fuel_type;
+      sel.appendChild(o);
+    });
+  } catch (e) {
+    sel.innerHTML = '<option value="">Any</option><option>Petrol</option><option>Diesel</option><option>Hybrid</option><option>Electric</option>';
+  }
+}
+
+/* Provinces */
+async function loadProvinces() {
+  const sel = document.getElementById('provinceSelect');
+  try {
+    const data = await apiFetch('/api/filters/provinces');
+    sel.innerHTML = '<option value="">All Provinces</option>';
+    (data.provinces || []).forEach(r => {
+      const o = document.createElement('option');
+      o.value = r.province; o.textContent = r.province;
+      sel.appendChild(o);
+    });
+  } catch (e) {
+    ['Gauteng','Western Cape','KwaZulu-Natal','Eastern Cape',
+     'Limpopo','Mpumalanga','North West','Free State','Northern Cape'].forEach(p => {
+      sel.innerHTML += `<option value="${p}">${p}</option>`;
+    });
+  }
+}
+
+/* URL PARAM PRE-FILL (from search.html "Find Similar" links) */
+async function parseUrlParams() {
+  const p     = new URLSearchParams(window.location.search);
+  const make  = p.get('make');
+  const model = p.get('model');
+  const year  = p.get('year');
+  if (!make) return;
+
+
+  await waitForOptions('makeSelect', 800);
+  const makeSel = document.getElementById('makeSelect');
+  makeSel.value = make;
+  if (makeSel.value !== make) return;
+
+  await onMakeChange();
+  if (!model) return;
+
+  await waitForOptions('modelSelect', 600);
+  document.getElementById('modelSelect').value = model;
+
+  await onModelChange();
+  if (!year) return;
+
+  await waitForOptions('yearSelect', 600);
+  document.getElementById('yearSelect').value = year;
+}
+
+function waitForOptions(selectId, ms) {
+  return new Promise(res => setTimeout(res, ms));
+}
+
+/* Form UI helpers */
+function setPill(el) {
+  document.querySelectorAll('.body-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+}
+function setSellerType(el) {
+  document.querySelectorAll('.seller-opt').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+}
+function showError(msg) {
+  document.getElementById('errorMsg').textContent = msg;
+  document.getElementById('errorToast').classList.add('visible');
+}
+function hideError() {
+  document.getElementById('errorToast').classList.remove('visible');
+}
+
+/* Reset form */
+function resetForm() {
+  // Dropdowns
+  document.getElementById('makeSelect').value         = '';
+  document.getElementById('modelSelect').innerHTML    = '<option value="">Select Make first</option>';
+  document.getElementById('yearSelect').innerHTML     = '<option value="">Select Model first</option>';
+  document.getElementById('mileageInput').value       = '';
+  document.getElementById('fuelSelect').value         = '';
+  document.getElementById('transmissionSelect').value = '';
+  document.getElementById('provinceSelect').value     = '';
+  document.getElementById('conditionSelect').value    = 'Used';
+  document.getElementById('listedPrice').value        = '';
+
+  // Year hint
+  document.getElementById('yearHint').classList.remove('visible');
+
+  // Body pills → reset to "Any"
+  document.querySelectorAll('.body-pill').forEach(p =>
+    p.classList.toggle('active', p.dataset.value === ''));
+
+  // Seller type → reset to "Dealer"
+  document.querySelectorAll('.seller-opt').forEach((s, i) =>
+    s.classList.toggle('active', i === 0));
+
+  // Result panel
+  document.getElementById('resultCard').classList.remove('visible');
+  document.getElementById('placeholderCard').style.display = '';
+  document.getElementById('noDataNotice').classList.remove('visible');
+  document.getElementById('distSection').style.display = 'none';
+
+  hideError();
+}
+
+/* Finance calculator */
+function calcFinance() {
+  const price    = +document.getElementById('fcPrice').value;
+  const depPct   = +document.getElementById('fcDep').value;
+  const term     = +document.getElementById('fcTerm').value;
+  const rate     = +document.getElementById('fcRate').value;
+  const dep      = price * depPct / 100;
+  const prin     = price - dep;
+  const mr       = rate / 100 / 12;
+  const monthly  = mr === 0
+    ? prin / term
+    : prin * (mr * Math.pow(1 + mr, term)) / (Math.pow(1 + mr, term) - 1);
+  const total    = monthly * term;
+
+  document.getElementById('fcPriceVal').textContent = fmt(price);
+  document.getElementById('fcDepVal').textContent   = `${fmt(Math.round(dep))} (${depPct}%)`;
+  document.getElementById('fcTermVal').textContent  = `${term} months`;
+  document.getElementById('fcRateVal').textContent  = `${rate}%`;
+  document.getElementById('fcMonthly').textContent  = fmt(Math.round(monthly));
+  document.getElementById('fcTermOut').textContent  = term;
+  document.getElementById('fcTotal').textContent    = `Total repayment: ${fmt(Math.round(total))}`;
+}
+
+/*
+  loadPriceDistribution - called after the main estimate succeeds, non-blocking.
+  GET /api/estimator/price-distribution/{make}/{model}
+  Returns percentiles (p25/p50/p75/p90), price_buckets, and sample_count.
+*/
+async function loadPriceDistribution(make, model, featuredPrice) {
+  try {
+    const d = await apiFetch(
+      `/api/estimator/price-distribution/${encodeURIComponent(make)}/${encodeURIComponent(model)}`
+    );
+
+    const p   = d.percentiles || {};
+    const sec = document.getElementById('distSection');
+
+    // Percentile stat cards
+    document.getElementById('dp25').textContent = fmtShort(p.p25);
+    document.getElementById('dp50').textContent = fmtShort(p.p50);
+    document.getElementById('dp75').textContent = fmtShort(p.p75);
+    document.getElementById('dp90').textContent = fmtShort(p.p90);
+
+    // IQR band (p25–p75 is where the middle 50% of prices sit)
+    document.getElementById('dIQR').textContent =
+      (p.p25 && p.p75) ? `${fmtShort(p.p25)} – ${fmtShort(p.p75)}` : '-';
+
+    // Sample count
+    document.getElementById('dSampleCount').textContent =
+      `${(d.sample_count || 0).toLocaleString('en-ZA')} listings`;
+
+    // Histogram (price_buckets from API)
+    const buckets  = d.price_buckets || [];
+    const histWrap = document.getElementById('histWrap');
+    histWrap.innerHTML = '';
+
+    if (buckets.length > 0) {
+      const maxPct = Math.max(...buckets.map(b => b.pct));
+
+      buckets.forEach(b => {
+        const barW     = maxPct > 0 ? (b.pct / maxPct * 100).toFixed(1) : '0';
+        const isActive = featuredPrice != null && featuredPrice >= b.min && featuredPrice < b.max;
+        const row      = document.createElement('div');
+        row.className  = 'hist-row' + (isActive ? ' hl' : '');
+        row.innerHTML  = `
+          <span class="hist-lbl" title="${b.label}">${b.label}</span>
+          <div class="hist-bar-outer">
+            <div class="hist-bar-inner" style="width:${barW}%"></div>
+          </div>
+          <span class="hist-count">${b.count.toLocaleString('en-ZA')}</span>`;
+        histWrap.appendChild(row);
+      });
+    }
+
+    sec.style.display = '';
+  } catch (e) {
+    console.warn('Price distribution failed (non-fatal):', e);
+    // Not a critical failure - main estimate still shows fine
+  }
+}
+
+/* MAIN: CALCULATE PRICE */
+/*
+  Flow:
+  1. Read + validate form
+  2. POST /api/estimator/predict
+  3. Populate result card
+  4. GET /api/estimator/price-distribution → render distribution section
+*/
+async function calculatePrice() {
+  hideError();
+
+  // 1. Read form values
+  const make         = document.getElementById('makeSelect').value;
+  const model        = document.getElementById('modelSelect').value;
+  const year         = parseInt(document.getElementById('yearSelect').value);
+  const mileage      = parseInt(document.getElementById('mileageInput').value) || 80000;
+  const fuel_type    = document.getElementById('fuelSelect').value;
+  const transmission = document.getElementById('transmissionSelect').value;
+  const body_type    = document.querySelector('.body-pill.active')?.dataset.value || '';
+  const province     = document.getElementById('provinceSelect').value;
+  const condition    = document.getElementById('conditionSelect').value;
+  const listedPrice  = parseInt(document.getElementById('listedPrice').value) || null;
+
+  // 2. Validate required fields
+  if (!make || !model || !year) {
+    showError('Please select Make, Model, and Year before estimating.');
+    const btn = document.getElementById('submitBtn');
+    btn.style.animation = 'shake .4s ease';
+    setTimeout(() => btn.style.animation = '', 400);
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  btn.classList.add('loading');
+  btn.disabled = true;
+  document.getElementById('noDataNotice').classList.remove('visible');
+  // Hide stale distribution section while loading new estimate
+  document.getElementById('distSection').style.display = 'none';
+
+  try {
+    /*
+      POST /api/estimator/predict
+      Body: { make, model, year, mileage, fuel_type, transmission, body_type, province, condition }
+
+      Response: {
+        estimated_price, confidence_range: { min, max },
+        market_avg, dealer_avg, private_avg,
+        regional_pricing: { Gauteng, Western Cape, KwaZulu-Natal },
+        similar_vehicles_count, market_position, market_position_pct,
+        confidence_score,
+        price_trend_30d, price_trend_12m, weekly_demand
+      }
+    */
+    const d = await apiFetch('/api/estimator/predict', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ make, model, year, mileage, fuel_type, transmission, body_type, province, condition })
+    });
+
+    // Handle "no data" case
+    if (!d.estimated_price) {
+      document.getElementById('noDataNotice').classList.add('visible');
+      document.getElementById('placeholderCard').style.display = 'none';
+      return;
+    }
+
+    const featuredPrice = listedPrice || d.estimated_price;
+
+
+    let badgeClass = 'badge-fair';
+    let badgeText  = '✅ Fair Deal';
+    let markerPct  = 50;
+
+    if (listedPrice) {
+      const diff = ((listedPrice - d.estimated_price) / d.estimated_price) * 100;
+      if (diff < -8)       { badgeClass = 'badge-steal'; badgeText = '🔥 Steal';       markerPct = 18; }
+      else if (diff > 8)   { badgeClass = 'badge-over';  badgeText = '⚠️ Overpriced';  markerPct = 82; }
+      else                 { markerPct = 50 + diff * 1.5; }
+    } else {
+      markerPct = 50 + (d.market_position_pct || 0) * 1.5;
+    }
+    markerPct = Math.max(5, Math.min(95, markerPct));
+
+    // Safely update badge - no outerHTML swap
+    const badgeEl = document.getElementById('rBadge');
+    badgeEl.className   = `result-badge ${badgeClass}`;
+    badgeEl.textContent = badgeText;
+
+    // Header
+    document.getElementById('rVehicle').textContent = `${year} ${make} ${model}`;
+    document.getElementById('rMeta').textContent    = `${mileage.toLocaleString('en-ZA')} km · ${condition} · South Africa`;
+    document.getElementById('rPrice').textContent   = fmt(featuredPrice);
+    document.getElementById('rRange').textContent   =
+      d.confidence_range ? `${fmt(d.confidence_range.min)} – ${fmt(d.confidence_range.max)}` : '-';
+    document.getElementById('fvMarker').style.left  = `${markerPct}%`;
+
+    // Three stat boxes
+    document.getElementById('rMarket').textContent  = fmt(d.market_avg);
+    document.getElementById('rDealer').textContent  = fmt(d.dealer_avg);
+    document.getElementById('rPrivate').textContent = fmt(d.private_avg);
+
+    // Confidence bar
+    const conf = Math.round((d.confidence_score || 0) * 100);
+    document.getElementById('rConfidence').textContent     = `${conf}%`;
+    document.getElementById('rConfidenceFill').style.width = `${conf}%`;
+
+    // Comparison rows
+    function fillComp(id, bench) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (!bench) { el.textContent = '-'; el.className = 'comp-val'; return; }
+      const pct  = ((featuredPrice - bench) / bench * 100).toFixed(1);
+      const sign = +pct >= 0 ? '+' : '−';
+      const good = parseFloat(pct) <= 0;
+      el.textContent = `${sign}${Math.abs(pct)}%`;
+      el.className   = `comp-val ${good ? 'good' : 'bad'}`;
+    }
+    fillComp('vsMarket',  d.market_avg);
+    fillComp('vsDealer',  d.dealer_avg);
+    fillComp('vsPrivate', d.private_avg);
+
+    document.getElementById('rCount').textContent =
+      `${(d.similar_vehicles_count || 0).toLocaleString('en-ZA')} vehicles`;
+
+    // Regional pricing
+    document.getElementById('rGP').textContent  = fmt(d.regional_pricing?.['Gauteng']);
+    document.getElementById('rWC').textContent  = fmt(d.regional_pricing?.['Western Cape']);
+    document.getElementById('rKZN').textContent = fmt(d.regional_pricing?.['KwaZulu-Natal']);
+
+    // Finance calculator pre-fill with estimated price
+    document.getElementById('fcPrice').value =
+      Math.min(Math.max(Math.round(featuredPrice), 50000), 2000000);
+    calcFinance();
+
+    // "Find Similar Cars" link
+    document.getElementById('findSimilarBtn').href =
+      `search.html?make=${encodeURIComponent(make)}&model=${encodeURIComponent(model)}&year=${year}`;
+
+    // Show result card, hide placeholder
+    document.getElementById('placeholderCard').style.display = 'none';
+    document.getElementById('resultCard').classList.add('visible');
+
+    // Non-blocking: load price distribution in parallel
+    loadPriceDistribution(make, model, featuredPrice);
+
+    // Smooth scroll on mobile
+    if (window.innerWidth <= 1024) {
+      document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+  } catch (err) {
+    console.error('Estimator error:', err);
+    showError(`Estimate failed: ${err.message}. Is the API server running at ${API}?`);
+  } finally {
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
+}
+
+/* Share */
+function shareEstimate() {
+  const vehicle = document.getElementById('rVehicle').textContent;
+  const price   = document.getElementById('rPrice').textContent;
+  const txt     = `Fair value estimate for ${vehicle}: ${price} - AutoInsight ZA`;
+  if (navigator.share) {
+    navigator.share({ title: 'AutoInsight ZA', text: txt });
+  } else {
+    navigator.clipboard.writeText(txt).then(() => alert('Copied to clipboard!'));
+  }
+}
+
+/* Scroll reveal */
+const revealObs = new IntersectionObserver(
+  entries => entries.forEach(en => {
+    if (en.isIntersecting) { en.target.classList.add('visible'); revealObs.unobserve(en.target); }
+  }),
+  { threshold: 0.08 }
+);
+document.querySelectorAll('.reveal').forEach(r => revealObs.observe(r));
+</script>
+</body>
+</html>

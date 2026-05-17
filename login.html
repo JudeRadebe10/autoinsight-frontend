@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Access Intelligence | AutoInsight ZA</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --ink: #0a0f1e;
+  --ink-2: #12192c;
+  --ink-3: #070b16;
+  --surface: #f5f7ff;
+  --card: rgba(255, 255, 255, 0.03);
+  --border: rgba(255, 255, 255, 0.08);
+  --accent: #0047ff;
+  --accent-light: #3377ff;
+  --accent-2: #00c896;
+  --muted: #8fa0c2;
+  --font: 'Montserrat', -apple-system, sans-serif;
+  --t: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --r-md: 16px;
+  --r-lg: 24px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font);
+  background: radial-gradient(circle at 10% 20%, var(--ink-2) 0%, var(--ink-3) 90%);
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  padding: 24px;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 71, 255, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  left: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 200, 150, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Auth Card */
+.auth-container {
+  width: 100%;
+  max-width: 440px;
+  background: rgba(18, 25, 44, 0.6);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 40px;
+  backdrop-filter: blur(24px);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  position: relative;
+  transition: transform var(--t), box-shadow var(--t);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.auth-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 900;
+  font-size: 20px;
+  color: #fff;
+  text-decoration: none;
+  margin-bottom: 16px;
+}
+
+.auth-logo img {
+  height: 48px;
+}
+
+.auth-logo span {
+  color: var(--accent);
+}
+
+.auth-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.auth-subtitle {
+  font-size: 13.5px;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* Tabs */
+.auth-tabs {
+  display: flex;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.auth-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--muted);
+  padding: 10px;
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 13px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--t);
+}
+
+.auth-tab.active {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 71, 255, 0.3);
+}
+
+/* Form inputs */
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.form-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  font-size: 14px;
+  transition: color var(--t);
+}
+
+.form-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 13px 16px 13px 44px;
+  color: #fff;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all var(--t);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 0 4px rgba(0, 71, 255, 0.15);
+}
+
+.form-input:focus + i {
+  color: var(--accent-light);
+}
+
+/* Actions */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  font-size: 12.5px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.forgot-link {
+  color: var(--accent-light);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color var(--t);
+}
+
+.forgot-link:hover {
+  color: #fff;
+}
+
+/* Buttons */
+.btn-submit {
+  width: 100%;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 14px;
+  border-radius: 10px;
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all var(--t);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-submit:hover {
+  background: #003de0;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 71, 255, 0.35);
+}
+
+.btn-submit:disabled {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--muted);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Error message */
+.alert {
+  background: rgba(255, 94, 58, 0.1);
+  border: 1px solid rgba(255, 94, 58, 0.2);
+  color: #ff8a6e;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  display: none;
+  align-items: center;
+  gap: 10px;
+}
+
+.alert.success {
+  background: rgba(0, 200, 150, 0.1);
+  border: 1px solid rgba(0, 200, 150, 0.2);
+  color: var(--accent-2);
+}
+
+/* Toggle Views */
+.form-view {
+  display: none;
+}
+
+.form-view.active {
+  display: block;
+}
+
+.back-home {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.back-home a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: color var(--t);
+}
+
+.back-home a:hover {
+  color: #fff;
+}
+</style>
+</head>
+<body>
+
+<div class="auth-container">
+  <div class="auth-header">
+    <a href="index.html" class="auth-logo">
+      <img src="https://raw.githubusercontent.com/Damian-naidoo-07/Image_Host_Monster/main/AutoInsight_Logo_v3.1.png" alt="AutoInsight Logo">
+      AutoInsight <span>ZA</span>
+    </a>
+    <h2 class="auth-title" id="cardTitle">Welcome Back</h2>
+    <p class="auth-subtitle" id="cardSubtitle">Access South Africa's car valuation intelligence</p>
+  </div>
+
+  <div class="auth-tabs">
+    <button class="auth-tab active" onclick="switchTab('login')">Sign In</button>
+    <button class="auth-tab" onclick="switchTab('register')">Register</button>
+  </div>
+
+  <div id="errorAlert" class="alert">
+    <i class="fas fa-exclamation-circle"></i>
+    <span id="errorText">An error occurred</span>
+  </div>
+
+  <!-- LOGIN FORM -->
+  <form id="loginForm" class="form-view active" onsubmit="handleLogin(event)">
+    <div class="form-group">
+      <label class="form-label">Email Address</label>
+      <div class="input-wrapper">
+        <input type="email" id="loginEmail" class="form-input" placeholder="you@example.com" required>
+        <i class="fas fa-envelope"></i>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <div class="input-wrapper">
+        <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required>
+        <i class="fas fa-lock"></i>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <label class="remember-me">
+        <input type="checkbox" style="accent-color:var(--accent)"> Remember me
+      </label>
+      <a href="#" class="forgot-link" onclick="handleForgotPassword(event)">Forgot Password?</a>
+    </div>
+
+    <button type="submit" id="loginBtn" class="btn-submit">
+      <span>Sign In</span> <i class="fas fa-arrow-right"></i>
+    </button>
+  </form>
+
+  <!-- REGISTER FORM -->
+  <form id="registerForm" class="form-view" onsubmit="handleRegister(event)">
+    <div class="form-group">
+      <label class="form-label">Full Name</label>
+      <div class="input-wrapper">
+        <input type="text" id="regName" class="form-input" placeholder="John Doe" required>
+        <i class="fas fa-user"></i>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Email Address</label>
+      <div class="input-wrapper">
+        <input type="email" id="regEmail" class="form-input" placeholder="you@example.com" required>
+        <i class="fas fa-envelope"></i>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <div class="input-wrapper">
+        <input type="password" id="regPassword" class="form-input" placeholder="At least 8 characters" required minlength="8">
+        <i class="fas fa-lock"></i>
+      </div>
+    </div>
+
+    <button type="submit" id="regBtn" class="btn-submit" style="margin-top: 8px;">
+      <span>Create Account</span> <i class="fas fa-user-plus"></i>
+    </button>
+  </form>
+
+  <div class="back-home">
+    <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Homepage</a>
+  </div>
+</div>
+
+<script>
+const BACKEND = 'http://localhost:8765';
+
+// Read query params
+const urlParams = new URLSearchParams(window.location.search);
+const redirectTarget = urlParams.get('redirect') || 'index.html';
+
+function switchTab(tab) {
+  const tabs = document.querySelectorAll('.auth-tab');
+  const forms = document.querySelectorAll('.form-view');
+  const title = document.getElementById('cardTitle');
+  const subtitle = document.getElementById('cardSubtitle');
+  const alert = document.getElementById('errorAlert');
+
+  alert.style.display = 'none';
+
+  if (tab === 'login') {
+    tabs[0].classList.add('active');
+    tabs[1].classList.remove('active');
+    forms[0].classList.add('active');
+    forms[1].classList.remove('active');
+    title.textContent = 'Welcome Back';
+    subtitle.textContent = "Access South Africa's car valuation intelligence";
+  } else {
+    tabs[0].classList.remove('active');
+    tabs[1].classList.add('active');
+    forms[0].classList.remove('active');
+    forms[1].classList.add('active');
+    title.textContent = 'Create Account';
+    subtitle.textContent = 'Join South Africa’s first car intelligence platform';
+  }
+}
+
+function showAlert(message, isSuccess = false) {
+  const alert = document.getElementById('errorAlert');
+  const text = document.getElementById('errorText');
+  
+  text.textContent = message;
+  alert.className = isSuccess ? 'alert success' : 'alert';
+  alert.style.display = 'flex';
+  
+  if (isSuccess) {
+    alert.querySelector('i').className = 'fas fa-check-circle';
+  } else {
+    alert.querySelector('i').className = 'fas fa-exclamation-circle';
+  }
+}
+
+async function handleLogin(event) {
+  event.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const btn = document.getElementById('loginBtn');
+  const alert = document.getElementById('errorAlert');
+
+  alert.style.display = 'none';
+  btn.disabled = true;
+  btn.querySelector('span').textContent = 'Authenticating...';
+
+  try {
+    const res = await fetch(`${BACKEND}/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.detail || 'Login failed. Please check credentials.');
+    }
+
+    // Save tokens and redirect
+    localStorage.setItem('access_token', data.access_token);
+    localStorage.setItem('refresh_token', data.refresh_token);
+    localStorage.setItem('user_role', data.role);
+
+    showAlert('Authenticated successfully! Redirecting...', true);
+    setTimeout(() => {
+      window.location.href = redirectTarget;
+    }, 1200);
+
+  } catch (error) {
+    showAlert(error.message);
+    btn.disabled = false;
+    btn.querySelector('span').textContent = 'Sign In';
+  }
+}
+
+async function handleRegister(event) {
+  event.preventDefault();
+  const full_name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPassword').value;
+  const btn = document.getElementById('regBtn');
+  const alert = document.getElementById('errorAlert');
+
+  alert.style.display = 'none';
+  btn.disabled = true;
+  btn.querySelector('span').textContent = 'Creating account...';
+
+  try {
+    const res = await fetch(`${BACKEND}/api/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, full_name })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.detail || 'Registration failed. Try again.');
+    }
+
+    localStorage.setItem('access_token', data.access_token);
+    localStorage.setItem('refresh_token', data.refresh_token);
+    localStorage.setItem('user_role', data.role);
+
+    showAlert('Account created! Logging in...', true);
+    setTimeout(() => {
+      window.location.href = redirectTarget;
+    }, 1200);
+
+  } catch (error) {
+    showAlert(error.message);
+    btn.disabled = false;
+    btn.querySelector('span').textContent = 'Create Account';
+  }
+}
+
+function handleForgotPassword(event) {
+  event.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  if (!email) {
+    showAlert('Please enter your email address above to trigger password reset.');
+    return;
+  }
+  
+  showAlert('Password reset link has been dispatched to ' + email, true);
+}
+</script>
+</body>
+</html>

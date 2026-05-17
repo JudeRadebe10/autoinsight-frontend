@@ -1,0 +1,2674 @@
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Browse Cars | AutoInsight ZA</title>
+<meta name="description" content="Browse live car listings from all major South African platforms. Filter by make, model, price, province, and get fair value scores on every result.">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{
+  --ink:#0a0f1e;--ink-2:#1c2542;--ink-3:#0f1835;
+  --surface:#f5f7ff;--card:#fff;
+  --accent:#0047ff;--accent-2:#00c896;--accent-3:#0099ff;
+  --warn:#ff5e3a;--gold:#f5a623;
+  --muted:#6b7a99;--border:#e2e7f7;
+  --r-xs:4px;--r-sm:10px;--r-md:16px;--r-lg:24px;--r-xl:36px;
+  --sh-sm:0 2px 8px rgba(0,71,255,.07);
+  --sh-md:0 8px 32px rgba(0,71,255,.12);
+  --font:'Montserrat',-apple-system,sans-serif;
+  --t:.2s ease;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--surface);color:var(--ink);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+.container{max-width:1280px;margin:0 auto;padding:0 32px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:var(--r-sm);font-family:var(--font);font-weight:700;font-size:13.5px;cursor:pointer;border:none;transition:all var(--t);white-space:nowrap}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#003de0;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,71,255,.35)}
+.btn-secondary{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.btn-secondary:hover{background:rgba(0,71,255,.06)}
+.btn-ghost{background:rgba(255,255,255,.1);color:#fff;border:1.5px solid rgba(255,255,255,.22);backdrop-filter:blur(8px)}
+.btn-ghost:hover{background:rgba(255,255,255,.2)}
+.btn-white{background:#fff;color:var(--accent)}
+.btn-sm{padding:8px 16px;font-size:12.5px}
+.btn-lg{padding:15px 30px;font-size:15px;border-radius:var(--r-md)}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(245,247,255,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all var(--t)}
+.nav.scrolled{background:rgba(245,247,255,.98);box-shadow:var(--sh-sm)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1280px;margin:0 auto;padding:0 32px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:19px;letter-spacing:-.4px;color:var(--ink)}
+.nav-logo .logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--accent),var(--accent-3));border-radius:10px;display:grid;place-items:center;color:#fff;font-size:15px;flex-shrink:0}
+.nav-logo .za{color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{padding:8px 15px;border-radius:var(--r-sm);font-size:13.5px;font-weight:500;color:var(--muted);transition:all var(--t)}
+.nav-links a:hover{color:var(--ink);background:rgba(0,71,255,.06)}
+.nav-links a.active{color:var(--accent);background:rgba(0,71,255,.08);font-weight:700}
+.nav-right{display:flex;gap:8px;align-items:center}
+.nav-mobile-btn{display:none;background:none;border:none;font-size:20px;color:var(--ink);cursor:pointer}
+.mobile-nav{display:none;position:fixed;top:72px;left:0;right:0;background:var(--card);border-bottom:1px solid var(--border);box-shadow:var(--sh-md);z-index:999;padding:16px;flex-direction:column;gap:4px}
+.mobile-nav.open{display:flex}
+.mobile-nav a{padding:12px 16px;border-radius:var(--r-sm);font-size:14px;font-weight:500;color:var(--muted)}
+.mobile-nav a.active{color:var(--accent);background:rgba(0,71,255,.07);font-weight:700}
+.mobile-nav-actions{display:flex;gap:8px;padding:12px 0 4px;border-top:1px solid var(--border);margin-top:8px}
+
+/* Search header */
+.search-header{background:linear-gradient(145deg,#050a1c 0%,#0c1a45 52%,#091e30 100%);padding:52px 0 40px;margin-top:72px;position:relative;overflow:hidden}
+.search-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 40%,rgba(0,71,255,.22) 0%,transparent 60%),radial-gradient(ellipse 50% 55% at 15% 80%,rgba(0,200,150,.12) 0%,transparent 55%)}
+.search-header::after{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:22px 22px}
+.search-header-inner{max-width:1280px;margin:0 auto;padding:0 32px;position:relative;z-index:1}
+.sh-title{font-size:clamp(22px,3vw,34px);font-weight:900;color:#fff;margin-bottom:4px;letter-spacing:-.3px}
+.sh-sub{font-size:14px;color:rgba(255,255,255,.48);margin-bottom:22px;font-weight:300}
+.main-search-bar{display:flex;gap:10px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:var(--r-md);padding:8px 8px 8px 20px;margin-bottom:14px}
+.main-search-bar input{flex:1;background:none;border:none;outline:none;color:#fff;font-size:15px;font-family:var(--font);font-weight:500}
+.main-search-bar input::placeholder{color:rgba(255,255,255,.35);font-weight:300}
+.search-stats{display:flex;gap:20px;flex-wrap:wrap}
+.search-stat{font-size:12.5px;color:rgba(255,255,255,.45);font-weight:400}
+.search-stat strong{color:rgba(255,255,255,.85);font-weight:700}
+
+/* Page layout */
+.page-layout{max-width:1280px;margin:0 auto;padding:28px 32px;display:grid;grid-template-columns:270px 1fr;gap:24px;align-items:start}
+
+/* SIDEBAR - independent scrollbar */
+.sidebar{
+  position:sticky;top:92px;
+  max-height:calc(100vh - 110px);
+  overflow:hidden;
+}
+.filter-panel{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);
+  overflow:hidden;box-shadow:var(--sh-sm);
+  max-height:calc(100vh - 110px);
+  display:flex;flex-direction:column;
+}
+.filter-header{
+  padding:18px 20px;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-shrink:0;
+}
+/* Scrollable filter body */
+.filter-scroll-body{
+  overflow-y:auto;
+  flex:1;
+  scrollbar-width:thin;
+  scrollbar-color:var(--accent) var(--border);
+}
+.filter-scroll-body::-webkit-scrollbar{width:4px}
+.filter-scroll-body::-webkit-scrollbar-track{background:var(--border)}
+.filter-scroll-body::-webkit-scrollbar-thumb{background:var(--accent);border-radius:99px}
+.filter-title{font-size:15px;font-weight:700;color:var(--ink)}
+.filter-clear{font-size:12px;font-weight:700;color:var(--accent);background:none;border:none;cursor:pointer;transition:color var(--t)}
+.filter-clear:hover{color:#003de0}
+.filter-section{padding:16px 20px;border-bottom:1px solid var(--border)}
+.filter-section:last-child{border-bottom:none}
+.filter-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
+.filter-section-title i{font-size:10px;transition:transform var(--t)}
+.filter-section.collapsed .filter-section-title i{transform:rotate(-90deg)}
+.filter-section.collapsed .filter-body{display:none}
+
+/* Range sliders */
+.range-wrap{padding:4px 0}
+.range-vals{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.range-label{font-size:11px;color:var(--muted);margin-bottom:4px;display:block}
+input[type=range]{width:100%;-webkit-appearance:none;height:5px;background:var(--border);border-radius:99px;outline:none;cursor:pointer;margin:0 0 10px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 2px 4px rgba(0,71,255,.25)}
+input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to right,var(--accent) 0%,var(--accent) var(--val,50%),var(--border) var(--val,50%),var(--border) 100%);height:5px;border-radius:99px}
+
+/* Checkboxes */
+.filter-check{display:flex;align-items:center;gap:9px;margin-bottom:8px;cursor:pointer;font-size:13.5px;color:var(--ink);font-weight:400}
+.filter-check:last-child{margin-bottom:0}
+.filter-check input{display:none}
+.check-box{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border);flex-shrink:0;display:grid;place-items:center;transition:all var(--t)}
+.filter-check input:checked+.check-box{background:var(--accent);border-color:var(--accent)}
+.filter-check input:checked+.check-box::after{content:'✓';color:#fff;font-size:10px;font-weight:700}
+.filter-check .count{margin-left:auto;font-size:11.5px;color:var(--muted);font-weight:500}
+.show-more-btn{display:block;background:none;border:none;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--accent);padding:4px 0;font-family:var(--font);margin-top:4px}
+.show-more-btn:hover{color:#003de0}
+
+/* Body pills */
+.body-pills{display:flex;flex-wrap:wrap;gap:6px}
+.bpill{padding:5px 12px;border-radius:var(--r-xs);border:1.5px solid var(--border);font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all var(--t);background:var(--surface);font-family:var(--font)}
+.bpill:hover{border-color:var(--accent);color:var(--accent)}
+.bpill.active{border-color:var(--accent);background:rgba(0,71,255,.07);color:var(--accent)}
+
+/* Toolbar */
+.results-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.results-count{font-size:14px;font-weight:700;color:var(--ink)}
+.results-count span{color:var(--muted);font-weight:400}
+.toolbar-right{display:flex;align-items:center;gap:12px}
+.sort-select{padding:8px 14px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:var(--font);font-size:13px;color:var(--ink);background:var(--card);outline:none;cursor:pointer;-webkit-appearance:none}
+.view-toggle{display:flex;border:1.5px solid var(--border);border-radius:var(--r-sm);overflow:hidden}
+.vt-btn{width:34px;height:34px;border:none;background:none;cursor:pointer;display:grid;place-items:center;font-size:13px;color:var(--muted);transition:all var(--t)}
+.vt-btn.active,.vt-btn:hover{background:var(--accent);color:#fff}
+
+/* Active filter chips */
+.active-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;min-height:0}
+.af-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:rgba(0,71,255,.08);border:1px solid rgba(0,71,255,.2);border-radius:99px;font-size:12px;font-weight:600;color:var(--accent)}
+.af-chip button{background:none;border:none;cursor:pointer;color:var(--accent);font-size:10px;padding:0;display:grid;place-items:center;opacity:.7;transition:opacity var(--t)}
+.af-chip button:hover{opacity:1}
+
+/* Car cards grid */
+.cars-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.cars-grid.list-view{grid-template-columns:1fr}
+
+/* Card */
+.car-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:all var(--t);position:relative}
+.car-card:hover{box-shadow:var(--sh-md);transform:translateY(-3px);border-color:rgba(0,71,255,.18)}
+.car-card-img{height:190px;background:linear-gradient(135deg,#e8eeff,#d5e4ff);display:flex;align-items:center;justify-content:center;font-size:52px;position:relative;overflow:hidden}
+.car-card-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.car-card-img .img-fallback{font-size:52px;z-index:1}
+.car-card-badges{position:absolute;top:12px;left:12px;display:flex;flex-direction:column;gap:5px;z-index:2}
+.car-card-actions{position:absolute;top:12px;right:12px;display:flex;gap:6px;z-index:2}
+.card-action-btn{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.88);border:none;cursor:pointer;display:grid;place-items:center;font-size:12px;color:var(--muted);transition:all var(--t);backdrop-filter:blur(6px)}
+.card-action-btn:hover{background:#fff;color:var(--accent)}
+.car-card-body{padding:18px}
+.car-make{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.3px;color:var(--accent);margin-bottom:1px}
+.car-title{font-size:15.5px;font-weight:700;color:var(--ink);margin-bottom:3px;line-height:1.3}
+.car-sub{font-size:12px;color:var(--muted);margin-bottom:10px;font-weight:400}
+.fv-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.fv-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.fv-bar-outer{flex:1;height:5px;background:var(--border);border-radius:99px;overflow:hidden}
+.fv-bar-inner{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+.fv-pct{font-size:11.5px;font-weight:700;white-space:nowrap}
+.fv-pct.below{color:var(--accent-2)}.fv-pct.above{color:var(--warn)}.fv-pct.at{color:var(--accent)}
+.car-specs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.spec-chip{display:inline-flex;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xs);padding:3px 8px;font-size:11px;color:var(--muted);font-weight:500}
+.spec-chip i{font-size:9.5px;color:var(--accent)}
+.car-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border)}
+.car-price{font-size:20px;font-weight:900;color:var(--ink);letter-spacing:-.3px}
+.car-pm{font-size:11px;color:var(--muted);margin-top:1px;font-weight:300}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:700}
+.badge-green{background:rgba(0,200,150,.12);color:#00a070}
+.badge-blue{background:rgba(0,71,255,.1);color:var(--accent)}
+.badge-warn{background:rgba(255,94,58,.12);color:var(--warn)}
+.badge-gold{background:rgba(245,166,35,.12);color:#c8840a}
+
+/* List view card overrides */
+.cars-grid.list-view .car-card{display:grid;grid-template-columns:200px 1fr}
+.cars-grid.list-view .car-card-img{height:100%;min-height:160px}
+
+/* Loading / empty state */
+.grid-message{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted)}
+.grid-message i{font-size:40px;margin-bottom:12px;display:block;color:var(--border)}
+.grid-message p{font-size:14px;font-weight:500}
+
+/* Pagination */
+.pagination{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:32px;padding-top:20px;border-top:1px solid var(--border);flex-wrap:wrap}
+.page-btn{width:38px;height:38px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:var(--card);font-family:var(--font);font-size:13.5px;font-weight:600;color:var(--muted);cursor:pointer;display:grid;place-items:center;transition:all var(--t)}
+.page-btn:hover{border-color:var(--accent);color:var(--accent)}
+.page-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.page-btn.arrow{font-size:12px}
+.page-btn:disabled{opacity:.35;cursor:default;pointer-events:none}
+
+/* Compare bar */
+.compare-bar{position:fixed;bottom:0;left:0;right:0;background:var(--ink);border-top:1px solid rgba(255,255,255,.1);padding:14px 32px;display:none;align-items:center;justify-content:space-between;z-index:900;gap:16px}
+.compare-bar.show{display:flex}
+.compare-slots{display:flex;gap:12px}
+.compare-slot{width:140px;height:44px;border:1.5px dashed rgba(255,255,255,.2);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(255,255,255,.4);font-weight:500}
+.compare-slot.filled{background:rgba(255,255,255,.07);border-style:solid;border-color:rgba(255,255,255,.25);color:#fff;font-size:13px;font-weight:700;padding:0 12px}
+.compare-actions{display:flex;gap:10px;align-items:center}
+.compare-count{font-size:13px;color:rgba(255,255,255,.6);font-weight:400}
+
+/* CTA strip */
+.cta-strip{background:linear-gradient(135deg,var(--accent) 0%,var(--accent-3) 100%);padding:64px 0;position:relative;overflow:hidden}
+.cta-strip::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:22px 22px}
+.cta-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center}
+.cta-title{font-size:clamp(22px,3vw,34px);font-weight:900;color:#fff;line-height:1.1}
+.cta-sub{font-size:15px;color:rgba(255,255,255,.7);margin-top:8px;font-weight:300}
+.cta-actions{display:flex;flex-direction:column;gap:10px}
+.cta-actions .btn{justify-content:center;min-width:200px}
+
+/* Footer */
+.footer{background:var(--ink);padding:64px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:44px}
+.footer-brand{font-size:21px;font-weight:900;color:#fff;margin-bottom:10px}
+.footer-brand span{color:var(--accent)}
+.footer-desc{font-size:13.5px;color:rgba(255,255,255,.4);line-height:1.72;max-width:290px;font-weight:300}
+.social-row{display:flex;gap:10px;margin-top:20px}
+.social-icon{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:grid;place-items:center;color:rgba(255,255,255,.5);font-size:13px;transition:all var(--t)}
+.social-icon:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.footer-heading{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#fff;margin-bottom:16px}
+.footer-links{display:flex;flex-direction:column;gap:10px}
+.footer-links a{font-size:13.5px;color:rgba(255,255,255,.42);transition:color var(--t);font-weight:300}
+.footer-links a:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:20px;display:flex;justify-content:space-between;font-size:12.5px;color:rgba(255,255,255,.3)}
+
+@media(max-width:1024px){
+  .page-layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .cta-inner{grid-template-columns:1fr;text-align:center}
+  .cta-actions{align-items:center}
+}
+@media(max-width:768px){
+  .nav-links,.nav-right .btn{display:none}
+  .nav-mobile-btn{display:block}
+  .page-layout{padding:20px}
+  .cars-grid{grid-template-columns:1fr}
+  .cars-grid.list-view .car-card{grid-template-columns:1fr}
+  .cars-grid.list-view .car-card-img{height:180px}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;gap:8px;text-align:center}
+}
+
+.logo-img{height:60px;margin-left:-50px;vertical-align:middle}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+  <img src="https://raw.githubusercontent.com/Damian-naidoo-07/Image_Host_Monster/main/AutoInsight_Logo_v3.1.png" alt="AutoInsight ZA Logo" class="logo-img">
+  AutoInsight <span class="za">ZA</span>
+</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">How It Works</a></li>
+      <li><a href="estimator.html">Price Estimator</a></li>
+      <li><a href="search.html" class="active">Browse Cars</a></li>
+      <li><a href="dashboard.html">Market Insights</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="login.html" class="btn btn-secondary btn-sm">Sign In</a>
+      <a href="estimator.html" class="btn btn-primary btn-sm"><i class="fas fa-calculator"></i> Get Fair Value</a>
+      <button class="nav-mobile-btn" onclick="toggleNav()"><i class="fas fa-bars" id="navIcon"></i></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="about.html">How It Works</a>
+  <a href="estimator.html">Price Estimator</a>
+  <a href="search.html" class="active">Browse Cars</a>
+  <a href="dashboard.html">Market Insights</a>
+  <div class="mobile-nav-actions">
+    <a href="login.html" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center">Sign In</a>
+    <a href="estimator.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center"><i class="fas fa-calculator"></i> Fair Value</a>
+  </div>
+</div>
+
+<!-- SEARCH HEADER -->
+<div class="search-header">
+  <div class="search-header-inner">
+    <div class="sh-title">Browse Cars</div>
+    <div class="sh-sub" id="shSub">81&nbsp;515 live listings updated daily from all major South African platforms</div>
+    <div class="main-search-bar">
+      <i class="fas fa-search" style="color:rgba(255,255,255,.35)"></i>
+      <input type="text" placeholder="Search by make, model, or keyword…" id="searchInput">
+      <button class="btn btn-primary btn-sm" onclick="doTextSearch()"><i class="fas fa-search"></i> Search</button>
+    </div>
+    <div class="search-stats">
+      <span class="search-stat">Showing <strong id="statListings">81&nbsp;515</strong> listings</span>
+      <span class="search-stat"><strong id="statGauteng">42&nbsp;335</strong> in Gauteng</span>
+      
+      <span class="search-stat"><strong>94%</strong> with fair value scores</span>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE LAYOUT -->
+<div class="page-layout">
+
+  <!-- SIDEBAR FILTERS - independent scrollbar -->
+  <aside class="sidebar">
+    <div class="filter-panel">
+      <div class="filter-header">
+        <span class="filter-title">Filters</span>
+        <button class="filter-clear" onclick="clearAllFilters()">Clear all</button>
+      </div>
+
+      <!-- Independent scrollable filter area -->
+      <div class="filter-scroll-body">
+
+        <!-- PRICE RANGE -->
+        <div class="filter-section">
+          <div class="filter-section-title" onclick="toggleSection(this)">Price Range <i class="fas fa-chevron-down"></i></div>
+          <div class="filter-body">
+            <div class="range-wrap">
+              <div class="range-vals"><span id="prMinLabel">R 0</span><span id="prMaxLabel">R 2M+</span></div>
+              <span class="range-label">Min price</span>
+              <input type="range" id="prMinInput" min="0" max="2000000" step="25000" value="0" oninput="updatePriceRange()" onchange="onPriceChange()" style="--val: 0%;">
+              <span class="range-label">Max price</span>
+              <input type="range" id="prMaxInput" min="0" max="2000000" step="25000" value="2000000" oninput="updatePriceRange()" onchange="onPriceChange()" style="--val: 100%;">
+            </div>
+          </div>
+        </div>
+
+        <!-- MAKE - dynamic from API -->
+        <div class="filter-section collapsed">
+          <div class="filter-section-title" onclick="toggleSection(this)">Make <i class="fas fa-chevron-down"></i></div>
+          <div class="filter-body" id="makeFilterBody">
+      <label class="filter-check make-check" style="" data-value="Abarth">
+        <input type="checkbox" onchange="onMakeChange(this,'Abarth')">
+        <div class="check-box"></div>
+        Abarth
+        <span class="count">12</span>
+      </label>
+      <label class="filter-check make-check" style="" data-value="AC">
+        <input type="checkbox" onchange="onMakeChange(this,'AC')">
+        <div class="check-box"></div>
+        AC
+        <span class="count">1</span>
+      </label>
+      <label class="filter-check make-check" style="" data-value="Alfa Romeo">
+        <input type="checkbox" onchange="onMakeChange(this,'Alfa Romeo')">
+        <div class="check-box"></div>
+        Alfa Romeo
+        <span class="count">88</span>
+      </label>
+      <label class="filter-check make-check" style="" data-value="Ashok Leyland">
+        <input type="checkbox" onchange="onMakeChange(this,'Ashok Leyland')">
+        <div class="check-box"></div>
+        Ashok Leyland
+        <span class="count">14</span>
+      </label>
+      <label class="filter-check make-check" style="" data-value="Aston Martin">
+        <input type="checkbox" onchange="onMakeChange(this,'Aston Martin')">
+        <div class="check-box"></div>
+        Aston Martin
+        <span class="count">21</span>
+      </label>
+      <label class="filter-check make-check" style="" data-value="Audi">
+        <input type="checkbox" onchange="onMakeChange(this,'Audi')">
+        <div class="check-box"></div>
+        Audi
+        <span class="count">2&nbsp;315</span>
+      </label>
+      <label class="filter-check make-check" style="" data-value="Austin">
+        <input type="checkbox" onchange="onMakeChange(this,'Austin')">
+        <div class="check-box"></div>
+        Austin
+        <span class="count">1</span>
+      </label>
+      <label class="filter-check make-check" style="" data-value="Austin-Healey">
+        <input type="checkbox" onchange="onMakeChange(this,'Austin-Healey')">
+        <div class="check-box"></div>
+        Austin-Healey
+        <span class="count">1</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="BAIC">
+        <input type="checkbox" onchange="onMakeChange(this,'BAIC')">
+        <div class="check-box"></div>
+        BAIC
+        <span class="count">280</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Bentley">
+        <input type="checkbox" onchange="onMakeChange(this,'Bentley')">
+        <div class="check-box"></div>
+        Bentley
+        <span class="count">28</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="BMW">
+        <input type="checkbox" onchange="onMakeChange(this,'BMW')">
+        <div class="check-box"></div>
+        BMW
+        <span class="count">3&nbsp;969</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Buick">
+        <input type="checkbox" onchange="onMakeChange(this,'Buick')">
+        <div class="check-box"></div>
+        Buick
+        <span class="count">2</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="BYD">
+        <input type="checkbox" onchange="onMakeChange(this,'BYD')">
+        <div class="check-box"></div>
+        BYD
+        <span class="count">100</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Cadillac">
+        <input type="checkbox" onchange="onMakeChange(this,'Cadillac')">
+        <div class="check-box"></div>
+        Cadillac
+        <span class="count">1</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Changan">
+        <input type="checkbox" onchange="onMakeChange(this,'Changan')">
+        <div class="check-box"></div>
+        Changan
+        <span class="count">35</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Chery">
+        <input type="checkbox" onchange="onMakeChange(this,'Chery')">
+        <div class="check-box"></div>
+        Chery
+        <span class="count">2&nbsp;062</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Chevrolet">
+        <input type="checkbox" onchange="onMakeChange(this,'Chevrolet')">
+        <div class="check-box"></div>
+        Chevrolet
+        <span class="count">478</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Chrysler">
+        <input type="checkbox" onchange="onMakeChange(this,'Chrysler')">
+        <div class="check-box"></div>
+        Chrysler
+        <span class="count">27</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Citroen">
+        <input type="checkbox" onchange="onMakeChange(this,'Citroen')">
+        <div class="check-box"></div>
+        Citroen
+        <span class="count">371</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Daewoo">
+        <input type="checkbox" onchange="onMakeChange(this,'Daewoo')">
+        <div class="check-box"></div>
+        Daewoo
+        <span class="count">3</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Daihatsu">
+        <input type="checkbox" onchange="onMakeChange(this,'Daihatsu')">
+        <div class="check-box"></div>
+        Daihatsu
+        <span class="count">66</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Datsun">
+        <input type="checkbox" onchange="onMakeChange(this,'Datsun')">
+        <div class="check-box"></div>
+        Datsun
+        <span class="count">88</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Dayun">
+        <input type="checkbox" onchange="onMakeChange(this,'Dayun')">
+        <div class="check-box"></div>
+        Dayun
+        <span class="count">2</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="DFSK">
+        <input type="checkbox" onchange="onMakeChange(this,'DFSK')">
+        <div class="check-box"></div>
+        DFSK
+        <span class="count">27</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Dodge">
+        <input type="checkbox" onchange="onMakeChange(this,'Dodge')">
+        <div class="check-box"></div>
+        Dodge
+        <span class="count">22</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Dongfeng">
+        <input type="checkbox" onchange="onMakeChange(this,'Dongfeng')">
+        <div class="check-box"></div>
+        Dongfeng
+        <span class="count">15</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="FAW">
+        <input type="checkbox" onchange="onMakeChange(this,'FAW')">
+        <div class="check-box"></div>
+        FAW
+        <span class="count">14</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Ferrari">
+        <input type="checkbox" onchange="onMakeChange(this,'Ferrari')">
+        <div class="check-box"></div>
+        Ferrari
+        <span class="count">29</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Fiat">
+        <input type="checkbox" onchange="onMakeChange(this,'Fiat')">
+        <div class="check-box"></div>
+        Fiat
+        <span class="count">211</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Ford">
+        <input type="checkbox" onchange="onMakeChange(this,'Ford')">
+        <div class="check-box"></div>
+        Ford
+        <span class="count">7&nbsp;981</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Foton">
+        <input type="checkbox" onchange="onMakeChange(this,'Foton')">
+        <div class="check-box"></div>
+        Foton
+        <span class="count">264</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Fuso">
+        <input type="checkbox" onchange="onMakeChange(this,'Fuso')">
+        <div class="check-box"></div>
+        Fuso
+        <span class="count">6</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="GAC">
+        <input type="checkbox" onchange="onMakeChange(this,'GAC')">
+        <div class="check-box"></div>
+        GAC
+        <span class="count">131</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Geely">
+        <input type="checkbox" onchange="onMakeChange(this,'Geely')">
+        <div class="check-box"></div>
+        Geely
+        <span class="count">53</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="GMC">
+        <input type="checkbox" onchange="onMakeChange(this,'GMC')">
+        <div class="check-box"></div>
+        GMC
+        <span class="count">1</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Golden Dragon">
+        <input type="checkbox" onchange="onMakeChange(this,'Golden Dragon')">
+        <div class="check-box"></div>
+        Golden Dragon
+        <span class="count">5</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="GWM">
+        <input type="checkbox" onchange="onMakeChange(this,'GWM')">
+        <div class="check-box"></div>
+        GWM
+        <span class="count">936</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Haval">
+        <input type="checkbox" onchange="onMakeChange(this,'Haval')">
+        <div class="check-box"></div>
+        Haval
+        <span class="count">1&nbsp;879</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Hino">
+        <input type="checkbox" onchange="onMakeChange(this,'Hino')">
+        <div class="check-box"></div>
+        Hino
+        <span class="count">59</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Holden">
+        <input type="checkbox" onchange="onMakeChange(this,'Holden')">
+        <div class="check-box"></div>
+        Holden
+        <span class="count">1</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Honda">
+        <input type="checkbox" onchange="onMakeChange(this,'Honda')">
+        <div class="check-box"></div>
+        Honda
+        <span class="count">810</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Hummer">
+        <input type="checkbox" onchange="onMakeChange(this,'Hummer')">
+        <div class="check-box"></div>
+        Hummer
+        <span class="count">5</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Hyundai">
+        <input type="checkbox" onchange="onMakeChange(this,'Hyundai')">
+        <div class="check-box"></div>
+        Hyundai
+        <span class="count">4&nbsp;489</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Ineos">
+        <input type="checkbox" onchange="onMakeChange(this,'Ineos')">
+        <div class="check-box"></div>
+        Ineos
+        <span class="count">19</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Infiniti">
+        <input type="checkbox" onchange="onMakeChange(this,'Infiniti')">
+        <div class="check-box"></div>
+        Infiniti
+        <span class="count">18</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Isuzu">
+        <input type="checkbox" onchange="onMakeChange(this,'Isuzu')">
+        <div class="check-box"></div>
+        Isuzu
+        <span class="count">2&nbsp;303</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Iveco">
+        <input type="checkbox" onchange="onMakeChange(this,'Iveco')">
+        <div class="check-box"></div>
+        Iveco
+        <span class="count">25</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="JAC">
+        <input type="checkbox" onchange="onMakeChange(this,'JAC')">
+        <div class="check-box"></div>
+        JAC
+        <span class="count">246</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Jaecoo">
+        <input type="checkbox" onchange="onMakeChange(this,'Jaecoo')">
+        <div class="check-box"></div>
+        Jaecoo
+        <span class="count">474</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Jaguar">
+        <input type="checkbox" onchange="onMakeChange(this,'Jaguar')">
+        <div class="check-box"></div>
+        Jaguar
+        <span class="count">252</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Jeep">
+        <input type="checkbox" onchange="onMakeChange(this,'Jeep')">
+        <div class="check-box"></div>
+        Jeep
+        <span class="count">474</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Jetour">
+        <input type="checkbox" onchange="onMakeChange(this,'Jetour')">
+        <div class="check-box"></div>
+        Jetour
+        <span class="count">475</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Jiayuan">
+        <input type="checkbox" onchange="onMakeChange(this,'Jiayuan')">
+        <div class="check-box"></div>
+        Jiayuan
+        <span class="count">2</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Jinbei">
+        <input type="checkbox" onchange="onMakeChange(this,'Jinbei')">
+        <div class="check-box"></div>
+        Jinbei
+        <span class="count">6</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="JMC">
+        <input type="checkbox" onchange="onMakeChange(this,'JMC')">
+        <div class="check-box"></div>
+        JMC
+        <span class="count">26</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Kia">
+        <input type="checkbox" onchange="onMakeChange(this,'Kia')">
+        <div class="check-box"></div>
+        Kia
+        <span class="count">3&nbsp;062</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Kinglong">
+        <input type="checkbox" onchange="onMakeChange(this,'Kinglong')">
+        <div class="check-box"></div>
+        Kinglong
+        <span class="count">3</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Lamborghini">
+        <input type="checkbox" onchange="onMakeChange(this,'Lamborghini')">
+        <div class="check-box"></div>
+        Lamborghini
+        <span class="count">10</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Land Rover">
+        <input type="checkbox" onchange="onMakeChange(this,'Land Rover')">
+        <div class="check-box"></div>
+        Land Rover
+        <span class="count">1&nbsp;449</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="LDV">
+        <input type="checkbox" onchange="onMakeChange(this,'LDV')">
+        <div class="check-box"></div>
+        LDV
+        <span class="count">57</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Leapmotor">
+        <input type="checkbox" onchange="onMakeChange(this,'Leapmotor')">
+        <div class="check-box"></div>
+        Leapmotor
+        <span class="count">20</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Lepas">
+        <input type="checkbox" onchange="onMakeChange(this,'Lepas')">
+        <div class="check-box"></div>
+        Lepas
+        <span class="count">6</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Lexus">
+        <input type="checkbox" onchange="onMakeChange(this,'Lexus')">
+        <div class="check-box"></div>
+        Lexus
+        <span class="count">184</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Lotus">
+        <input type="checkbox" onchange="onMakeChange(this,'Lotus')">
+        <div class="check-box"></div>
+        Lotus
+        <span class="count">1</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Mahindra">
+        <input type="checkbox" onchange="onMakeChange(this,'Mahindra')">
+        <div class="check-box"></div>
+        Mahindra
+        <span class="count">1&nbsp;324</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Maserati">
+        <input type="checkbox" onchange="onMakeChange(this,'Maserati')">
+        <div class="check-box"></div>
+        Maserati
+        <span class="count">30</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Mazda">
+        <input type="checkbox" onchange="onMakeChange(this,'Mazda')">
+        <div class="check-box"></div>
+        Mazda
+        <span class="count">1&nbsp;030</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="McLaren">
+        <input type="checkbox" onchange="onMakeChange(this,'McLaren')">
+        <div class="check-box"></div>
+        McLaren
+        <span class="count">7</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Mercedes-AMG">
+        <input type="checkbox" onchange="onMakeChange(this,'Mercedes-AMG')">
+        <div class="check-box"></div>
+        Mercedes-AMG
+        <span class="count">467</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Mercedes-Benz">
+        <input type="checkbox" onchange="onMakeChange(this,'Mercedes-Benz')">
+        <div class="check-box"></div>
+        Mercedes-Benz
+        <span class="count">3&nbsp;186</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="MG">
+        <input type="checkbox" onchange="onMakeChange(this,'MG')">
+        <div class="check-box"></div>
+        MG
+        <span class="count">592</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="MINI">
+        <input type="checkbox" onchange="onMakeChange(this,'MINI')">
+        <div class="check-box"></div>
+        MINI
+        <span class="count">444</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Mitsubishi">
+        <input type="checkbox" onchange="onMakeChange(this,'Mitsubishi')">
+        <div class="check-box"></div>
+        Mitsubishi
+        <span class="count">615</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Nissan">
+        <input type="checkbox" onchange="onMakeChange(this,'Nissan')">
+        <div class="check-box"></div>
+        Nissan
+        <span class="count">3&nbsp;481</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Noble">
+        <input type="checkbox" onchange="onMakeChange(this,'Noble')">
+        <div class="check-box"></div>
+        Noble
+        <span class="count">2</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Omoda">
+        <input type="checkbox" onchange="onMakeChange(this,'Omoda')">
+        <div class="check-box"></div>
+        Omoda
+        <span class="count">721</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Opel">
+        <input type="checkbox" onchange="onMakeChange(this,'Opel')">
+        <div class="check-box"></div>
+        Opel
+        <span class="count">499</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Peugeot">
+        <input type="checkbox" onchange="onMakeChange(this,'Peugeot')">
+        <div class="check-box"></div>
+        Peugeot
+        <span class="count">404</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Pontiac">
+        <input type="checkbox" onchange="onMakeChange(this,'Pontiac')">
+        <div class="check-box"></div>
+        Pontiac
+        <span class="count">1</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Porsche">
+        <input type="checkbox" onchange="onMakeChange(this,'Porsche')">
+        <div class="check-box"></div>
+        Porsche
+        <span class="count">345</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Powerstar">
+        <input type="checkbox" onchange="onMakeChange(this,'Powerstar')">
+        <div class="check-box"></div>
+        Powerstar
+        <span class="count">1</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Proton">
+        <input type="checkbox" onchange="onMakeChange(this,'Proton')">
+        <div class="check-box"></div>
+        Proton
+        <span class="count">212</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Puma">
+        <input type="checkbox" onchange="onMakeChange(this,'Puma')">
+        <div class="check-box"></div>
+        Puma
+        <span class="count">1</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Rambler">
+        <input type="checkbox" onchange="onMakeChange(this,'Rambler')">
+        <div class="check-box"></div>
+        Rambler
+        <span class="count">1</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Reliant">
+        <input type="checkbox" onchange="onMakeChange(this,'Reliant')">
+        <div class="check-box"></div>
+        Reliant
+        <span class="count">1</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Renault">
+        <input type="checkbox" onchange="onMakeChange(this,'Renault')">
+        <div class="check-box"></div>
+        Renault
+        <span class="count">3&nbsp;177</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Rolls-Royce">
+        <input type="checkbox" onchange="onMakeChange(this,'Rolls-Royce')">
+        <div class="check-box"></div>
+        Rolls-Royce
+        <span class="count">3</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="SEAT">
+        <input type="checkbox" onchange="onMakeChange(this,'SEAT')">
+        <div class="check-box"></div>
+        SEAT
+        <span class="count">2</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Smart">
+        <input type="checkbox" onchange="onMakeChange(this,'Smart')">
+        <div class="check-box"></div>
+        Smart
+        <span class="count">20</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="SsangYong">
+        <input type="checkbox" onchange="onMakeChange(this,'SsangYong')">
+        <div class="check-box"></div>
+        SsangYong
+        <span class="count">5</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Subaru">
+        <input type="checkbox" onchange="onMakeChange(this,'Subaru')">
+        <div class="check-box"></div>
+        Subaru
+        <span class="count">194</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Suzuki">
+        <input type="checkbox" onchange="onMakeChange(this,'Suzuki')">
+        <div class="check-box"></div>
+        Suzuki
+        <span class="count">5&nbsp;584</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="TATA">
+        <input type="checkbox" onchange="onMakeChange(this,'TATA')">
+        <div class="check-box"></div>
+        TATA
+        <span class="count">234</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Toyota">
+        <input type="checkbox" onchange="onMakeChange(this,'Toyota')">
+        <div class="check-box"></div>
+        Toyota
+        <span class="count">11&nbsp;420</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Triumph">
+        <input type="checkbox" onchange="onMakeChange(this,'Triumph')">
+        <div class="check-box"></div>
+        Triumph
+        <span class="count">2</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="UD Trucks">
+        <input type="checkbox" onchange="onMakeChange(this,'UD Trucks')">
+        <div class="check-box"></div>
+        UD Trucks
+        <span class="count">13</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Volkswagen">
+        <input type="checkbox" onchange="onMakeChange(this,'Volkswagen')">
+        <div class="check-box"></div>
+        Volkswagen
+        <span class="count">10&nbsp;996</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Volvo">
+        <input type="checkbox" onchange="onMakeChange(this,'Volvo')">
+        <div class="check-box"></div>
+        Volvo
+        <span class="count">485</span>
+      </label>
+      <label class="filter-check make-check hidden-make" style="display:none" data-value="Willys">
+        <input type="checkbox" onchange="onMakeChange(this,'Willys')">
+        <div class="check-box"></div>
+        Willys
+        <span class="count">1</span>
+      </label><button class="show-more-btn" id="showMoreMakesBtn" onclick="showMoreMakes()">
+               Show 91 more…
+             </button></div>
+        </div>
+
+        <!-- MODEL - dynamically populated when a single make is selected -->
+        <div class="filter-section collapsed" id="modelFilterSection">
+          <div class="filter-section-title" onclick="toggleSection(this)">Model <i class="fas fa-chevron-down"></i></div>
+          <div class="filter-body" id="modelFilterBody">
+            <span style="font-size:12px;color:var(--muted);padding:4px 0;display:block">Select a make first</span>
+          </div>
+        </div>
+
+        <!-- YEAR - hardcoded brackets with data attributes -->
+        <div class="filter-section">
+          <div class="filter-section-title" onclick="toggleSection(this)">Year <i class="fas fa-chevron-down"></i></div>
+          <div class="filter-body">
+            <label class="filter-check year-check" data-key="2026" data-min="2026" data-max="2026">
+              <input type="checkbox" onchange="onYearChange()"><div class="check-box"></div>2026<span class="count" id="ycnt-2026"></span>
+            </label>
+            <label class="filter-check year-check" data-key="2024-2025" data-min="2024" data-max="2025">
+              <input type="checkbox" onchange="onYearChange()"><div class="check-box"></div>2024 – 2025<span class="count" id="ycnt-2024-2025"></span>
+            </label>
+            <label class="filter-check year-check" data-key="2020-2023" data-min="2020" data-max="2023">
+              <input type="checkbox" onchange="onYearChange()"><div class="check-box"></div>2020 – 2023<span class="count" id="ycnt-2020-2023"></span>
+            </label>
+            <label class="filter-check year-check" data-key="2015-2019" data-min="2015" data-max="2019">
+              <input type="checkbox" onchange="onYearChange()"><div class="check-box"></div>2015 – 2019<span class="count" id="ycnt-2015-2019"></span>
+            </label>
+            <label class="filter-check year-check" data-key="2010-2014" data-min="2010" data-max="2014">
+              <input type="checkbox" onchange="onYearChange()"><div class="check-box"></div>2010 – 2014<span class="count" id="ycnt-2010-2014"></span>
+            </label>
+            <label class="filter-check year-check" data-key="before-2010" data-min="1900" data-max="2009">
+              <input type="checkbox" onchange="onYearChange()"><div class="check-box"></div>Before 2010<span class="count" id="ycnt-before-2010"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- BODY TYPE - dynamic from API -->
+        <div class="filter-section">
+          <div class="filter-section-title" onclick="toggleSection(this)">Body Type <i class="fas fa-chevron-down"></i></div>
+          <div class="filter-body">
+            <div class="body-pills" id="bodyTypePills"><button class="bpill active" data-value="" onclick="selectBodyType(this)">All</button><button class="bpill" data-value="SUV" onclick="selectBodyType(this)">SUV</button><button class="bpill" data-value="Hatchback" onclick="selectBodyType(this)">Hatchback</button><button class="bpill" data-value="Double Cab Bakkie" onclick="selectBodyType(this)">Double Cab Bakkie</button><button class="bpill" data-value="Sedan" onclick="selectBodyType(this)">Sedan</button><button class="bpill" data-value="Single Cab Bakkie" onclick="selectBodyType(this)">Single Cab Bakkie</button><button class="bpill" data-value="Crossover" onclick="selectBodyType(this)">Crossover</button><button class="bpill" data-value="Multi Purpose Vehicle" onclick="selectBodyType(this)">Multi Purpose Vehicle</button><button class="bpill" data-value="Coupe" onclick="selectBodyType(this)">Coupe</button><button class="bpill" data-value="Bus" onclick="selectBodyType(this)">Bus</button><button class="bpill" data-value="Extended Cab Bakkie" onclick="selectBodyType(this)">Extended Cab Bakkie</button></div>
+          </div>
+        </div>
+
+        <!-- PROVINCE - dynamic from API -->
+        <div class="filter-section">
+          <div class="filter-section-title" onclick="toggleSection(this)">Province <i class="fas fa-chevron-down"></i></div>
+          <div class="filter-body" id="provFilterBody">
+    <label class="filter-check" data-value="Gauteng">
+      <input type="checkbox" onchange="onProvinceChange(this,'Gauteng')">
+      <div class="check-box"></div>
+      Gauteng
+      <span class="count">46&nbsp;123</span>
+    </label>
+    <label class="filter-check" data-value="Western Cape">
+      <input type="checkbox" onchange="onProvinceChange(this,'Western Cape')">
+      <div class="check-box"></div>
+      Western Cape
+      <span class="count">13&nbsp;478</span>
+    </label>
+    <label class="filter-check" data-value="Kwazulu Natal">
+      <input type="checkbox" onchange="onProvinceChange(this,'Kwazulu Natal')">
+      <div class="check-box"></div>
+      Kwazulu Natal
+      <span class="count">10&nbsp;075</span>
+    </label>
+    <label class="filter-check" data-value="Mpumalanga">
+      <input type="checkbox" onchange="onProvinceChange(this,'Mpumalanga')">
+      <div class="check-box"></div>
+      Mpumalanga
+      <span class="count">3&nbsp;242</span>
+    </label>
+    <label class="filter-check" data-value="Eastern Cape">
+      <input type="checkbox" onchange="onProvinceChange(this,'Eastern Cape')">
+      <div class="check-box"></div>
+      Eastern Cape
+      <span class="count">2&nbsp;350</span>
+    </label>
+    <label class="filter-check" data-value="North West Province">
+      <input type="checkbox" onchange="onProvinceChange(this,'North West Province')">
+      <div class="check-box"></div>
+      North West Province
+      <span class="count">2&nbsp;309</span>
+    </label>
+    <label class="filter-check" data-value="Free State">
+      <input type="checkbox" onchange="onProvinceChange(this,'Free State')">
+      <div class="check-box"></div>
+      Free State
+      <span class="count">1&nbsp;713</span>
+    </label>
+    <label class="filter-check" data-value="Limpopo">
+      <input type="checkbox" onchange="onProvinceChange(this,'Limpopo')">
+      <div class="check-box"></div>
+      Limpopo
+      <span class="count">1&nbsp;452</span>
+    </label>
+    <label class="filter-check" data-value="Northern Cape">
+      <input type="checkbox" onchange="onProvinceChange(this,'Northern Cape')">
+      <div class="check-box"></div>
+      Northern Cape
+      <span class="count">319</span>
+    </label></div>
+        </div>
+
+        <!-- FUEL TYPE - dynamic from API -->
+        <div class="filter-section collapsed">
+          <div class="filter-section-title" onclick="toggleSection(this)">Fuel Type <i class="fas fa-chevron-down"></i></div>
+          <div class="filter-body" id="fuelFilterBody">
+    <label class="filter-check" data-value="Petrol">
+      <input type="checkbox" onchange="onFuelChange(this,'Petrol')">
+      <div class="check-box"></div>
+      Petrol
+      <span class="count">53&nbsp;868</span>
+    </label>
+    <label class="filter-check" data-value="Diesel">
+      <input type="checkbox" onchange="onFuelChange(this,'Diesel')">
+      <div class="check-box"></div>
+      Diesel
+      <span class="count">25&nbsp;321</span>
+    </label>
+    <label class="filter-check" data-value="Hybrid">
+      <input type="checkbox" onchange="onFuelChange(this,'Hybrid')">
+      <div class="check-box"></div>
+      Hybrid
+      <span class="count">1&nbsp;804</span>
+    </label>
+    <label class="filter-check" data-value="Electric">
+      <input type="checkbox" onchange="onFuelChange(this,'Electric')">
+      <div class="check-box"></div>
+      Electric
+      <span class="count">302</span>
+    </label>
+    <label class="filter-check" data-value="">
+      <input type="checkbox" onchange="onFuelChange(this,'')">
+      <div class="check-box"></div>
+      
+      <span class="count">44</span>
+    </label></div>
+        </div>
+
+        <!-- TRANSMISSION -->
+        <div class="filter-section collapsed">
+          <div class="filter-section-title" onclick="toggleSection(this)">Transmission <i class="fas fa-chevron-down"></i></div>
+          <div class="filter-body">
+            <label class="filter-check" data-value="Automatic">
+              <input type="checkbox" onchange="onTransmissionChange(this,'Automatic')"><div class="check-box"></div>Automatic
+            </label>
+            <label class="filter-check" data-value="Manual">
+              <input type="checkbox" onchange="onTransmissionChange(this,'Manual')"><div class="check-box"></div>Manual
+            </label>
+          </div>
+        </div>
+
+        <!-- SELLER TYPE -->
+
+
+
+
+      </div><!-- /filter-scroll-body -->
+    </div><!-- /filter-panel -->
+  </aside>
+
+  <!-- RESULTS -->
+  <div>
+    <!-- Active filter chips -->
+    <div class="active-filters" id="activeFilters"></div>
+
+    <!-- Toolbar -->
+    <div class="results-toolbar">
+      <div class="results-count" id="resultsCount"><strong>81&nbsp;515</strong> <span>listings found</span></div>
+      <div class="toolbar-right">
+        <select class="sort-select" id="sortSelect" onchange="onSortChange()">
+          <option value="newest">Sort: Best Match</option>
+          <option value="price_asc">Price: Low to High</option>
+          <option value="price_desc">Price: High to Low</option>
+          <option value="newest">Newest First</option>
+          <option value="mileage_asc">Lowest Mileage</option>
+        </select>
+        <div class="view-toggle">
+          <button class="vt-btn active" id="gridBtn" onclick="setView('grid')"><i class="fas fa-grid-2"></i></button>
+          <button class="vt-btn" id="listBtn" onclick="setView('list')"><i class="fas fa-list"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Car Cards -->
+    <div class="cars-grid" id="carsGrid">
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#e8eeff,#d5e4ff)">
+    <span class="img-fallback">🚗</span>
+    <div class="car-card-badges">
+      <span class="badge badge-warn"><i class="fas fa-fire"></i> Hot Price</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Volkswagen Polo Vivo')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Volkswagen</div>
+    <div class="car-title">Polo Vivo 1.4</div>
+    <div class="car-sub">2025 · 4&nbsp;521 km · Manual · Petrol · GREY</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:72%"></div></div>
+      <span class="fv-pct at">Market</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Mpumalanga</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> Hatchback</span>
+      
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;259&nbsp;900</div>
+        <div class="car-pm">~R&nbsp;4&nbsp;603/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/used/2025-Volkswagen-Polo-Vivo-1.4-Mpumalanga-White-River/10866053/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#ffe8d5,#ffd0c0)">
+    <span class="img-fallback">🚗</span>
+    <div class="car-card-badges">
+      <span class="badge badge-blue"><i class="fas fa-star"></i> Top Value</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Volkswagen Polo')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Volkswagen</div>
+    <div class="car-title">Polo GP 1.4 Comfortline</div>
+    <div class="car-sub">2020 · 138&nbsp;332 km · Manual · Petrol · REFLEX SILVER METALLIC</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:77%"></div></div>
+      <span class="fv-pct above">+0.6%</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Gauteng</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> Sedan</span>
+      <span class="spec-chip"><i class="fas fa-shield-halved"></i> NADA</span>
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;199&nbsp;900</div>
+        <div class="car-pm">~R&nbsp;3&nbsp;541/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/used/2020-Volkswagen-Polo-GP-1.4-Comfortline-Gauteng-Randburg/10866058/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#d5e8ff,#c0d5f5)">
+    <span class="img-fallback">🚗</span>
+    <div class="car-card-badges">
+      <span class="badge badge-green"><i class="fas fa-check-circle"></i> Fair Deal</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Volkswagen Polo Vivo')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Volkswagen</div>
+    <div class="car-title">Polo Vivo 1.4</div>
+    <div class="car-sub">2025 · 4&nbsp;420 km · Manual · Petrol · GREY</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:72%"></div></div>
+      <span class="fv-pct at">Market</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Mpumalanga</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> Hatchback</span>
+      
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;259&nbsp;900</div>
+        <div class="car-pm">~R&nbsp;4&nbsp;603/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/used/2025-Volkswagen-Polo-Vivo-1.4-Mpumalanga-White-River/10866052/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#e0d5ff,#cfc0f5)">
+    <span class="img-fallback">🚗</span>
+    <div class="car-card-badges">
+      <span class="badge badge-gold"><i class="fas fa-crown"></i> Premium</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Mercedes-Benz Vito')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Mercedes-Benz</div>
+    <div class="car-title">Vito 116 2.2 CDI Tourer Pro Auto</div>
+    <div class="car-sub">2024 · 50&nbsp;550 km · Automatic · Diesel · Silver</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:46%"></div></div>
+      <span class="fv-pct below">−3.6%</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Gauteng</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> Bus</span>
+      <span class="spec-chip"><i class="fas fa-shield-halved"></i> NADA</span>
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;600&nbsp;000</div>
+        <div class="car-pm">~R&nbsp;10&nbsp;627/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/used/2024-Mercedes-Benz-Vito-116-2.2-CDI-Tourer-Pro-Auto-Gauteng-Boksburg/10866047/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#d5f5e5,#b8eeda)">
+    <span class="img-fallback">🚙</span>
+    <div class="car-card-badges">
+      <span class="badge badge-gold"><i class="fas fa-crown"></i> Premium</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Toyota RAV4')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Toyota</div>
+    <div class="car-title">RAV4 2.0 GX Auto</div>
+    <div class="car-sub">2021 · 77&nbsp;355 km · Automatic · Petrol · WHITE</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:61%"></div></div>
+      <span class="fv-pct below">−1.5%</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Mpumalanga</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> SUV</span>
+      
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;399&nbsp;900</div>
+        <div class="car-pm">~R&nbsp;7&nbsp;083/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/used/2021-Toyota-RAV4-2.0-GX-Auto-Mpumalanga-White-River/10866051/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#fff5d5,#ffe8b8)">
+    <span class="img-fallback">🚗</span>
+    <div class="car-card-badges">
+      <span class="badge badge-blue"><i class="fas fa-star"></i> Top Value</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Toyota Corolla')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Toyota</div>
+    <div class="car-title">Corolla 1.8 XS Hybrid Auto 5-dr</div>
+    <div class="car-sub">2025 · 42&nbsp;768 km · Automatic · Hybrid · White</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:63%"></div></div>
+      <span class="fv-pct below">−1.3%</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Gauteng</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> Hatchback</span>
+      <span class="spec-chip"><i class="fas fa-shield-halved"></i> NADA</span>
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;379&nbsp;900</div>
+        <div class="car-pm">~R&nbsp;6&nbsp;729/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/used/2025-Toyota-Corolla-1.8-XS-Hybrid-Auto-5-dr-Gauteng-Boksburg/10866046/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#e8eeff,#d5e4ff)">
+    <span class="img-fallback">🛻</span>
+    <div class="car-card-badges">
+      <span class="badge badge-warn"><i class="fas fa-fire"></i> Hot Price</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Ford Ranger')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Ford</div>
+    <div class="car-title">Ranger 2.0D XL 4x4 Double Cab Auto</div>
+    <div class="car-sub">2025 · 60&nbsp;669 km · Automatic · Diesel · White</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:52%"></div></div>
+      <span class="fv-pct below">−2.8%</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Gauteng</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> Double Cab Bakkie</span>
+      <span class="spec-chip"><i class="fas fa-shield-halved"></i> NADA</span>
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;519&nbsp;900</div>
+        <div class="car-pm">~R&nbsp;9&nbsp;209/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/used/2025-Ford-Ranger-2.0D-XL-4x4-Double-Cab-Auto-Gauteng-Boksburg/10866045/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#ffe8d5,#ffd0c0)">
+    <span class="img-fallback">🚙</span>
+    <div class="car-card-badges">
+      <span class="badge badge-green"><i class="fas fa-check-circle"></i> Fair Deal</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Mahindra XUV 3XO')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Mahindra</div>
+    <div class="car-title">XUV 3XO 1.2T AX7L</div>
+    <div class="car-sub">2025 · 10 km · Automatic · Petrol · Galaxy Grey Dual Ton</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:64%"></div></div>
+      <span class="fv-pct below">−1.2%</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Gauteng</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> SUV</span>
+      <span class="spec-chip"><i class="fas fa-shield-halved"></i> NADA</span>
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;369&nbsp;900</div>
+        <div class="car-pm">~R&nbsp;6&nbsp;552/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/used/2025-Mahindra-XUV-3XO-1.2T-AX7L-Gauteng-Germiston/10866044/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#d5e8ff,#c0d5f5)">
+    <span class="img-fallback">🚙</span>
+    <div class="car-card-badges">
+      <span class="badge badge-blue"><i class="fas fa-star"></i> Top Value</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Mazda CX-3')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Mazda</div>
+    <div class="car-title">CX-3 2.0 Dynamic Auto</div>
+    <div class="car-sub">2021 · 42&nbsp;102 km · Automatic · Petrol · Blue</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:71%"></div></div>
+      <span class="fv-pct at">Market</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Gauteng</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> SUV</span>
+      <span class="spec-chip"><i class="fas fa-shield-halved"></i> NADA</span>
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;269&nbsp;900</div>
+        <div class="car-pm">~R&nbsp;4&nbsp;781/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/used/2021-Mazda-CX-3-2.0-Dynamic-Auto-Gauteng-Boksburg/10866038/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#e0d5ff,#cfc0f5)">
+    <span class="img-fallback">🚗</span>
+    <div class="car-card-badges">
+      <span class="badge badge-warn"><i class="fas fa-fire"></i> Hot Price</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Toyota Quantum')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Toyota</div>
+    <div class="car-title">Quantum 2.8 GL 14 Seat</div>
+    <div class="car-sub">2024 · 56&nbsp;000 km · Manual · Diesel · White</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:38%"></div></div>
+      <span class="fv-pct below">−4.7%</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Western Cape</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> Bus</span>
+      
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;769&nbsp;900</div>
+        <div class="car-pm">~R&nbsp;13&nbsp;637/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/used/2024-Toyota-Quantum-2.8-GL-14-Seat-Western-Cape-Vredendal/10882389/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#d5f5e5,#b8eeda)">
+    <span class="img-fallback">🛻</span>
+    <div class="car-card-badges">
+      <span class="badge badge-gold"><i class="fas fa-crown"></i> Premium</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Ford Ranger')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Ford</div>
+    <div class="car-title">Ranger 2.2 TDCi XLS Double-Cab</div>
+    <div class="car-sub">2015 · 112&nbsp;000 km · Manual · Diesel · White</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:71%"></div></div>
+      <span class="fv-pct at">Market</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Gauteng</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> Double Cab Bakkie</span>
+      
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;269&nbsp;950</div>
+        <div class="car-pm">~R&nbsp;5&nbsp;399/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/used/2015-Ford-Ranger-2.2-TDCi-XLS-Double-Cab-Gauteng-Vereeniging/10866067/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#fff5d5,#ffe8b8)">
+    <span class="img-fallback">🚙</span>
+    <div class="car-card-badges">
+      <span class="badge badge-gold"><i class="fas fa-crown"></i> Premium</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Haval Jolion')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Haval</div>
+    <div class="car-title">Jolion Pro 1.5T Ultra Luxury DCT</div>
+    <div class="car-sub">2026 · 15 km · Automatic · Petrol · SUN BLACK</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:56%"></div></div>
+      <span class="fv-pct below">−2.2%</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Gauteng</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> SUV</span>
+      
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;466&nbsp;449</div>
+        <div class="car-pm">~R&nbsp;8&nbsp;262/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/new/2026-Haval-Jolion-Pro-1.5T-Ultra-Luxury-DCT-Gauteng-Benoni/10879575/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#e8eeff,#d5e4ff)">
+    <span class="img-fallback">🚙</span>
+    <div class="car-card-badges">
+      <span class="badge badge-blue"><i class="fas fa-star"></i> Top Value</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Haval Jolion')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Haval</div>
+    <div class="car-title">Jolion Pro 1.5T Super Luxury DCT</div>
+    <div class="car-sub">2026 · 15 km · Automatic · Petrol · SUN BLACK</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:59%"></div></div>
+      <span class="fv-pct below">−1.8%</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Gauteng</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> SUV</span>
+      
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;431&nbsp;450</div>
+        <div class="car-pm">~R&nbsp;7&nbsp;642/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/new/2026-Haval-Jolion-Pro-1.5T-Super-Luxury-DCT-Gauteng-Benoni/10879574/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#ffe8d5,#ffd0c0)">
+    <span class="img-fallback">🚙</span>
+    <div class="car-card-badges">
+      <span class="badge badge-gold"><i class="fas fa-crown"></i> Premium</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Chery Tiggo 4 Pro')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Chery</div>
+    <div class="car-title">Tiggo 4 Pro 1.5 LiT Auto</div>
+    <div class="car-sub">2026 · 22 km · Automatic · Petrol · Grey</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:69%"></div></div>
+      <span class="fv-pct at">Market</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Western Cape</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> SUV</span>
+      <span class="spec-chip"><i class="fas fa-shield-halved"></i> NADA</span>
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;299&nbsp;900</div>
+        <div class="car-pm">~R&nbsp;5&nbsp;312/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/new/2026-Chery-Tiggo-4-Pro-1.5-LiT-Auto-Western-Cape-Cape-Town/10804091/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#d5e8ff,#c0d5f5)">
+    <span class="img-fallback">🚙</span>
+    <div class="car-card-badges">
+      <span class="badge badge-warn"><i class="fas fa-fire"></i> Hot Price</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Chery Tiggo 4 Pro')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Chery</div>
+    <div class="car-title">Tiggo 4 Pro 1.5 LiT Auto</div>
+    <div class="car-sub">2026 · 11 km · Automatic · Petrol · Grey</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:69%"></div></div>
+      <span class="fv-pct at">Market</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Western Cape</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> SUV</span>
+      <span class="spec-chip"><i class="fas fa-shield-halved"></i> NADA</span>
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;299&nbsp;900</div>
+        <div class="car-pm">~R&nbsp;5&nbsp;312/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/new/2026-Chery-Tiggo-4-Pro-1.5-LiT-Auto-Western-Cape-Cape-Town/10804089/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#e0d5ff,#cfc0f5)">
+    <span class="img-fallback">🚙</span>
+    <div class="car-card-badges">
+      <span class="badge badge-green"><i class="fas fa-check-circle"></i> Fair Deal</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Chery Tiggo 4 Pro')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Chery</div>
+    <div class="car-title">Tiggo 4 Pro 1.5 LiT Auto</div>
+    <div class="car-sub">2026 · 12 km · Automatic · Petrol · Grey</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:69%"></div></div>
+      <span class="fv-pct at">Market</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Western Cape</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> SUV</span>
+      <span class="spec-chip"><i class="fas fa-shield-halved"></i> NADA</span>
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;299&nbsp;900</div>
+        <div class="car-pm">~R&nbsp;5&nbsp;312/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/new/2026-Chery-Tiggo-4-Pro-1.5-LiT-Auto-Western-Cape-Cape-Town/10804088/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#d5f5e5,#b8eeda)">
+    <span class="img-fallback">🚙</span>
+    <div class="car-card-badges">
+      <span class="badge badge-warn"><i class="fas fa-fire"></i> Hot Price</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Nissan X-Trail')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Nissan</div>
+    <div class="car-title">X-Trail 4x4 AUTOMATIc 7-SEATER</div>
+    <div class="car-sub">2021 · 76&nbsp;000 km · Automatic · Petrol · White Pearl Metallic</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:61%"></div></div>
+      <span class="fv-pct below">−1.5%</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Western Cape</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> SUV</span>
+      
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;399&nbsp;900</div>
+        <div class="car-pm">~R&nbsp;7&nbsp;083/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/used/2021-Nissan-X-Trail-4x4-AUTOMATIc-7-SEATER-Western-Cape-Cape-Town/10856253/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#fff5d5,#ffe8b8)">
+    <span class="img-fallback">🚗</span>
+    <div class="car-card-badges">
+      <span class="badge badge-warn"><i class="fas fa-fire"></i> Hot Price</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Toyota Corolla')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Toyota</div>
+    <div class="car-title">Corolla 1.8 High Auto</div>
+    <div class="car-sub">2015 · 132&nbsp;850 km · Automatic · Petrol · WHITE</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:77%"></div></div>
+      <span class="fv-pct above">+0.6%</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Gauteng</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> Sedan</span>
+      
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;199&nbsp;900</div>
+        <div class="car-pm">~R&nbsp;3&nbsp;998/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/used/2015-Toyota-Corolla-1.8-High-Auto-Gauteng-Pretoria-North/10866069/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#e8eeff,#d5e4ff)">
+    <span class="img-fallback">🚙</span>
+    <div class="car-card-badges">
+      <span class="badge badge-gold"><i class="fas fa-crown"></i> Premium</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Changan CS75')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Changan</div>
+    <div class="car-title">CS75 Pro 1.5T CS Auto</div>
+    <div class="car-sub">2026 · 50 km · Automatic · Petrol · Obsidian Grey</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:55%"></div></div>
+      <span class="fv-pct below">−2.3%</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Western Cape</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> SUV</span>
+      
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;479&nbsp;900</div>
+        <div class="car-pm">~R&nbsp;8&nbsp;500/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/new/2026-Changan-CS75-Pro-1.5T-CS-Auto-Western-Cape-Claremont/10866075/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#ffe8d5,#ffd0c0)">
+    <span class="img-fallback">🚙</span>
+    <div class="car-card-badges">
+      <span class="badge badge-warn"><i class="fas fa-fire"></i> Hot Price</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Toyota Fortuner')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Toyota</div>
+    <div class="car-title">Fortuner 2.4 GD-6 Raised Body</div>
+    <div class="car-sub">2020 · 141&nbsp;104 km · Manual · Diesel · WHITE</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:57%"></div></div>
+      <span class="fv-pct below">−2.0%</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Gauteng</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> SUV</span>
+      
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;449&nbsp;900</div>
+        <div class="car-pm">~R&nbsp;7&nbsp;969/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/used/2020-Toyota-Fortuner-2.4-GD-6-Raised-Body-Gauteng-Pretoria-North/10866073/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#d5e8ff,#c0d5f5)">
+    <span class="img-fallback">🚗</span>
+    <div class="car-card-badges">
+      <span class="badge badge-warn"><i class="fas fa-fire"></i> Hot Price</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Volkswagen Polo')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Volkswagen</div>
+    <div class="car-title">Polo 1.6 Conceptline 5-dr</div>
+    <div class="car-sub">2019 · 22&nbsp;000 km · Manual · Petrol · Blue</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:78%"></div></div>
+      <span class="fv-pct above">+0.9%</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Gauteng</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> Hatchback</span>
+      
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;179&nbsp;999</div>
+        <div class="car-pm">~R&nbsp;3&nbsp;188/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/used/2019-Volkswagen-Polo-1.6-Conceptline-5-dr-Gauteng-Johannesburg/10874493/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#e0d5ff,#cfc0f5)">
+    <span class="img-fallback">🏎️</span>
+    <div class="car-card-badges">
+      <span class="badge badge-warn"><i class="fas fa-fire"></i> Hot Price</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('BMW M3')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">BMW</div>
+    <div class="car-title">M3 Coupe</div>
+    <div class="car-sub">1994 · 213&nbsp;000 km · Manual · Petrol · Dakar Yellow</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:46%"></div></div>
+      <span class="fv-pct below">−3.6%</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Gauteng</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> Coupe</span>
+      
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;599&nbsp;900</div>
+        <div class="car-pm">~R&nbsp;11&nbsp;998/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/used/1994-BMW-M3-Coupe-Gauteng-Randburg/10866077/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#d5f5e5,#b8eeda)">
+    <span class="img-fallback">🚙</span>
+    <div class="car-card-badges">
+      <span class="badge badge-blue"><i class="fas fa-star"></i> Top Value</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('Ford Territory')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">Ford</div>
+    <div class="car-title">Territory Dark Edition 1.8l Ecoboost Auto</div>
+    <div class="car-sub">2026 · 50 km · Automatic · Petrol · Panther Black</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:38%"></div></div>
+      <span class="fv-pct below">−4.7%</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Western Cape</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> SUV</span>
+      
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;734&nbsp;000</div>
+        <div class="car-pm">~R&nbsp;13&nbsp;001/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/new/2026-Ford-Territory-Dark-Edition-1.8l-Ecoboost-Auto-Western-Cape-Claremont/10866078/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>
+<div class="car-card">
+  <div class="car-card-img" style="background:linear-gradient(135deg,#fff5d5,#ffe8b8)">
+    <span class="img-fallback">🚗</span>
+    <div class="car-card-badges">
+      <span class="badge badge-gold"><i class="fas fa-crown"></i> Premium</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('BMW 7 Series')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">BMW</div>
+    <div class="car-title">7 Series 750i</div>
+    <div class="car-sub">2006 · 81&nbsp;000 km · Automatic · Petrol · Grey</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:79%"></div></div>
+      <span class="fv-pct above">+1.0%</span>
+    </div>
+    <div class="car-specs">
+      <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Eastern Cape</span>
+      <span class="spec-chip"><i class="fas fa-car"></i> Sedan</span>
+      
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">R&nbsp;169&nbsp;990</div>
+        <div class="car-pm">~R&nbsp;3&nbsp;400/month</div>
+      </div>
+      <a href="https://www.cars.co.za/for-sale/used/2006-BMW-7-Series-750i-Eastern-Cape-Gqeberha/10866079/" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div></div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="pagination"><button class="page-btn arrow" disabled="" onclick="goPage(0)"><i class="fas fa-chevron-left"></i></button><button class="page-btn active" onclick="goPage(1)">1</button><button class="page-btn " onclick="goPage(2)">2</button><button class="page-btn " onclick="goPage(3)">3</button><button class="page-btn " onclick="goPage(4)">4</button><button class="page-btn " onclick="goPage(5)">5</button><span style="font-size:13px;color:var(--muted);padding:0 4px">…</span><button class="page-btn" onclick="goPage(3397)">3&nbsp;397</button><button class="page-btn arrow" onclick="goPage(2)"><i class="fas fa-chevron-right"></i></button></div>
+
+  </div>
+</div><!-- /page-layout -->
+
+<!-- COMPARE BAR -->
+<div class="compare-bar" id="compareBar">
+  <div style="display:flex;align-items:center;gap:12px;flex:1">
+    <span style="font-size:13px;font-weight:700;color:rgba(255,255,255,.7)">Comparing:</span>
+    <div class="compare-slots" id="compareSlots"><div class="compare-slot filled">Suzuki Ertiga</div><div class="compare-slot"><i class="fas fa-plus" style="margin-right:5px"></i>Add vehicle</div><div class="compare-slot"><i class="fas fa-plus" style="margin-right:5px"></i>Add vehicle</div></div>
+    <span class="compare-count" id="compareCount">1/3 selected</span>
+  </div>
+  <div class="compare-actions">
+    <button class="btn btn-ghost btn-sm" onclick="clearCompare()"><i class="fas fa-trash"></i> Clear</button>
+    <button class="btn btn-primary btn-sm"><i class="fas fa-code-compare"></i> Compare Now</button>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div style="max-width:1280px;margin:0 auto;padding:0 32px">
+    <div class="footer-grid">
+      <div><div class="footer-brand">AutoInsight <span>ZA</span></div><p class="footer-desc">South Africa's first ML-powered car buying intelligence platform.</p><div class="social-row"><a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-icon"><i class="fab fa-x-twitter"></i></a><a href="#" class="social-icon"><i class="fab fa-instagram"></i></a><a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a></div></div>
+      <div><div class="footer-heading">Platform</div><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="about.html">How It Works</a></li><li><a href="estimator.html">Price Estimator</a></li><li><a href="search.html">Browse Cars</a></li><li><a href="dashboard.html">Market Insights</a></li></ul></div>
+      <div><div class="footer-heading">Resources</div><ul class="footer-links"><li><a href="#">Buying Guide</a></li><li><a href="#">Car Reviews</a></li><li><a href="#">Financing Guide</a></li><li><a href="#">FAQs</a></li></ul></div>
+      <div><div class="footer-heading">Company</div><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 AutoInsight ZA. All rights reserved.</span><span>Built for South African car buyers 🇿🇦</span></div>
+  </div>
+</footer>
+
+<script src="auth.js"></script>
+<script>
+const API = 'http://localhost:8765';
+
+const CARD_BGS = [
+  'linear-gradient(135deg,#e8eeff,#d5e4ff)',
+  'linear-gradient(135deg,#ffe8d5,#ffd0c0)',
+  'linear-gradient(135deg,#d5e8ff,#c0d5f5)',
+  'linear-gradient(135deg,#e0d5ff,#cfc0f5)',
+  'linear-gradient(135deg,#d5f5e5,#b8eeda)',
+  'linear-gradient(135deg,#fff5d5,#ffe8b8)',
+];
+const BADGES = [
+  ['badge-green','<i class="fas fa-check-circle"></i> Fair Deal'],
+  ['badge-warn', '<i class="fas fa-fire"></i> Hot Price'],
+  ['badge-blue', '<i class="fas fa-star"></i> Top Value'],
+  ['badge-gold', '<i class="fas fa-crown"></i> Premium'],
+];
+const BODY_EMOJI = {
+  sedan:'🚗', hatchback:'🚗', suv:'🚙', crossover:'🚙', bakkie:'🛻',
+  'double cab':'🛻', 'single cab':'🛻', pickup:'🛻', mpv:'🚐',
+  minivan:'🚐', coupe:'🏎️', convertible:'🏎️', cabriolet:'🏎️',
+  'station wagon':'🚗', estate:'🚗', van:'🚐',
+};
+
+// Application state
+const state = {
+  q: '',
+  makes: new Set(),
+  models: new Set(),          
+  provinces: new Set(),
+  fuelTypes: new Set(),
+  transmissions: new Set(),
+  bodyType: '',
+  minPrice: 0,
+  maxPrice: 2000000,
+  selectedYears: new Set(),   
+  sort: 'newest',
+  page: 1,
+  limit: 24,
+};
+
+
+const YEAR_BRACKETS = {
+  '2026':       { min: 2026, max: 2026 },
+  '2024-2025':  { min: 2024, max: 2025 },
+  '2020-2023':  { min: 2020, max: 2023 },
+  '2015-2019':  { min: 2015, max: 2019 },
+  '2010-2014':  { min: 2010, max: 2014 },
+  'before-2010':{ min: 1900, max: 2009 },
+};
+
+let searchTimeout = null;
+
+/* nav helpers */
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+function toggleNav() {
+  const mn = document.getElementById('mobileNav');
+  const ic = document.getElementById('navIcon');
+  mn.classList.toggle('open');
+  ic.className = mn.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+}
+function toggleSection(title) { title.closest('.filter-section').classList.toggle('collapsed'); }
+function setView(v) {
+  const g = document.getElementById('carsGrid');
+  if (v === 'list') {
+    g.classList.add('list-view');
+    document.getElementById('gridBtn').classList.remove('active');
+    document.getElementById('listBtn').classList.add('active');
+  } else {
+    g.classList.remove('list-view');
+    document.getElementById('gridBtn').classList.add('active');
+    document.getElementById('listBtn').classList.remove('active');
+  }
+}
+
+/* formatters */
+function fmtFull(n) {
+  if (!n && n !== 0) return 'POA';
+  return 'R\u00a0' + parseInt(n).toLocaleString('en-ZA');
+}
+function fmtShort(n) {
+  if (!n) return '';
+  if (n >= 1000000) return 'R\u00a0' + (n / 1000000).toFixed(1) + 'M';
+  if (n >= 1000) return 'R\u00a0' + (n / 1000).toFixed(0) + 'K';
+  return fmtFull(n);
+}
+function getEmoji(bodyType) {
+  if (!bodyType) return '🚗';
+  const lc = bodyType.toLowerCase();
+  for (const [key, emoji] of Object.entries(BODY_EMOJI)) {
+    if (lc.includes(key)) return emoji;
+  }
+  return '🚗';
+}
+
+/* price range slider */
+function updatePriceRange() {
+  const minEl = document.getElementById('prMinInput');
+  const maxEl = document.getElementById('prMaxInput');
+  let minVal = parseInt(minEl.value);
+  let maxVal = parseInt(maxEl.value);
+  if (minVal > maxVal) { minVal = maxVal; minEl.value = minVal; }
+  document.getElementById('prMinLabel').textContent = minVal === 0 ? 'R 0' : fmtShort(minVal);
+  document.getElementById('prMaxLabel').textContent = maxVal >= 2000000 ? 'R 2M+' : fmtShort(maxVal);
+
+  const minPct = (minVal / 2000000) * 100;
+  const maxPct = (maxVal / 2000000) * 100;
+  minEl.style.setProperty('--val', minPct + '%');
+  maxEl.style.setProperty('--val', maxPct + '%');
+}
+function onPriceChange() {
+  state.minPrice = parseInt(document.getElementById('prMinInput').value);
+  state.maxPrice = parseInt(document.getElementById('prMaxInput').value);
+  state.page = 1;
+  triggerSearch();
+}
+
+/* year filter */
+function onYearChange() {
+  state.selectedYears.clear();
+  document.querySelectorAll('.year-check input:checked').forEach(cb => {
+    const key = cb.closest('.year-check').dataset.key;
+    state.selectedYears.add(key);
+  });
+  state.page = 1;
+  triggerSearch();
+}
+
+/* body type pills */
+function selectBodyType(btn) {
+  document.querySelectorAll('.bpill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  state.bodyType = btn.dataset.value || '';
+  state.page = 1;
+  executeSearch();
+}
+
+/* transmission checkboxes */
+function onTransmissionChange(cb, value) {
+  if (cb.checked) state.transmissions.add(value);
+  else state.transmissions.delete(value);
+  state.page = 1;
+  triggerSearch();
+}
+
+
+
+/* sort */
+function onSortChange() {
+  state.sort = document.getElementById('sortSelect').value;
+  state.page = 1;
+  executeSearch();
+}
+
+/* text search */
+function doTextSearch() {
+  state.q = document.getElementById('searchInput').value.trim();
+  state.page = 1;
+  executeSearch();
+}
+document.getElementById('searchInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doTextSearch();
+});
+
+/* dynamic filter loading */
+async function loadFilters() {
+  try {
+    const [makesRes, provRes, fuelRes, bodyRes, statsRes] = await Promise.all([
+      fetch(`${API}/api/filters/makes`),
+      fetch(`${API}/api/filters/provinces`),
+      fetch(`${API}/api/filters/fuel-types`),
+      fetch(`${API}/api/filters/body-types`),
+      fetch(`${API}/api/homepage/stats`),
+    ]);
+    const [makesData, provData, fuelData, bodyData, statsData] = await Promise.all([
+      makesRes.json(), provRes.json(), fuelRes.json(), bodyRes.json(), statsRes.json(),
+    ]);
+
+    renderMakesFilter(makesData.makes || []);
+    renderProvincesFilter(provData.provinces || []);
+    renderFuelFilter(fuelData.fuel_types || []);
+    renderBodyTypePills(bodyData.body_types || []);
+    populateHeaderStats(statsData, provData.provinces || []);
+  } catch (err) {
+    console.error('Filter load error:', err);
+  }
+}
+
+function populateHeaderStats(stats, provinces) {
+  const total = stats.total_listings || 0;
+  document.getElementById('shSub').textContent =
+    `${total.toLocaleString('en-ZA')} live listings updated daily from all major South African platforms`;
+  document.getElementById('statListings').textContent = total.toLocaleString('en-ZA');
+  document.getElementById('statMakes').textContent = (stats.unique_makes || '?') + ' makes';
+  const gp = provinces.find(p => p.province && p.province.toLowerCase().includes('gauteng'));
+  document.getElementById('statGauteng').textContent = gp ? gp.count.toLocaleString('en-ZA') : '-';
+}
+
+// MAKE FILTER
+function renderMakesFilter(makes) {
+  const container = document.getElementById('makeFilterBody');
+  if (!makes.length) { container.innerHTML = '<span style="font-size:12px;color:var(--muted)">No data</span>'; return; }
+  const VISIBLE = 8;
+  let html = '';
+  makes.forEach((m, i) => {
+    const hidden = i >= VISIBLE;
+    html += `
+      <label class="filter-check make-check${hidden ? ' hidden-make' : ''}"
+             style="${hidden ? 'display:none' : ''}"
+             data-value="${escHtml(m.make)}">
+        <input type="checkbox" onchange="onMakeChange(this,'${escHtml(m.make)}')">
+        <div class="check-box"></div>
+        ${escHtml(m.make)}
+        <span class="count">${m.count.toLocaleString('en-ZA')}</span>
+      </label>`;
+  });
+  if (makes.length > VISIBLE) {
+    html += `<button class="show-more-btn" id="showMoreMakesBtn" onclick="showMoreMakes()">
+               Show ${makes.length - VISIBLE} more…
+             </button>`;
+  }
+  container.innerHTML = html;
+}
+
+function showMoreMakes() {
+  document.querySelectorAll('.hidden-make').forEach(el => { el.style.display = 'flex'; });
+  const btn = document.getElementById('showMoreMakesBtn');
+  if (btn) btn.style.display = 'none';
+}
+
+function onMakeChange(cb, make) {
+  if (cb.checked) {
+    state.makes.add(make);
+  } else {
+    state.makes.delete(make);
+    // Clear model selection when a make is unchecked
+    state.models.clear();
+  }
+  state.page = 1;
+  loadModelsFilter();   // update model filter list
+  triggerSearch();
+}
+
+/* model filter - dynamic, linked to make selection */
+/*
+  Behaviour:
+    • 0 makes selected  → "Select a make first"
+    • 1 make selected   → fetch GET /api/filters/models/{make} and render checkboxes
+    • 2+ makes selected → "Select one make to filter by model"
+  
+  Previously-selected models that don't exist for a new make are
+  automatically cleared to prevent stale filters reaching the API.
+*/
+async function loadModelsFilter() {
+  const container = document.getElementById('modelFilterBody');
+  const section   = document.getElementById('modelFilterSection');
+  if (!container || !section) return;
+
+  if (state.makes.size === 0) {
+    state.models.clear();
+    container.innerHTML = '<span style="font-size:12px;color:var(--muted);padding:4px 0;display:block">Select a make first</span>';
+    section.classList.add('collapsed');
+    return;
+  }
+
+  if (state.makes.size > 1) {
+    state.models.clear();
+    container.innerHTML = '<span style="font-size:12px;color:var(--muted);padding:4px 0;display:block">Select one make to filter by model</span>';
+    section.classList.add('collapsed');
+    return;
+  }
+
+  // Exactly one make selected - fetch its models
+  const selectedMake = [...state.makes][0];
+  container.innerHTML = '<span style="font-size:12px;color:var(--muted);padding:4px 0;display:block"><i class="fas fa-spinner fa-spin" style="margin-right:6px"></i>Loading models…</span>';
+
+  try {
+    const res  = await fetch(`${API}/api/filters/models/${encodeURIComponent(selectedMake)}`);
+    const data = await res.json();
+    const models = data.models || [];
+
+    if (!models.length) {
+      container.innerHTML = '<span style="font-size:12px;color:var(--muted);padding:4px 0;display:block">No models found</span>';
+      section.classList.add('collapsed');
+      return;
+    }
+
+    // Drop any previously-selected models that aren't valid for this make
+    const validModelNames = new Set(models.map(m => m.model));
+    state.models.forEach(m => { if (!validModelNames.has(m)) state.models.delete(m); });
+
+    container.innerHTML = models.map(m => `
+      <label class="filter-check model-check" data-value="${escHtml(m.model)}">
+        <input type="checkbox" ${state.models.has(m.model) ? 'checked' : ''}
+               onchange="onModelChange(this,'${escHtml(m.model)}')">
+        <div class="check-box"></div>
+        ${escHtml(m.model)}
+        <span class="count">${m.count.toLocaleString('en-ZA')}</span>
+      </label>`).join('');
+
+    // Auto-expand section so user sees the freshly-loaded models
+    section.classList.remove('collapsed');
+
+  } catch (err) {
+    console.error('Model load error:', err);
+    container.innerHTML = '<span style="font-size:12px;color:var(--muted);padding:4px 0;display:block">Could not load models</span>';
+  }
+}
+
+function onModelChange(cb, model) {
+  if (cb.checked) state.models.add(model);
+  else state.models.delete(model);
+  state.page = 1;
+  triggerSearch();
+}
+
+// PROVINCE FILTER
+function renderProvincesFilter(provinces) {
+  const container = document.getElementById('provFilterBody');
+  if (!provinces.length) { container.innerHTML = '<span style="font-size:12px;color:var(--muted)">No data</span>'; return; }
+  container.innerHTML = provinces.map(p => `
+    <label class="filter-check" data-value="${escHtml(p.province)}">
+      <input type="checkbox" onchange="onProvinceChange(this,'${escHtml(p.province)}')">
+      <div class="check-box"></div>
+      ${escHtml(p.province)}
+      <span class="count">${p.count.toLocaleString('en-ZA')}</span>
+    </label>`).join('');
+}
+function onProvinceChange(cb, province) {
+  if (cb.checked) state.provinces.add(province);
+  else state.provinces.delete(province);
+  state.page = 1;
+  triggerSearch();
+}
+
+// FUEL TYPE FILTER
+function renderFuelFilter(fuelTypes) {
+  const container = document.getElementById('fuelFilterBody');
+  if (!fuelTypes.length) { container.innerHTML = '<span style="font-size:12px;color:var(--muted)">No data</span>'; return; }
+  container.innerHTML = fuelTypes.map(f => `
+    <label class="filter-check" data-value="${escHtml(f.fuel_type)}">
+      <input type="checkbox" onchange="onFuelChange(this,'${escHtml(f.fuel_type)}')">
+      <div class="check-box"></div>
+      ${escHtml(f.fuel_type)}
+      <span class="count">${f.count.toLocaleString('en-ZA')}</span>
+    </label>`).join('');
+}
+function onFuelChange(cb, fuel) {
+  if (cb.checked) state.fuelTypes.add(fuel);
+  else state.fuelTypes.delete(fuel);
+  state.page = 1;
+  triggerSearch();
+}
+
+// BODY TYPE PILLS 
+function renderBodyTypePills(bodyTypes) {
+  const container = document.getElementById('bodyTypePills');
+  let html = '<button class="bpill active" data-value="" onclick="selectBodyType(this)">All</button>';
+  bodyTypes.slice(0, 10).forEach(bt => {
+    if (bt.body_type) {
+      html += `<button class="bpill" data-value="${escHtml(bt.body_type)}" onclick="selectBodyType(this)">${escHtml(bt.body_type)}</button>`;
+    }
+  });
+  container.innerHTML = html;
+}
+
+/* search execution */
+function triggerSearch() {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(executeSearch, 350);
+}
+
+async function executeSearch() {
+  const params = new URLSearchParams();
+
+  if (state.q) params.set('q', state.q);
+  if (state.makes.size > 0)        params.set('make',         [...state.makes].join(','));
+  if (state.models.size > 0)       params.set('model',        [...state.models].join(','));
+  if (state.provinces.size > 0)    params.set('province',     [...state.provinces].join(','));
+  if (state.fuelTypes.size > 0)    params.set('fuel_type',    [...state.fuelTypes].join(','));
+  if (state.transmissions.size > 0) params.set('transmission', [...state.transmissions].join(','));
+  if (state.bodyType)               params.set('body_type',    state.bodyType);
+
+  if (state.minPrice > 0)          params.set('min_price', state.minPrice);
+  if (state.maxPrice < 2000000)    params.set('max_price', state.maxPrice);
+
+  // Year: union of all selected brackets
+  if (state.selectedYears.size > 0) {
+    const selected = [...state.selectedYears].map(k => YEAR_BRACKETS[k]);
+    params.set('min_year', Math.min(...selected.map(b => b.min)));
+    params.set('max_year', Math.max(...selected.map(b => b.max)));
+  }
+
+
+
+  params.set('sort',  state.sort);
+  params.set('page',  state.page);
+  params.set('limit', state.limit);
+
+  // Show loading state
+  const grid = document.getElementById('carsGrid');
+  grid.innerHTML = '<div class="grid-message"><i class="fas fa-spinner fa-spin"></i><p>Loading listings…</p></div>';
+
+  try {
+    const res = await fetch(`${API}/api/vehicles/search?${params}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+
+    renderVehicles(data.vehicles || []);
+    renderPagination(data.total || 0, data.page || 1, data.limit || 24, data.total_pages || 1);
+    updateResultsCount(data.total || 0);
+    updateActiveFilters();
+  } catch (err) {
+    console.error('Search error:', err);
+    grid.innerHTML = `<div class="grid-message"><i class="fas fa-circle-exclamation"></i><p>Could not load listings. Is the server running?</p></div>`;
+  }
+}
+
+/* car card rendering */
+function buildCard(v, idx) {
+  const bg      = CARD_BGS[idx % CARD_BGS.length];
+  const emoji   = getEmoji(v.body_type);
+  const vid     = v.vehicle_id;
+  const badgeSet = BADGES[vid % BADGES.length];
+
+  // Image: use main_image from DB, fall back to emoji
+  let imgHtml;
+  if (v.main_image) {
+    imgHtml = `
+      <img src="${escAttr(v.main_image)}"
+           alt="${escAttr((v.make||'') + ' ' + (v.model||''))}"
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"
+           onerror="this.style.display='none';document.getElementById('fb${vid}').style.display='flex'">
+      <span id="fb${vid}" class="img-fallback" style="display:none">${emoji}</span>`;
+  } else {
+    imgHtml = `<span class="img-fallback">${emoji}</span>`;
+  }
+
+  const year      = v.year      || '-';
+  const mileage   = v.mileage   ? parseInt(v.mileage).toLocaleString('en-ZA') + ' km' : '-';
+  const trans     = v.transmission || '-';
+  const fuel      = v.fuel_type  || '-';
+  const colour    = v.colour     ? ' · ' + v.colour : '';
+  const province  = v.province   || '';
+  const bodyType  = v.body_type  || '';
+  const isNada    = v.agent_nada_member;
+  const sellerT   = (v.seller_type || '').toLowerCase();
+  const isDealer  = sellerT.includes('dealer') || sellerT.includes('agent');
+  const isPrivate = sellerT.includes('private');
+
+  const sellerChip = isNada
+    ? `<span class="spec-chip"><i class="fas fa-shield-halved"></i> NADA</span>`
+    : isDealer
+    ? `<span class="spec-chip"><i class="fas fa-store"></i> Dealer</span>`
+    : isPrivate
+    ? `<span class="spec-chip"><i class="fas fa-user"></i> Private</span>`
+    : '';
+
+  const price   = v.price       ? parseInt(v.price)         : null;
+  const monthly = v.monthly_price ? parseInt(v.monthly_price)
+                  : price ? Math.round(price * 0.02) : null;
+
+
+  const fvScore = price ? Math.min(94, Math.max(38, 92 - price / 13000)) : 62;
+  const fvW = Math.round(fvScore);
+  const diff = parseFloat(((fvScore - 72) / 72 * 10).toFixed(1));
+  const fvClass = diff < -0.5 ? 'below' : diff > 0.5 ? 'above' : 'at';
+  const fvText  = diff < -0.5 ? `−${Math.abs(diff).toFixed(1)}%` : diff > 0.5 ? `+${diff.toFixed(1)}%` : 'Market';
+
+  const estUrl  = `estimator.html?make=${encodeURIComponent(v.make||'')}&model=${encodeURIComponent(v.model||'')}&year=${v.year||''}`;
+  const viewUrl = v.website_url || estUrl;
+
+  return `
+<div class="car-card">
+  <div class="car-card-img" style="background:${bg}">
+    ${imgHtml}
+    <div class="car-card-badges">
+      <span class="badge ${badgeSet[0]}">${badgeSet[1]}</span>
+    </div>
+    <div class="car-card-actions">
+      <button class="card-action-btn" title="Save"><i class="far fa-heart"></i></button>
+      <button class="card-action-btn" title="Compare" onclick="addToCompare('${escAttr((v.make||'')+' '+(v.model||''))}')"><i class="fas fa-code-compare"></i></button>
+    </div>
+  </div>
+  <div class="car-card-body">
+    <div class="car-make">${escHtml(v.make || 'Unknown')}</div>
+    <div class="car-title">${escHtml((v.model || '') + (v.variant ? ' ' + v.variant : ''))}</div>
+    <div class="car-sub">${year} · ${mileage} · ${trans} · ${fuel}${escHtml(colour)}</div>
+    <div class="fv-row">
+      <span class="fv-label">Fair Value</span>
+      <div class="fv-bar-outer"><div class="fv-bar-inner" style="width:${fvW}%"></div></div>
+      <span class="fv-pct ${fvClass}">${fvText}</span>
+    </div>
+    <div class="car-specs">
+      ${province  ? `<span class="spec-chip"><i class="fas fa-map-marker-alt"></i> ${escHtml(province)}</span>` : ''}
+      ${bodyType  ? `<span class="spec-chip"><i class="fas fa-car"></i> ${escHtml(bodyType)}</span>` : ''}
+      ${sellerChip}
+    </div>
+    <div class="car-footer">
+      <div>
+        <div class="car-price">${fmtFull(price)}</div>
+        <div class="car-pm">${monthly ? '~' + fmtFull(monthly) + '/month' : ''}</div>
+      </div>
+      <a href="${escAttr(viewUrl)}" target="_blank" class="btn btn-primary btn-sm">View Deal</a>
+    </div>
+  </div>
+</div>`;
+}
+
+function renderVehicles(vehicles) {
+  const grid = document.getElementById('carsGrid');
+  if (!vehicles.length) {
+    grid.innerHTML = `<div class="grid-message"><i class="fas fa-car-side"></i><p>No listings match your current filters.<br>Try broadening your search.</p></div>`;
+    return;
+  }
+  grid.innerHTML = vehicles.map((v, i) => buildCard(v, i)).join('');
+}
+
+/* pagination */
+function renderPagination(total, page, limit, totalPages) {
+  const el = document.getElementById('pagination');
+  if (totalPages <= 1) { el.innerHTML = ''; return; }
+
+  let html = '';
+  // Prev
+  html += `<button class="page-btn arrow" ${page <= 1 ? 'disabled' : ''} onclick="goPage(${page - 1})"><i class="fas fa-chevron-left"></i></button>`;
+
+  // Page numbers - show up to 5 around current page
+  const range = buildPageRange(page, totalPages, 5);
+  let lastShown = 0;
+  range.forEach(p => {
+    if (p - lastShown > 1) html += `<span style="font-size:13px;color:var(--muted);padding:0 4px">…</span>`;
+    html += `<button class="page-btn ${p === page ? 'active' : ''}" onclick="goPage(${p})">${p.toLocaleString('en-ZA')}</button>`;
+    lastShown = p;
+  });
+  if (totalPages - lastShown > 1) html += `<span style="font-size:13px;color:var(--muted);padding:0 4px">…</span>`;
+  if (!range.includes(totalPages)) {
+    html += `<button class="page-btn" onclick="goPage(${totalPages})">${totalPages.toLocaleString('en-ZA')}</button>`;
+  }
+
+  // Next
+  html += `<button class="page-btn arrow" ${page >= totalPages ? 'disabled' : ''} onclick="goPage(${page + 1})"><i class="fas fa-chevron-right"></i></button>`;
+
+  el.innerHTML = html;
+}
+
+function buildPageRange(current, total, window) {
+  const half = Math.floor(window / 2);
+  let start = Math.max(1, current - half);
+  let end   = Math.min(total, start + window - 1);
+  start = Math.max(1, end - window + 1);
+  const pages = [];
+  for (let i = start; i <= end; i++) pages.push(i);
+  return pages;
+}
+
+function goPage(p) {
+  state.page = p;
+  executeSearch();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* results count */
+function updateResultsCount(total) {
+  document.getElementById('resultsCount').innerHTML =
+    `<strong>${total.toLocaleString('en-ZA')}</strong> <span>listings found</span>`;
+}
+
+/* active filter chips */
+function updateActiveFilters() {
+  const el = document.getElementById('activeFilters');
+  const chips = [];
+
+  if (state.q)                  chips.push([`"${state.q}"`,              () => { state.q = ''; document.getElementById('searchInput').value = ''; }]);
+  state.makes.forEach(m =>      chips.push([m,                            () => { state.makes.delete(m);     syncCheckbox('.make-check', m, false); }]));
+  state.provinces.forEach(p =>  chips.push([p,                            () => { state.provinces.delete(p); syncCheckbox('#provFilterBody', p, false); }]));
+  state.fuelTypes.forEach(f =>  chips.push([f,                            () => { state.fuelTypes.delete(f); syncCheckbox('#fuelFilterBody', f, false); }]));
+  state.transmissions.forEach(t => chips.push([t,                         () => { state.transmissions.delete(t); }]));
+  if (state.bodyType)           chips.push([state.bodyType,               () => { state.bodyType = ''; document.querySelectorAll('.bpill').forEach(b => b.classList.toggle('active', b.dataset.value === '')); }]);
+  if (state.minPrice > 0)       chips.push([`From ${fmtShort(state.minPrice)}`, () => { state.minPrice = 0; document.getElementById('prMinInput').value = 0; updatePriceRange(); }]);
+  if (state.maxPrice < 2000000) chips.push([`Up to ${fmtShort(state.maxPrice)}`, () => { state.maxPrice = 2000000; document.getElementById('prMaxInput').value = 2000000; updatePriceRange(); }]);
+  state.selectedYears.forEach(k => {
+    const label = k === 'before-2010' ? 'Before 2010' : k.replace('-','–');
+    chips.push([label, () => {
+      state.selectedYears.delete(k);
+      const cb = document.querySelector(`.year-check[data-key="${k}"] input`);
+      if (cb) cb.checked = false;
+    }]);
+  });
+  state.models.forEach(m => chips.push([`Model: ${m}`, () => {
+    state.models.delete(m);
+    syncCheckbox('#modelFilterBody', m, false);
+  }]));
+
+  if (!chips.length) { el.innerHTML = ''; return; }
+  el.innerHTML = chips.map(([label, fn], i) =>
+    `<span class="af-chip">${escHtml(label)} <button onclick="removeChip(${i})"><i class="fas fa-xmark"></i></button></span>`
+  ).join('');
+  // Store callbacks for chip removal
+  el._chipFns = chips.map(c => c[1]);
+}
+
+function removeChip(i) {
+  const fn = document.getElementById('activeFilters')._chipFns[i];
+  if (fn) { fn(); state.page = 1; executeSearch(); }
+}
+
+function syncCheckbox(selector, value, checked) {
+  const labels = document.querySelectorAll(`${selector}[data-value]`);
+  labels.forEach(lbl => {
+    if (lbl.dataset.value === value) {
+      const cb = lbl.querySelector('input');
+      if (cb) cb.checked = checked;
+    }
+  });
+}
+
+/* clear all filters */
+function clearAllFilters() {
+  state.q = ''; document.getElementById('searchInput').value = '';
+  state.makes.clear();
+  state.provinces.clear();
+  state.fuelTypes.clear();
+  state.transmissions.clear();
+  state.bodyType = '';
+  state.minPrice = 0; state.maxPrice = 2000000;
+  document.getElementById('prMinInput').value = 0;
+  document.getElementById('prMaxInput').value = 2000000;
+  updatePriceRange();
+  state.selectedYears.clear();
+  state.models.clear();
+  loadModelsFilter();   // reset model filter display to "Select a make first"
+  // Uncheck all checkboxes
+  document.querySelectorAll('.filter-check input').forEach(cb => cb.checked = false);
+  // Reset body type to "All"
+  document.querySelectorAll('.bpill').forEach(b => b.classList.toggle('active', b.dataset.value === ''));
+  state.page = 1;
+  executeSearch();
+}
+
+/* compare bar */
+let compareList = [];
+function addToCompare(name) {
+  if (compareList.length >= 3 && !compareList.includes(name)) return;
+  if (!compareList.includes(name)) compareList.push(name);
+  const bar   = document.getElementById('compareBar');
+  const slots = document.getElementById('compareSlots');
+  bar.classList.add('show');
+  slots.innerHTML = '';
+  compareList.forEach(n => {
+    const s = document.createElement('div');
+    s.className = 'compare-slot filled';
+    s.textContent = n;
+    slots.appendChild(s);
+  });
+  for (let i = compareList.length; i < 3; i++) {
+    const s = document.createElement('div');
+    s.className = 'compare-slot';
+    s.innerHTML = '<i class="fas fa-plus" style="margin-right:5px"></i>Add vehicle';
+    slots.appendChild(s);
+  }
+  document.getElementById('compareCount').textContent = compareList.length + '/3 selected';
+}
+function clearCompare() { compareList = []; document.getElementById('compareBar').classList.remove('show'); }
+
+/* escape helpers */
+function escHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escAttr(s) {
+  if (!s) return '';
+  return String(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+/* url param parsing on load */
+function parseUrlParams() {
+  const urlP = new URLSearchParams(window.location.search);
+  if (urlP.get('q'))     { state.q = urlP.get('q'); document.getElementById('searchInput').value = state.q; }
+  if (urlP.get('make'))  { urlP.get('make').split(',').forEach(m => state.makes.add(m.trim())); }
+  if (urlP.get('model')) {
+    urlP.get('model').split(',').forEach(m => state.models.add(m.trim()));
+  }
+  if (urlP.get('province')) { urlP.get('province').split(',').forEach(p => state.provinces.add(p.trim())); }
+}
+
+/* initialise */
+document.addEventListener('DOMContentLoaded', async () => {
+  parseUrlParams();
+  updatePriceRange();
+  await loadFilters();
+  await executeSearch();
+});
+</script>
+
+
+</body></html>

@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account Settings | AutoInsight ZA</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --ink: #0a0f1e;
+  --ink-2: #161c30;
+  --ink-3: #0d1222;
+  --surface: #f5f7ff;
+  --card: #fff;
+  --accent: #0047ff;
+  --accent-2: #00c896;
+  --muted: #6b7a99;
+  --border: #e2e7f7;
+  --font: 'Montserrat', -apple-system, sans-serif;
+  --t: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 24px;
+}
+
+body.dark-theme {
+  --surface: #0a0f1e;
+  --card: #121829;
+  --ink: #ffffff;
+  --border: rgba(255, 255, 255, 0.08);
+  --muted: #8fa0c2;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--surface);
+  color: var(--ink);
+  line-height: 1.6;
+  transition: background var(--t), color var(--t);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+  width: 100%;
+}
+
+/* Nav */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(245, 247, 255, 0.93);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: all var(--t);
+}
+body.dark-theme .nav {
+  background: rgba(10, 15, 30, 0.93);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 900;
+  font-size: 19px;
+  letter-spacing: -0.4px;
+  color: var(--ink);
+}
+
+.nav-logo img {
+  height: 48px;
+}
+
+.nav-logo .za {
+  color: var(--accent);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.nav-links a {
+  padding: 8px 15px;
+  border-radius: var(--r-sm);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--muted);
+  transition: all var(--t);
+}
+
+.nav-links a:hover {
+  color: var(--ink);
+  background: rgba(0, 71, 255, 0.06);
+}
+
+.nav-right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border-radius: var(--r-sm);
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 13.5px;
+  cursor: pointer;
+  border: none;
+  transition: all var(--t);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #003de0;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 71, 255, 0.35);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+}
+
+.btn-secondary:hover {
+  background: rgba(0, 71, 255, 0.06);
+}
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.1);
+  color: inherit;
+  border: 1.5px solid var(--border);
+}
+
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 12.5px;
+}
+
+/* Page Layout */
+.main-content {
+  margin-top: 112px;
+  margin-bottom: 64px;
+  flex: 1;
+}
+
+.layout-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 40px;
+}
+
+/* Profile Summary Sidebar */
+.profile-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 71, 255, 0.04);
+}
+
+.avatar-wrapper {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  margin: 0 auto 16px;
+  display: grid;
+  place-items: center;
+  font-size: 36px;
+  font-weight: 800;
+  color: #fff;
+  border: 4px solid var(--card);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.profile-name {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.profile-email {
+  font-size: 13px;
+  color: var(--muted);
+  word-break: break-all;
+  margin-bottom: 16px;
+}
+
+.role-badge {
+  display: inline-block;
+  background: rgba(0, 71, 255, 0.08);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 99px;
+  border: 1px solid rgba(0, 71, 255, 0.15);
+}
+
+/* Forms and Settings Panels */
+.settings-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(0, 71, 255, 0.04);
+}
+
+.panel-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.panel-subtitle {
+  font-size: 14.5px;
+  color: var(--muted);
+  margin-bottom: 32px;
+  font-weight: 400;
+}
+
+.section-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 32px 0;
+}
+
+/* Custom Controls styling */
+.control-group {
+  margin-bottom: 24px;
+}
+
+.control-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.form-input {
+  width: 100%;
+  background: transparent;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: inherit;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all var(--t);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(0, 71, 255, 0.15);
+}
+
+/* Preferences Toggle */
+.pref-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  gap: 24px;
+}
+
+.pref-info {
+  flex: 1;
+}
+
+.pref-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.pref-desc {
+  font-size: 12.5px;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* Switch UI */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: var(--border);
+  transition: .3s;
+  border-radius: 34px;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--accent-2);
+}
+
+input:checked + .slider::before {
+  transform: translateX(22px);
+}
+
+/* Alert notifications */
+.alert-popup {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 10000;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none;
+}
+
+.alert-popup.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.alert-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 200, 150, 0.12);
+  color: var(--accent-2);
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+}
+
+.alert-body {
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .layout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="https://raw.githubusercontent.com/Damian-naidoo-07/Image_Host_Monster/main/AutoInsight_Logo_v3.1.png" alt="AutoInsight ZA Logo">
+      AutoInsight <span class="za">ZA</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">How It Works</a></li>
+      <li><a href="estimator.html">Price Estimator</a></li>
+      <li><a href="search.html">Browse Cars</a></li>
+      <li><a href="dashboard.html">Market Insights</a></li>
+    </ul>
+    <div class="nav-right" id="navActions">
+      <a href="login.html" class="btn btn-secondary btn-sm">Sign In</a>
+      <a href="estimator.html" class="btn btn-primary btn-sm"><i class="fas fa-calculator"></i> Get Fair Value</a>
+    </div>
+  </div>
+</nav>
+
+<div class="main-content">
+  <div class="container">
+    <div class="layout-grid">
+      <!-- SIDEBAR -->
+      <div>
+        <div class="profile-card">
+          <div class="avatar-wrapper" id="profileInitials">U</div>
+          <h3 class="profile-name" id="profileName">Loading User</h3>
+          <p class="profile-email" id="profileEmail">user@example.com</p>
+          <span class="role-badge" id="roleBadge">Client</span>
+        </div>
+      </div>
+
+      <!-- MAIN CONFIG PANEL -->
+      <div>
+        <div class="settings-panel">
+          <h2 class="panel-title">Custom User Settings</h2>
+          <p class="panel-subtitle">Manage preferences persisted on your personal secure database</p>
+
+          <div class="control-group">
+            <label class="control-label">Display Name</label>
+            <input type="text" id="inputName" class="form-input" placeholder="Your full name">
+          </div>
+
+          <div class="section-divider"></div>
+
+          <!-- PERSISTED THEME CONFIG -->
+          <h3 class="control-label" style="margin-bottom: 16px;">Interface Preference</h3>
+          <div class="pref-row">
+            <div class="pref-info">
+              <h4 class="pref-title">Dark Theme</h4>
+              <p class="pref-desc">Switch the UI layout to high-contrast blue and ink tones</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="themeSwitch" onchange="toggleLocalTheme(this)">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="section-divider"></div>
+
+          <!-- NOTIFICATION PERSISTENCE -->
+          <h3 class="control-label" style="margin-bottom: 16px;">Notification Channels</h3>
+          
+          <div class="pref-row">
+            <div class="pref-info">
+              <h4 class="pref-title">Monthly Car Market Analysis</h4>
+              <p class="pref-desc">Receive South Africa car market inflation stats and data reviews</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="marketingSwitch" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="pref-row">
+            <div class="pref-info">
+              <h4 class="pref-title">Saved Vehicle Price Alerts</h4>
+              <p class="pref-desc">Trigger notification when comparable listings match price drop signals</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="priceAlertsSwitch" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="pref-row">
+            <div class="pref-info">
+              <h4 class="pref-title">Product &amp; ML Model Updates</h4>
+              <p class="pref-desc">Get informed when new makes/models or valuation features release</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="productUpdatesSwitch" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div style="margin-top: 36px; display: flex; justify-content: flex-end;">
+            <button onclick="saveUserSettings()" class="btn btn-primary" id="saveBtn">
+              <i class="fas fa-save"></i> Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Alert success popups -->
+<div class="alert-popup" id="successPopup">
+  <div class="alert-icon">
+    <i class="fas fa-check"></i>
+  </div>
+  <div class="alert-body">Settings persisted successfully!</div>
+</div>
+
+<!-- GLOBAL AUTH SCRIPT LINK -->
+<script src="auth.js"></script>
+<script>
+const BACKEND = 'http://localhost:8765';
+
+// Authenticate protection check
+const token = localStorage.getItem('access_token');
+if (!token) {
+  window.location.href = 'login.html?redirect=settings.html';
+}
+
+function showPopup(message) {
+  const popup = document.getElementById('successPopup');
+  popup.querySelector('.alert-body').textContent = message;
+  popup.classList.add('show');
+  setTimeout(() => {
+    popup.classList.remove('show');
+  }, 3000);
+}
+
+// Initial settings load
+async function loadSettingsOnPage() {
+  try {
+    // 1. Fetch Auth Profile
+    const profileRes = await fetch(`${BACKEND}/api/auth/me`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!profileRes.ok) throw new Error('Unauthenticated');
+    const user = await profileRes.json();
+
+    document.getElementById('profileName').textContent = user.full_name || 'Client User';
+    document.getElementById('profileEmail').textContent = user.email;
+    document.getElementById('inputName').value = user.full_name || '';
+    
+    // Initials logic
+    const names = (user.full_name || 'User').split(' ');
+    const initials = names.map(n => n[0]).join('').substring(0, 2).toUpperCase();
+    document.getElementById('profileInitials').textContent = initials;
+
+    // Set Role Badge
+    const primaryRole = user.roles[0] || 'client';
+    const badge = document.getElementById('roleBadge');
+    badge.textContent = primaryRole.replace('_', ' ').toUpperCase();
+
+    // 2. Fetch Persisted settings
+    const settingsRes = await fetch(`${BACKEND}/api/settings/me`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!settingsRes.ok) return;
+    const settings = await settingsRes.json();
+
+    // Populate inputs
+    document.getElementById('themeSwitch').checked = settings.theme === 'dark';
+    document.getElementById('marketingSwitch').checked = settings.email_marketing;
+    document.getElementById('priceAlertsSwitch').checked = settings.email_price_alerts;
+    document.getElementById('productUpdatesSwitch').checked = settings.email_product_updates;
+
+    // Apply theme immediately
+    if (settings.theme === 'dark') {
+      document.body.classList.add('dark-theme');
+    } else {
+      document.body.classList.remove('dark-theme');
+    }
+
+  } catch (error) {
+    console.error('Failed to load user settings:', error);
+    localStorage.removeItem('access_token');
+    window.location.href = 'login.html?redirect=settings.html';
+  }
+}
+
+// Toggle local theme visually immediately
+function toggleLocalTheme(checkbox) {
+  if (checkbox.checked) {
+    document.body.classList.add('dark-theme');
+  } else {
+    document.body.classList.remove('dark-theme');
+  }
+}
+
+// Persist updates to the active database
+async function saveUserSettings() {
+  const saveBtn = document.getElementById('saveBtn');
+  saveBtn.disabled = true;
+  saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+  const full_name = document.getElementById('inputName').value.trim();
+  const theme = document.getElementById('themeSwitch').checked ? 'dark' : 'light';
+  const email_marketing = document.getElementById('marketingSwitch').checked;
+  const email_price_alerts = document.getElementById('priceAlertsSwitch').checked;
+  const email_product_updates = document.getElementById('productUpdatesSwitch').checked;
+
+  try {
+    // 1. Update Profile (Name)
+    const profileRes = await fetch(`${BACKEND}/api/auth/me/profile`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ full_name })
+    });
+    
+    // 2. Update Persisted Settings in DB
+    const settingsRes = await fetch(`${BACKEND}/api/settings/me`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        theme,
+        email_marketing,
+        email_price_alerts,
+        email_product_updates
+      })
+    });
+
+    if (!profileRes.ok || !settingsRes.ok) {
+      throw new Error('Persistence save failed.');
+    }
+
+    // Refresh UI elements
+    document.getElementById('profileName').textContent = full_name || 'Client User';
+    const names = (full_name || 'User').split(' ');
+    const initials = names.map(n => n[0]).join('').substring(0, 2).toUpperCase();
+    document.getElementById('profileInitials').textContent = initials;
+    
+    // Sync local storage theme
+    localStorage.setItem('user_theme', theme);
+
+    showPopup('Settings persisted to DB successfully!');
+  } catch (error) {
+    alert('Error saving preferences: ' + error.message);
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadSettingsOnPage);
+</script>
+</body>
+</html>

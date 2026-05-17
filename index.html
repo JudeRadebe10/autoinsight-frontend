@@ -1,0 +1,968 @@
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoInsight ZA | Smart Car Buying for South Africans</title>
+<meta name="description" content="South Africa's first ML-powered car intelligence platform. Know the fair value of any vehicle before you buy.">
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+
+:root{
+  --ink:#0a0f1e;--ink-2:#1c2542;--ink-3:#0f1835;
+  --surface:#f5f7ff;--card:#fff;
+  --accent:#0047ff;--accent-2:#00c896;--accent-3:#0099ff;
+  --warn:#ff5e3a;--gold:#f5a623;
+  --muted:#6b7a99;--border:#e2e7f7;
+  --r-xs:4px;--r-sm:10px;--r-md:16px;--r-lg:24px;--r-xl:36px;
+  --sh-sm:0 2px 8px rgba(0,71,255,.07);
+  --sh-md:0 8px 32px rgba(0,71,255,.12);
+  --font:'Montserrat',-apple-system,sans-serif;
+  --t:.2s ease;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--surface);color:var(--ink);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+.container{max-width:1280px;margin:0 auto;padding:0 32px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:var(--r-sm);font-family:var(--font);font-weight:700;font-size:13.5px;cursor:pointer;border:none;transition:all var(--t);white-space:nowrap}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#003de0;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,71,255,.35)}
+.btn-secondary{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.btn-secondary:hover{background:rgba(0,71,255,.06)}
+.btn-ghost{background:rgba(255,255,255,.1);color:#fff;border:1.5px solid rgba(255,255,255,.22);backdrop-filter:blur(8px)}
+.btn-ghost:hover{background:rgba(255,255,255,.2)}
+.btn-white{background:#fff;color:var(--accent)}
+.btn-sm{padding:8px 16px;font-size:12.5px}
+.btn-lg{padding:15px 30px;font-size:15px;border-radius:var(--r-md)}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(245,247,255,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all var(--t)}
+.nav.scrolled{background:rgba(245,247,255,.98);box-shadow:var(--sh-sm)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1280px;margin:0 auto;padding:0 32px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:19px;letter-spacing:-.4px;color:var(--ink)}
+.nav-logo .logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--accent),var(--accent-3));border-radius:10px;display:grid;place-items:center;color:#fff;font-size:15px;flex-shrink:0}
+.nav-logo .za{color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{padding:8px 15px;border-radius:var(--r-sm);font-size:13.5px;font-weight:500;color:var(--muted);transition:all var(--t)}
+.nav-links a:hover{color:var(--ink);background:rgba(0,71,255,.06)}
+.nav-links a.active{color:var(--accent);background:rgba(0,71,255,.08);font-weight:700}
+.nav-right{display:flex;gap:8px;align-items:center}
+.nav-mobile-btn{display:none;background:none;border:none;font-size:20px;color:var(--ink);cursor:pointer}
+.mobile-nav{display:none;position:fixed;top:72px;left:0;right:0;background:var(--card);border-bottom:1px solid var(--border);box-shadow:var(--sh-md);z-index:999;padding:16px;flex-direction:column;gap:4px}
+.mobile-nav.open{display:flex}
+.mobile-nav a{padding:12px 16px;border-radius:var(--r-sm);font-size:14px;font-weight:500;color:var(--muted)}
+.mobile-nav a.active{color:var(--accent);background:rgba(0,71,255,.07);font-weight:700}
+.mobile-nav-actions{display:flex;gap:8px;padding:12px 0 4px;border-top:1px solid var(--border);margin-top:8px}
+
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:99px;font-size:11.5px;font-weight:700}
+.badge-green{background:rgba(0,200,150,.12);color:#00a577}
+.badge-blue{background:rgba(0,71,255,.1);color:var(--accent)}
+.badge-warn{background:rgba(255,94,58,.12);color:var(--warn)}
+.badge-gold{background:rgba(245,166,35,.12);color:#c8840a}
+.badge-muted{background:var(--border);color:var(--muted)}
+
+
+/* Hero */
+.hero{min-height:100vh;background:linear-gradient(145deg,#050a1c 0%,#0c1a45 52%,#091e30 100%);position:relative;overflow:hidden;padding-top:72px;display:flex;align-items:center}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 75% 65% at 72% 42%,rgba(0,71,255,.28) 0%,transparent 60%),radial-gradient(ellipse 55% 55% at 18% 75%,rgba(0,200,150,.15) 0%,transparent 55%);pointer-events:none}
+.hero::after{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1px);background-size:26px 26px;pointer-events:none}
+.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;padding:88px 32px;max-width:1280px;margin:0 auto}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(0,200,150,.13);border:1px solid rgba(0,200,150,.28);color:var(--accent-2);border-radius:99px;padding:5px 15px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:22px;width:fit-content}
+.hero-dot{width:6px;height:6px;border-radius:50%;background:var(--accent-2);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-title{font-size:clamp(38px,5vw,66px);font-weight:900;line-height:1.04;color:#fff;margin-bottom:20px;letter-spacing:-.5px}
+.hero-title .grad{background:linear-gradient(90deg,#0af5c2,#0095ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{color:rgba(255,255,255,.58);font-size:17px;line-height:1.72;max-width:480px;margin-bottom:36px;font-weight:300}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:52px}
+.hero-stats{display:flex;gap:40px}
+.hero-stat-val{font-size:30px;font-weight:900;color:#fff;letter-spacing:-.5px;line-height:1}
+.hero-stat-lbl{font-size:12.5px;color:rgba(255,255,255,.45);margin-top:4px;font-weight:400}
+
+/* Hero visual: floating card */
+.hero-visual{position:relative;padding:20px 0}
+.hero-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);backdrop-filter:blur(20px);border-radius:var(--r-lg);padding:28px;color:#fff;animation:floatCard 3.4s ease-in-out infinite}
+@keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.mini-card{position:absolute;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(16px);border-radius:var(--r-md);padding:14px 18px;color:#fff;font-size:12.5px}
+.mc-1{bottom:-80px;left:-36px;animation:floatCard 3.4s ease-in-out infinite 0.6s}
+.mc-2{top:-80px;right:-16px;animation:floatCard 3.4s ease-in-out infinite 0.6s}
+.meta-pill{background:rgba(255,255,255,.12);border-radius:99px;padding:3px 10px;font-size:11.5px;display:inline-block;margin:2px}
+.fair-badge{background:rgba(0,200,150,.2);border:1px solid rgba(0,200,150,.4);color:#00e8a8;border-radius:var(--r-sm);padding:5px 12px;font-size:12px;font-weight:700}
+.fv-bar-wrap{margin-top:14px}
+.fv-bar-labels{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.4);margin-bottom:5px}
+.fv-bar{height:7px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden}
+.fv-fill{height:100%;width:72%;background:linear-gradient(90deg,#0af5c2,#0099ff);border-radius:99px}
+
+/* Search BOX */
+.search-section{margin-top:-44px;position:relative;z-index:10;padding-bottom:88px}
+.search-box{background:var(--card);border-radius:var(--r-lg);box-shadow:var(--sh-lg);padding:32px}
+.search-box-title{font-size:20px;font-weight:700;margin-bottom:20px;color:var(--ink)}
+.search-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:12px;align-items:end}
+.fl{display:flex;flex-direction:column;gap:6px}
+.fl-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px}
+.fl-input,.fl-select{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:var(--font);font-size:14px;color:var(--ink);background:var(--surface);transition:border-color var(--t);outline:none;-webkit-appearance:none}
+.fl-input:focus,.fl-select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,71,255,.09)}
+.fl-input::placeholder{color:#b8c4d8;font-weight:400}
+.fl-icon{position:relative}
+.fl-icon .fl-input{padding-left:40px}
+.fl-icon i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;pointer-events:none}
+.search-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;align-items:center}
+.search-tag{padding:4px 12px;border-radius:99px;font-size:12px;font-weight:500;background:var(--border);color:var(--muted);cursor:pointer;transition:all var(--t);border:none}
+.search-tag:hover{background:var(--accent);color:#fff}
+
+/* Section common */
+.section{padding:88px 0}
+.section-bg-white{background:#fff}
+.section-bg-ink{background:var(--ink)}
+.section-bg-surface{background:var(--surface)}
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:10px}
+.section-label-green{color:var(--accent-2)}
+.section-label-white{color:var(--accent-2)}
+.section-title{font-size:clamp(26px,3vw,42px);font-weight:900;line-height:1.1;margin-bottom:14px;letter-spacing:-.3px}
+.section-sub{font-size:16.5px;color:var(--muted);max-width:580px;font-weight:300;line-height:1.7}
+.section-head{margin-bottom:52px}
+.section-head-row{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:52px;flex-wrap:wrap}
+
+/* how-it-works steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;position:relative}
+.steps::before{content:'';position:absolute;top:31px;left:calc(16.6% + 24px);right:calc(16.6% + 24px);height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));z-index:0}
+.step{text-align:center;position:relative;z-index:1}
+.step-num{width:62px;height:62px;border-radius:50%;background:var(--card);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:var(--accent);margin:0 auto 22px;box-shadow:0 0 0 6px rgba(0,71,255,.08)}
+.step h3{font-size:18px;font-weight:700;margin-bottom:8px;color:var(--ink)}
+.step p{font-size:14px;color:var(--muted);line-height:1.65;font-weight:400}
+
+/* Car cards */
+.cars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.car-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:box-shadow var(--t),transform var(--t)}
+.car-card:hover{box-shadow:var(--sh-md);transform:translateY(-4px)}
+.car-card-img{height:200px;background:linear-gradient(135deg,#e8eeff,#d5e4ff);display:flex;align-items:center;justify-content:center;font-size:56px;position:relative;overflow:hidden}
+.car-card-badges{position:absolute;top:14px;left:14px;display:flex;flex-direction:column;gap:6px}
+.car-card-body{padding:20px}
+.car-make{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--accent);margin-bottom:2px}
+.car-title{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.car-sub{font-size:12.5px;color:var(--muted);margin-bottom:12px;font-weight:400}
+.car-specs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.spec-chip{display:inline-flex;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xs);padding:3px 9px;font-size:11.5px;color:var(--muted);font-weight:500}
+.spec-chip i{font-size:10px;color:var(--accent)}
+.fv-score-bar{height:5px;background:var(--border);border-radius:99px;overflow:hidden;margin-bottom:12px}
+.fv-fill-bar{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+.car-footer{display:flex;align-items:center;justify-content:space-between}
+.car-price{font-size:20px;font-weight:900;color:var(--ink);letter-spacing:-.3px}
+.car-pm{font-size:11.5px;color:var(--muted);margin-top:1px;font-weight:400}
+
+/* Data section */
+.data-section{background:var(--ink);padding:88px 0}
+.data-intro{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;margin-bottom:52px}
+.code-block{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:var(--r-lg);padding:26px 28px;font-family:'Courier New',monospace;font-size:13px;color:rgba(255,255,255,.5);line-height:2}
+.code-key{color:#7dd3fc}
+.code-str{color:#fca5a5}
+.code-num{color:#86efac}
+.code-cmt{color:#00e8a8}
+.data-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;border-radius:var(--r-lg);overflow:hidden}
+.data-card{background:var(--ink-2);padding:26px 22px;transition:background var(--t)}
+.data-card:hover{background:#243260}
+.data-card-icon{font-size:22px;margin-bottom:10px}
+.data-card-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.8px;color:var(--muted);margin-bottom:6px}
+.data-card-field{font-size:17px;font-weight:700;color:#fff;margin-bottom:4px}
+.data-card-desc{font-size:12.5px;color:rgba(255,255,255,.38);line-height:1.55;font-weight:400}
+
+/* Insights grid */
+.insights-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.insight-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:30px;transition:all var(--t)}
+.insight-card:hover{box-shadow:var(--sh-md);transform:translateY(-3px);border-color:rgba(0,71,255,.2)}
+.insight-icon{width:50px;height:50px;border-radius:var(--r-sm);display:grid;place-items:center;font-size:20px;margin-bottom:18px}
+.ic-blue{background:rgba(0,71,255,.1);color:var(--accent)}
+.ic-green{background:rgba(0,200,150,.1);color:var(--accent-2)}
+.ic-gold{background:rgba(245,166,35,.1);color:#d4890a}
+.ic-red{background:rgba(255,94,58,.1);color:var(--warn)}
+.insight-card h3{font-size:18px;font-weight:700;margin-bottom:8px;color:var(--ink)}
+.insight-card p{font-size:14.5px;color:var(--muted);line-height:1.65;font-weight:300}
+
+/* Provinces */
+.provinces-section{background:var(--ink-2);padding:88px 0}
+/* Loading skeleton for province pills */
+.prov-pill.skeleton .prov-name,.prov-pill.skeleton .prov-count,.prov-pill.skeleton .prov-label{
+  background:rgba(255,255,255,.08);color:transparent;border-radius:4px;
+  animation:shimmer 1.4s ease-in-out infinite alternate}
+@keyframes shimmer{from{opacity:.5}to{opacity:1}}
+.provinces-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.province-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.prov-pill{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);padding:16px 14px;text-align:center;transition:all var(--t);cursor:pointer}
+.prov-pill:hover{background:rgba(0,71,255,.18);border-color:rgba(0,71,255,.4)}
+.prov-pill.hot{background:rgba(0,71,255,.16);border-color:rgba(0,71,255,.35)}
+.prov-name{font-size:12px;font-weight:700;color:#fff;margin-bottom:4px}
+.prov-count{font-size:20px;font-weight:900;color:var(--accent-2);line-height:1;letter-spacing:-.3px}
+.prov-label{font-size:10px;color:rgba(255,255,255,.35);margin-top:2px;font-weight:400}
+
+/* Cta strip */
+.cta-strip{background:linear-gradient(135deg,var(--accent) 0%,var(--accent-3) 100%);padding:88px 0;position:relative;overflow:hidden}
+.cta-strip::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:22px 22px}
+.cta-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center}
+.cta-title{font-size:clamp(26px,3.5vw,44px);font-weight:900;color:#fff;line-height:1.1;letter-spacing:-.3px}
+.cta-sub{font-size:16px;color:rgba(255,255,255,.72);margin-top:10px;font-weight:300}
+.cta-actions{display:flex;flex-direction:column;gap:10px}
+.cta-actions .btn{justify-content:center;min-width:220px}
+
+/* Footer */
+.footer{background:var(--ink);padding:64px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:44px}
+.footer-brand{font-size:21px;font-weight:900;color:#fff;margin-bottom:10px;letter-spacing:-.3px}
+.footer-brand span{color:var(--accent)}
+.footer-desc{font-size:13.5px;color:rgba(255,255,255,.4);line-height:1.72;max-width:290px;font-weight:400}
+.social-row{display:flex;gap:10px;margin-top:20px}
+.social-icon{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:grid;place-items:center;color:rgba(255,255,255,.5);font-size:13px;transition:all var(--t)}
+.social-icon:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.footer-heading{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#fff;margin-bottom:16px}
+.footer-links{display:flex;flex-direction:column;gap:10px}
+.footer-links a{font-size:13.5px;color:rgba(255,255,255,.42);transition:color var(--t);font-weight:400}
+.footer-links a:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:20px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:rgba(255,255,255,.3)}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.delay-1{transition-delay:.08s}
+.delay-2{transition-delay:.16s}
+.delay-3{transition-delay:.24s}
+.delay-4{transition-delay:.32s}
+.fade-up{opacity:0;transform:translateY(20px);animation:fadeUp .7s ease forwards}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+.delay-d1{animation-delay:.1s}
+.delay-d2{animation-delay:.2s}
+.delay-d3{animation-delay:.3s}
+.delay-d4{animation-delay:.4s}
+
+/* Responsive */
+@media(max-width:1024px){
+  .hero-inner{grid-template-columns:1fr;gap:48px}
+  .hero-visual{display:none}
+  .search-row{grid-template-columns:1fr 1fr}
+  .data-grid{grid-template-columns:1fr 1fr}
+  .insights-grid{grid-template-columns:1fr}
+  .provinces-inner{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .cta-inner{grid-template-columns:1fr;text-align:center}
+  .cta-actions{align-items:center}
+}
+@media(max-width:768px){
+  .container{padding:0 20px}
+  .nav-links,.nav-right .btn:not(.nav-mobile-visible){display:none}
+  .nav-mobile-btn{display:block}
+  .search-row{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  .steps::before{display:none}
+  .cars-grid{grid-template-columns:1fr}
+  .data-grid{grid-template-columns:1fr}
+  .province-grid{grid-template-columns:repeat(3,1fr)}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;gap:8px;text-align:center}
+  .hero-stats{flex-direction:column;gap:16px}
+}
+
+.logo-img {
+  height: 60px;
+  margin-left: -50px;
+  vertical-align: middle;
+  
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+  <img src="https://raw.githubusercontent.com/Damian-naidoo-07/Image_Host_Monster/main/AutoInsight_Logo_v3.1.png" alt="AutoInsight ZA Logo" class="logo-img">
+  AutoInsight <span class="za">ZA</span>
+</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="about.html">How It Works</a></li>
+      <li><a href="estimator.html">Price Estimator</a></li>
+      <li><a href="search.html">Browse Cars</a></li>
+      <li><a href="dashboard.html">Market Insights</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="login.html" class="btn btn-secondary btn-sm">Sign In</a>
+      <a href="estimator.html" class="btn btn-primary btn-sm"><i class="fas fa-calculator"></i> Get Fair Value</a>
+      <button class="nav-mobile-btn" onclick="toggleNav()"><i class="fas fa-bars" id="navIcon"></i></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="about.html">How It Works</a>
+  <a href="estimator.html" class="active">Price Estimator</a>
+  <a href="search.html">Browse Cars</a>
+  <a href="dashboard.html">Market Insights</a>
+  <div class="mobile-nav-actions">
+    <a href="login.html" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center">Sign In</a>
+    <a href="estimator.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center"><i class="fas fa-calculator"></i> Fair Value</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow fade-up" id="heroEyebrow"><span class="hero-dot"></span> Live: 70,000+ SA listings tracked</div>
+      <h1 class="hero-title fade-up delay-d1">Stop Guessing.<br>Start Buying<br><span class="grad">With Data.</span></h1>
+      <p class="hero-sub fade-up delay-d2">South Africa's first ML-powered car intelligence platform. Know the fair value of any vehicle before you even call the dealer.</p>
+      <div class="hero-actions fade-up delay-d3">
+        <a href="search.html" class="btn btn-primary btn-lg" id="heroBrowseBtn"><i class="fas fa-search"></i> Browse 70,000+ Cars</a>
+        <a href="estimator.html" class="btn btn-ghost btn-lg">Try Price Estimator</a>
+      </div>
+      <div class="hero-stats fade-up delay-d4">
+        <div><div class="hero-stat-val" id="statListings">84K+</div><div class="hero-stat-lbl">Live Listings</div></div>
+        <div><div class="hero-stat-val" id="statMakes">99</div><div class="hero-stat-lbl">Makes Covered</div></div>
+        <div><div class="hero-stat-val" id="statMarketVal">R34.9B+</div><div class="hero-stat-lbl">Market Value Tracked</div></div>
+      </div>
+    </div>
+    <div class="hero-visual fade-up delay-d2">
+      <div class="hero-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(0,200,150,.15);border:1px solid rgba(0,200,150,.3);color:#00e8a8;border-radius:99px;padding:4px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px"><i class="fas fa-circle" style="font-size:7px"></i> Fair Value Analysis</span>
+          <span style="font-size:11px;color:rgba(255,255,255,.35)">Updated 2 min ago</span>
+        </div>
+        <div style="font-size:20px;font-weight:900;margin-bottom:10px">2021 Toyota Corolla Quest</div>
+        <div style="margin-bottom:14px"><span class="meta-pill">Automatic</span><span class="meta-pill">Petrol</span><span class="meta-pill">Sedan</span><span class="meta-pill">48,500 km</span><span class="meta-pill">Silver</span></div>
+        <div style="display:flex;align-items:flex-end;justify-content:space-between">
+          <div><div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:3px">Market Avg Price</div><div style="font-size:30px;font-weight:900;letter-spacing:-.5px" id="heroCardAvgPrice">-</div></div>
+          <div class="fair-badge"><i class="fas fa-check-circle"></i> Fair Deal</div>
+        </div>
+        <div class="fv-bar-wrap">
+          <div class="fv-bar-labels"><span>Below Market</span><span>Market Avg</span><span>Overpriced</span></div>
+          <div class="fv-bar"><div class="fv-fill"></div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.09)">
+          <div style="width:30px;height:30px;border-radius:50%;background:var(--accent);display:grid;place-items:center;font-size:12px;font-weight:700">A</div>
+          <div style="flex:1"><div style="font-size:12.5px;font-weight:700">AutoDeal Motors</div><div style="font-size:11px;color:rgba(255,255,255,.4)">★★★★★ 4.9 · 814 reviews · NADA Verified</div></div>
+        </div>
+      </div>
+      <div class="mini-card mc-1"><div style="font-size:11px;color:rgba(255,255,255,.45);margin-bottom:3px">Province Rank</div><div style="font-size:18px;font-weight:900">#1 of 9</div><div style="font-size:11px;color:var(--accent-2)">Cheapest in SA</div></div>
+      <div class="mini-card mc-2"><div style="font-size:11px;color:rgba(255,255,255,.45);margin-bottom:3px">Price Trend</div><div style="font-size:18px;font-weight:900;color:var(--accent-2)">↓ −3.2%</div><div style="font-size:11px;color:rgba(255,255,255,.4)">vs last quarter</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SEARCH BOX -->
+<div class="search-section">
+  <div class="container">
+    <div class="search-box">
+      <div class="search-box-title">Find Your Next Vehicle</div>
+      <div class="search-row">
+        <div class="fl fl-icon" style="position: relative;">
+          <div class="fl-label">Make / Model</div>
+          <i class="fas fa-search"></i>
+          <input type="text" class="fl-input" placeholder="e.g. Toyota Corolla, Ford Ranger…">
+        <div style="position: absolute; top: 100%; left: 0px; right: 0px; background: rgb(255, 255, 255); border-right-color: ; border-right-style: ; border-right-width: ; border-bottom-color: ; border-bottom-style: ; border-bottom-width: ; border-left-color: ; border-left-style: ; border-left-width: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-top: none; border-radius: 0 0 var(--r-sm) var(--r-sm); box-shadow: var(--sh-md); z-index: 100; max-height: 240px; overflow-y: auto; display: none;"></div></div>
+        <div class="fl">
+          <div class="fl-label">Province</div>
+          <select class="fl-select">
+            <option value="">All Provinces</option>
+            <option>Gauteng</option><option>Western Cape</option><option>KwaZulu-Natal</option>
+            <option>Eastern Cape</option><option>Limpopo</option><option>Mpumalanga</option>
+            <option>North West</option><option>Free State</option><option>Northern Cape</option>
+          </select>
+        </div>
+        <div class="fl">
+          <div class="fl-label">Max Price</div>
+          <select class="fl-select">
+            <option>Any price</option>
+            <option>Under R100K</option><option>Under R200K</option><option>Under R350K</option>
+            <option>Under R500K</option><option>Under R1M</option>
+          </select>
+        </div>
+        <div class="fl">
+          <div class="fl-label">Year</div>
+          <select class="fl-select">
+            <option>Any year</option>
+            <option>2024–2025</option><option>2020–2023</option>
+            <option>2015–2019</option><option>Before 2015</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-lg" id="mainSearchBtn" style="align-self:end;height:48px;border:none;cursor:pointer"><i class="fas fa-search"></i> Search</button>
+      </div>
+      <div class="search-tags" id="popularTagsRow"><span style="font-size:12px;color:var(--muted);font-weight:600">Popular:</span><a href="search.html?make=Toyota" class="search-tag">Toyota <span style="font-size:10px;opacity:.6">(11,910)</span></a><a href="search.html?make=Volkswagen" class="search-tag">Volkswagen <span style="font-size:10px;opacity:.6">(11,401)</span></a><a href="search.html?make=Ford" class="search-tag">Ford <span style="font-size:10px;opacity:.6">(8,259)</span></a><a href="search.html?make=Suzuki" class="search-tag">Suzuki <span style="font-size:10px;opacity:.6">(5,807)</span></a><a href="search.html?make=Hyundai" class="search-tag">Hyundai <span style="font-size:10px;opacity:.6">(4,634)</span></a><a href="search.html?make=BMW" class="search-tag">BMW <span style="font-size:10px;opacity:.6">(4,142)</span></a></div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS- 3 STEPS -->
+<section class="section section-bg-white">
+  <div class="container">
+    <div class="section-head reveal" style="text-align:center">
+      <div class="section-label">The Process</div>
+      <h2 class="section-title">Three Steps to Smarter Buying</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal delay-1">
+        <div class="step-num">1</div>
+        <h3>Search &amp; Filter</h3>
+        <p>Browse 70,000+ listings aggregated from all major SA platforms. Filter by make, model, province, fuel type, transmission, and more.</p>
+      </div>
+      <div class="step reveal delay-2">
+        <div class="step-num">2</div>
+        <h3>Get Your Fair Value Score</h3>
+        <p>Our ML engine analyses market data, seller ratings, mileage, and regional trends to instantly tell you if the price is fair, high, or a steal.</p>
+      </div>
+      <div class="step reveal delay-3">
+        <div class="step-num">3</div>
+        <h3>Buy With Confidence</h3>
+        <p>Walk into negotiations armed with data. Track price history, compare private vs. dealer pricing, and never get taken advantage of again.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED CARS -->
+<section class="section">
+  <div class="container">
+    <div class="section-head-row reveal">
+      <div>
+        <div class="section-label">This Week's Best Deals</div>
+        <h2 class="section-title">Fair-Priced Vehicles</h2>
+      </div>
+      <a href="search.html" class="btn btn-secondary">View All <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="cars-grid" id="featuredGrid">
+  <div class="car-card reveal delay-1">
+    <div class="car-card-img" style="background:linear-gradient(135deg,#e8eeff,#d5e4ff)">🚗
+      <div class="car-card-badges"><span class="badge badge-warn"><i class="fas fa-fire"></i> Hot Price</span></div>
+    </div>
+    <div class="car-card-body">
+      <div class="car-make">Volkswagen</div>
+      <div class="car-title">Amarok 3.0 TDI V6 184kW 4Motion Panamericana Auto Double-</div>
+      <div class="car-sub">2026 · 200 km · Automatic · Diesel</div>
+      <div class="fv-score-bar"><div class="fv-fill-bar" style="width:48%"></div></div>
+      <div class="car-specs">
+        <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Gauteng</span>
+        <span class="spec-chip"><i class="fas fa-car"></i> Double Cab Bakkie</span>
+        <span class="spec-chip"><i class="fas fa-store"></i> Verified Dealer</span>
+      </div>
+      <div class="car-footer">
+        <div>
+          <div class="car-price">R 1&nbsp;149&nbsp;950</div>
+          <div class="car-pm">~R 20&nbsp;368/month</div>
+        </div>
+        <a href="search.html?make=Volkswagen&amp;model=Amarok" class="btn btn-primary btn-sm">View</a>
+      </div>
+    </div>
+  </div>
+  <div class="car-card reveal delay-2">
+    <div class="car-card-img" style="background:linear-gradient(135deg,#ffe8d5,#ffd0c0)">🚗
+      <div class="car-card-badges"><span class="badge badge-warn"><i class="fas fa-fire"></i> Hot Price</span></div>
+    </div>
+    <div class="car-card-body">
+      <div class="car-make">Citroen</div>
+      <div class="car-title">C3 1.2 Max (61kW)</div>
+      <div class="car-sub">2026 · 101 km · Manual · Petrol</div>
+      <div class="fv-score-bar"><div class="fv-fill-bar" style="width:71%"></div></div>
+      <div class="car-specs">
+        <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Gauteng</span>
+        <span class="spec-chip"><i class="fas fa-car"></i> Hatchback</span>
+        <span class="spec-chip"><i class="fas fa-store"></i> Verified Dealer</span>
+      </div>
+      <div class="car-footer">
+        <div>
+          <div class="car-price">R 229&nbsp;950</div>
+          <div class="car-pm">~R 4&nbsp;073/month</div>
+        </div>
+        <a href="search.html?make=Citroen&amp;model=C3" class="btn btn-primary btn-sm">View</a>
+      </div>
+    </div>
+  </div>
+  <div class="car-card reveal delay-3">
+    <div class="car-card-img" style="background:linear-gradient(135deg,#d5e8ff,#c0d5f5)">🚙
+      <div class="car-card-badges"><span class="badge badge-blue"><i class="fas fa-star"></i> Top Value</span></div>
+    </div>
+    <div class="car-card-body">
+      <div class="car-make">Toyota</div>
+      <div class="car-title">Urban Cruiser 1.5 XR Auto</div>
+      <div class="car-sub">2026 · 1,500 km · Automatic · Petrol</div>
+      <div class="fv-score-bar"><div class="fv-fill-bar" style="width:61%"></div></div>
+      <div class="car-specs">
+        <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Free State</span>
+        <span class="spec-chip"><i class="fas fa-car"></i> SUV</span>
+        <span class="spec-chip"><i class="fas fa-store"></i> Verified Dealer</span>
+      </div>
+      <div class="car-footer">
+        <div>
+          <div class="car-price">R 359&nbsp;900</div>
+          <div class="car-pm">~R 6&nbsp;375/month</div>
+        </div>
+        <a href="search.html?make=Toyota&amp;model=Urban%20Cruiser" class="btn btn-primary btn-sm">View</a>
+      </div>
+    </div>
+  </div>
+  <div class="car-card reveal delay-1">
+    <div class="car-card-img" style="background:linear-gradient(135deg,#e8ffe8,#c8f0c8)">🚙
+      <div class="car-card-badges"><span class="badge badge-warn"><i class="fas fa-fire"></i> Hot Price</span></div>
+    </div>
+    <div class="car-card-body">
+      <div class="car-make">Hyundai</div>
+      <div class="car-title">Creta 1.5D Executive Auto</div>
+      <div class="car-sub">2022 · 24,270 km · Automatic · Diesel</div>
+      <div class="fv-score-bar"><div class="fv-fill-bar" style="width:64%"></div></div>
+      <div class="car-specs">
+        <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Kwazulu Natal</span>
+        <span class="spec-chip"><i class="fas fa-car"></i> SUV</span>
+        <span class="spec-chip"><i class="fas fa-store"></i> Verified Dealer</span>
+      </div>
+      <div class="car-footer">
+        <div>
+          <div class="car-price">R 318&nbsp;900</div>
+          <div class="car-pm">~R 5&nbsp;648/month</div>
+        </div>
+        <a href="search.html?make=Hyundai&amp;model=Creta" class="btn btn-primary btn-sm">View</a>
+      </div>
+    </div>
+  </div>
+  <div class="car-card reveal delay-2">
+    <div class="car-card-img" style="background:linear-gradient(135deg,#fff0e8,#ffe0c0)">🚗
+      <div class="car-card-badges"><span class="badge badge-gold"><i class="fas fa-bolt"></i> New Listing</span></div>
+    </div>
+    <div class="car-card-body">
+      <div class="car-make">Volkswagen</div>
+      <div class="car-title">Caddy 1.6i (81kW) Panel Van</div>
+      <div class="car-sub">2015 · 166,000 km · Manual · Petrol</div>
+      <div class="fv-score-bar"><div class="fv-fill-bar" style="width:77%"></div></div>
+      <div class="car-specs">
+        <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> North West Province</span>
+        <span class="spec-chip"><i class="fas fa-car"></i> Panel Van</span>
+        <span class="spec-chip"><i class="fas fa-store"></i> Verified Dealer</span>
+      </div>
+      <div class="car-footer">
+        <div>
+          <div class="car-price">R 159&nbsp;900</div>
+          
+        </div>
+        <a href="search.html?make=Volkswagen&amp;model=Caddy" class="btn btn-primary btn-sm">View</a>
+      </div>
+    </div>
+  </div>
+  <div class="car-card reveal delay-3">
+    <div class="car-card-img" style="background:linear-gradient(135deg,#f0e8ff,#e0c8ff)">🚙
+      <div class="car-card-badges"><span class="badge badge-blue"><i class="fas fa-star"></i> Top Value</span></div>
+    </div>
+    <div class="car-card-body">
+      <div class="car-make">Volvo</div>
+      <div class="car-title">XC90 T6 Inscription AWD</div>
+      <div class="car-sub">2018 · 79,833 km · Automatic · Petrol</div>
+      <div class="fv-score-bar"><div class="fv-fill-bar" style="width:57%"></div></div>
+      <div class="car-specs">
+        <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> Western Cape</span>
+        <span class="spec-chip"><i class="fas fa-car"></i> SUV</span>
+        <span class="spec-chip"><i class="fas fa-store"></i> Verified Dealer</span>
+      </div>
+      <div class="car-footer">
+        <div>
+          <div class="car-price">R 399&nbsp;900</div>
+          <div class="car-pm">~R 7&nbsp;083/month</div>
+        </div>
+        <a href="search.html?make=Volvo&amp;model=XC90" class="btn btn-primary btn-sm">View</a>
+      </div>
+    </div>
+  </div></div>
+  </div>
+</section>
+
+<!-- DATA FIELDS SECTION -->
+<div class="data-section">
+  <div class="container">
+    <div class="data-intro reveal">
+      <div>
+        <div class="section-label section-label-green">What We Collect</div>
+        <h2 class="section-title" style="color:#fff">Intelligence Built on<br>Real Scraped Data</h2>
+        <p style="color:rgba(255,255,255,.48);font-size:15.5px;line-height:1.72;font-weight:300">Every data point in our platform comes from live, scraped market data. Our database covers vehicle details, pricing signals, seller profiles, and geolocation - giving you the complete picture dealers don't want you to see.</p>
+      </div>
+      <div class="code-block">
+        <span class="code-cmt">// vehicle record</span><br>
+        {<br>
+        &nbsp;&nbsp;<span class="code-key">vehicle_id</span>: <span class="code-str">"VH_842991"</span>,<br>
+        &nbsp;&nbsp;<span class="code-key">make</span>: <span class="code-str">"Toyota"</span>, <span class="code-key">model</span>: <span class="code-str">"Corolla"</span>,<br>
+        &nbsp;&nbsp;<span class="code-key">price</span>: <span class="code-num">265000</span>,<br>
+        &nbsp;&nbsp;<span class="code-key">mileage</span>: <span class="code-num">48500</span>,<br>
+        &nbsp;&nbsp;<span class="code-key">province</span>: <span class="code-str">"Gauteng"</span>,<br>
+        &nbsp;&nbsp;<span class="code-key">seller_rating</span>: <span class="code-num">4.8</span><br>
+        }
+      </div>
+    </div>
+    <div class="data-grid reveal">
+      <div class="data-card"><div class="data-card-icon">🏷️</div><div class="data-card-label">Vehicle Identity</div><div class="data-card-field">vehicle_id · title · description</div><div class="data-card-desc">Unique ID and full description for every scraped listing</div></div>
+      <div class="data-card"><div class="data-card-icon">📅</div><div class="data-card-label">Vehicle Specs</div><div class="data-card-field">year · make · model · variant</div><div class="data-card-desc">Full specification breakdown for accurate model matching</div></div>
+      <div class="data-card"><div class="data-card-icon">💰</div><div class="data-card-label">Pricing Signals</div><div class="data-card-field">price · monthly_price · finance_available</div><div class="data-card-desc">Listed price, monthly instalment &amp; finance eligibility</div></div>
+      <div class="data-card"><div class="data-card-icon">🔧</div><div class="data-card-label">Condition &amp; Type</div><div class="data-card-field">fuel_type · transmission · body_type · colour</div><div class="data-card-desc">Mechanical specs and physical attributes for filtering</div></div>
+      <div class="data-card"><div class="data-card-icon">🏪</div><div class="data-card-label">Seller Profile</div><div class="data-card-field">seller_name · seller_rating · seller_rating_count</div><div class="data-card-desc">Dealer reputation: ratings, reviews, NADA membership</div></div>
+      <div class="data-card"><div class="data-card-icon">📍</div><div class="data-card-label">Geolocation</div><div class="data-card-field">province · agent_locality · coords_lat/lng</div><div class="data-card-desc">Province, locality, and GPS for regional price mapping</div></div>
+      <div class="data-card"><div class="data-card-icon">✅</div><div class="data-card-label">Trust Signals</div><div class="data-card-field">agent_featured · agent_nada_member · agent_vin_required</div><div class="data-card-desc">Verified dealer flags and VIN check requirements</div></div>
+      <div class="data-card"><div class="data-card-icon">🔗</div><div class="data-card-label">Source Tracking</div><div class="data-card-field">website_url · commercial_type</div><div class="data-card-desc">Original listing URL and commercial categorisation</div></div>
+      <div class="data-card"><div class="data-card-icon">🕐</div><div class="data-card-label">Temporal Data</div><div class="data-card-field">created_at · updated_at</div><div class="data-card-desc">Timestamps powering price trend and history analytics</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PLATFORM INSIGHTS -->
+<section class="section section-bg-white">
+  <div class="container">
+    <div class="section-head reveal" style="text-align:center">
+      <div class="section-label">Why AutoInsight ZA</div>
+      <h2 class="section-title">Market Intelligence You Can't Get Elsewhere</h2>
+      <p class="section-sub" style="margin:0 auto">Every feature is built around real data gaps that leave South African car buyers at a disadvantage.</p>
+    </div>
+    <div class="insights-grid reveal">
+      <div class="insight-card"><div class="insight-icon ic-blue"><i class="fas fa-scale-balanced"></i></div><h3>Instant Fair Value Score</h3><p>Our ML model analyses price, mileage, year, province, and seller trust score to give you an immediate verdict - fair, overpriced, or a steal - on any listing.</p></div>
+      <div class="insight-card"><div class="insight-icon ic-green"><i class="fas fa-chart-line"></i></div><h3>Price History &amp; Trend Tracking</h3><p>Track how prices for specific makes and models have moved over time. Understand the impact of Rand fluctuations, import duties, and fuel costs on used car prices.</p></div>
+      <div class="insight-card"><div class="insight-icon ic-gold"><i class="fas fa-map"></i></div><h3>Provincial Price Heat Maps</h3><p>See exactly where vehicles are cheapest across all 9 provinces. Using geo-coordinates from our seller data to power regional pricing intelligence.</p></div>
+      <div class="insight-card"><div class="insight-icon ic-red"><i class="fas fa-store-slash"></i></div><h3>Private vs. Dealer Comparison</h3><p>Instantly compare private seller pricing against dealership rates for the same vehicle type - and know exactly how much the dealer premium costs you.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROVINCES -->
+<section class="provinces-section">
+  <div class="container">
+    <div class="provinces-inner">
+      <div class="reveal">
+        <div class="section-label section-label-green">Regional Coverage</div>
+        <h2 class="section-title" style="color:#fff">All 9 Provinces.<br>Real Regional Data.</h2>
+        <p style="color:rgba(255,255,255,.48);font-size:15.5px;line-height:1.72;margin-bottom:28px;font-weight:300">Used car prices differ significantly between provinces. A Toyota Hilux in Gauteng can cost R20,000 more than the same spec in the Northern Cape. Our geo-data exposes this gap.</p>
+        <a href="dashboard.html" class="btn btn-ghost">View Market Insights <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <!--
+        id="provinceGrid" - replaced by loadProvinceStats() which calls
+        GET /api/filters/provinces → { provinces: [ { province, count } ] }
+        Returns real listing counts from the DB sorted by count DESC.
+        Skeleton pills are shown while the API call is in-flight.
+      -->
+      <div class="province-grid reveal" id="provinceGrid">
+        <div class="prov-pill skeleton"><div class="prov-name">&nbsp;</div><div class="prov-count">&nbsp;&nbsp;&nbsp;&nbsp;</div><div class="prov-label">&nbsp;</div></div>
+        <div class="prov-pill skeleton"><div class="prov-name">&nbsp;</div><div class="prov-count">&nbsp;&nbsp;&nbsp;&nbsp;</div><div class="prov-label">&nbsp;</div></div>
+        <div class="prov-pill skeleton"><div class="prov-name">&nbsp;</div><div class="prov-count">&nbsp;&nbsp;&nbsp;&nbsp;</div><div class="prov-label">&nbsp;</div></div>
+        <div class="prov-pill skeleton"><div class="prov-name">&nbsp;</div><div class="prov-count">&nbsp;&nbsp;&nbsp;&nbsp;</div><div class="prov-label">&nbsp;</div></div>
+        <div class="prov-pill skeleton"><div class="prov-name">&nbsp;</div><div class="prov-count">&nbsp;&nbsp;&nbsp;&nbsp;</div><div class="prov-label">&nbsp;</div></div>
+        <div class="prov-pill skeleton"><div class="prov-name">&nbsp;</div><div class="prov-count">&nbsp;&nbsp;&nbsp;&nbsp;</div><div class="prov-label">&nbsp;</div></div>
+        <div class="prov-pill skeleton"><div class="prov-name">&nbsp;</div><div class="prov-count">&nbsp;&nbsp;&nbsp;&nbsp;</div><div class="prov-label">&nbsp;</div></div>
+        <div class="prov-pill skeleton"><div class="prov-name">&nbsp;</div><div class="prov-count">&nbsp;&nbsp;&nbsp;&nbsp;</div><div class="prov-label">&nbsp;</div></div>
+        <div class="prov-pill skeleton"><div class="prov-name">&nbsp;</div><div class="prov-count">&nbsp;&nbsp;&nbsp;&nbsp;</div><div class="prov-label">&nbsp;</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">AutoInsight <span>ZA</span></div>
+        <p class="footer-desc">South Africa's first ML-powered car buying intelligence platform. Making informed car purchases accessible to every South African.</p>
+        <div class="social-row">
+          <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-icon" aria-label="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Platform</div>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">How It Works</a></li>
+          <li><a href="estimator.html">Price Estimator</a></li>
+          <li><a href="search.html">Browse Cars</a></li>
+          <li><a href="dashboard.html">Market Insights</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Resources</div>
+        <ul class="footer-links">
+          <li><a href="#">Buying Guide</a></li>
+          <li><a href="#">Car Reviews</a></li>
+          <li><a href="#">Financing Guide</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 AutoInsight ZA. All rights reserved.</span>
+      <span>Built for South African car buyers 🇿🇦</span>
+    </div>
+  </div>
+</footer>
+
+<script src="auth.js"></script>
+<script>
+
+const API = 'http://localhost:8765';
+
+// sticky nav scroll effect
+const nav=document.getElementById('mainNav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
+function toggleNav(){
+  const mn=document.getElementById('mobileNav');
+  const ic=document.getElementById('navIcon');
+  mn.classList.toggle('open');
+  ic.className=mn.classList.contains('open')?'fas fa-times':'fas fa-bars';
+}
+
+// scroll-triggered fade-in for .reveal elements
+const ro=new IntersectionObserver(entries=>entries.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target)}
+}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(r=>ro.observe(r));
+
+// price and number formatting helpers
+const fmtR    = n => n>=1_000_000?`R${(n/1_000_000).toFixed(1)}M`:n>=1_000?`R${Math.round(n/1_000)}K`:`R${Math.round(n).toLocaleString()}`;
+const fmtFull = n => 'R '+Math.round(n).toLocaleString('en-ZA');
+const fmtKM   = n => n>=1000?`${Math.round(n/1000).toLocaleString()}K+`:(n?.toLocaleString()??'-');
+// Province listing counts: 28400→"28K", 800→"800"
+const fmtCount = n => n>=10_000?`${(n/1_000).toFixed(0)}K`:n>=1_000?`${(n/1_000).toFixed(1)}K`:String(n);
+
+// gradients and badges used to skin the listing cards
+const CARD_BGSRC = [
+  'linear-gradient(135deg,#e8eeff,#d5e4ff)',
+  'linear-gradient(135deg,#ffe8d5,#ffd0c0)',
+  'linear-gradient(135deg,#d5e8ff,#c0d5f5)',
+  'linear-gradient(135deg,#e8ffe8,#c8f0c8)',
+  'linear-gradient(135deg,#fff0e8,#ffe0c0)',
+  'linear-gradient(135deg,#f0e8ff,#e0c8ff)',
+];
+const BADGES=[
+  {cls:'badge-green',icon:'fa-check-circle',text:'Fair Deal'},
+  {cls:'badge-warn', icon:'fa-fire',        text:'Hot Price'},
+  {cls:'badge-blue', icon:'fa-star',        text:'Top Value'},
+  {cls:'badge-gold', icon:'fa-bolt',        text:'New Listing'},
+];
+const BODY_EMOJI={
+  'suv':'🚙','bakkie':'🛻','double cab':'🛻','sedan':'🚗','hatchback':'🚗',
+  'mpv':'🚐','coupe':'🏎️','convertible':'🏎️','crossover':'🚙'
+};
+function getEmoji(bodyType){ return BODY_EMOJI[(bodyType||'').toLowerCase()]||'🚗'; }
+
+
+const PROV_SHORT={
+  'KwaZulu-Natal':'KZN',
+  'Northern Cape':'N. Cape',
+};
+function provDisplayName(p){ return PROV_SHORT[p]||p; }
+
+
+function buildCarCard(v, idx) {
+  const badge   = BADGES[idx % BADGES.length];
+  const bg      = CARD_BGSRC[idx % CARD_BGSRC.length];
+  const emoji   = getEmoji(v.body_type);
+  const pm      = v.monthly_price ? `~${fmtFull(v.monthly_price)}/month` : '';
+  const mileage = v.mileage ? `${v.mileage.toLocaleString('en-ZA')} km` : '-';
+  const sellerIco = (v.seller_type||'').toLowerCase().includes('private')?'fa-user':'fa-store';
+  const sellerLbl = (v.seller_type||'').toLowerCase().includes('private')?'Private Seller':'Verified Dealer';
+  const province  = v.province  || 'SA';
+  const bodyType  = v.body_type || 'Vehicle';
+  const fvW       = Math.min(92, Math.max(48, 90 - Math.floor((v.price||300000)/12000)));
+  const destUrl   = `estimator.html?make=${encodeURIComponent(v.make)}&model=${encodeURIComponent(v.model)}&year=${v.year}`;
+  const imgHtml   = v.main_image
+    ? `<img src="${v.main_image}" alt="${v.make} ${v.model}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';this.nextSibling.style.display='flex'"><span style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:56px">${emoji}</span>`
+    : emoji;
+  return `
+  <div class="car-card reveal delay-${(idx%3)+1}">
+    <div class="car-card-img" style="background:${bg}">${imgHtml}
+      <div class="car-card-badges"><span class="badge ${badge.cls}"><i class="fas ${badge.icon}"></i> ${badge.text}</span></div>
+    </div>
+    <div class="car-card-body">
+      <div class="car-make">${v.make}</div>
+      <div class="car-title">${v.model}${v.variant?' '+v.variant:''}</div>
+      <div class="car-sub">${v.year} · ${mileage} · ${v.transmission||'-'} · ${v.fuel_type||'-'}</div>
+      <div class="fv-score-bar"><div class="fv-fill-bar" style="width:${fvW}%"></div></div>
+      <div class="car-specs">
+        <span class="spec-chip"><i class="fas fa-map-marker-alt"></i> ${province}</span>
+        <span class="spec-chip"><i class="fas fa-car"></i> ${bodyType}</span>
+        <span class="spec-chip"><i class="fas ${sellerIco}"></i> ${sellerLbl}</span>
+      </div>
+      <div class="car-footer">
+        <div>
+          <div class="car-price">${v.price?fmtFull(v.price):'-'}</div>
+          ${pm?`<div class="car-pm">${pm}</div>`:''}
+        </div>
+        <a href="${destUrl}" class="btn btn-primary btn-sm">View</a>
+      </div>
+    </div>
+  </div>`;
+}
+
+// GET /api/homepage/stats - populates the hero counters
+/*
+  GET /api/homepage/stats
+  Updates: #statListings, #statMakes, #statMarketVal,
+           #heroCardAvgPrice, #heroEyebrow, #heroBrowseBtn
+*/
+async function loadHeroStats() {
+  try {
+    const res  = await fetch(`${API}/api/homepage/stats`);
+    const data = await res.json();
+    const total = data.total_listings || 0;
+    const fmtTotal = total>=1000 ? `${Math.floor(total/1000)}K+` : total.toLocaleString();
+    const listEl=document.getElementById('statListings');
+    const makEl =document.getElementById('statMakes');
+    const mvEl  =document.getElementById('statMarketVal');
+    const avgEl =document.getElementById('heroCardAvgPrice');
+    const eyeEl =document.getElementById('heroEyebrow');
+    const btnEl =document.getElementById('heroBrowseBtn');
+    if(listEl) listEl.textContent = fmtTotal;
+    if(makEl)  makEl.textContent  = data.total_makes || '-';
+    if(mvEl)   mvEl.textContent   = data.total_market_value_label || '-';
+    if(avgEl && data.avg_price) avgEl.textContent = fmtFull(data.avg_price);
+    if(eyeEl)  eyeEl.innerHTML    = `<span class="hero-dot"></span> Live: ${fmtTotal} SA listings tracked`;
+    if(btnEl)  btnEl.innerHTML    = `<i class="fas fa-search"></i> Browse ${fmtTotal} Cars`;
+  } catch(e) { console.warn('Hero stats:',e); }
+}
+
+// GET /api/homepage/featured-vehicles - fills the featured grid
+/*  GET /api/homepage/featured-vehicles → replaces #featuredGrid  */
+async function loadFeaturedVehicles() {
+  try {
+    const res  = await fetch(`${API}/api/homepage/featured-vehicles`);
+    const data = await res.json();
+    const grid = document.getElementById('featuredGrid');
+    if (!data.vehicles || data.vehicles.length === 0) return;
+    grid.innerHTML = data.vehicles.map((v, i) => buildCarCard(v, i)).join('');
+    grid.querySelectorAll('.reveal').forEach(r => ro.observe(r));
+  } catch(e) { console.warn('Featured vehicles:',e); }
+}
+
+// GET /api/homepage/popular-brands - fills the popular search tags
+/*  GET /api/homepage/popular-brands → replaces #popularTagsRow  */
+async function loadPopularBrands() {
+  try {
+    const res  = await fetch(`${API}/api/homepage/popular-brands`);
+    const data = await res.json();
+    const row  = document.getElementById('popularTagsRow');
+    if (!data.brands || data.brands.length === 0) return;
+    row.innerHTML = `<span style="font-size:12px;color:var(--muted);font-weight:600">Popular:</span>` +
+      data.brands.map(b =>
+        `<a href="search.html?make=${encodeURIComponent(b.make)}" class="search-tag">${b.make} <span style="font-size:10px;opacity:.6">(${b.count.toLocaleString('en-ZA')})</span></a>`
+      ).join('');
+  } catch(e) { console.warn('Popular brands:',e); }
+}
+
+// GET /api/filters/provinces - fills the province listing pill grid
+/*
+  GET /api/filters/provinces
+  Returns { provinces: [{ province, count }, …] } sorted by count DESC.
+  Replaces the skeleton pills in #provinceGrid with real DB counts.
+  • First (highest) province gets the "hot" highlight.
+  • Province names shortened via PROV_SHORT map.
+  • Each pill links to search.html?province=<name>.
+*/
+async function loadProvinceStats() {
+  const grid = document.getElementById('provinceGrid');
+  if (!grid) return;
+  try {
+    const res  = await fetch(`${API}/api/filters/provinces`);
+    const data = await res.json();
+    const provs = data.provinces || [];
+    if (provs.length === 0) return;
+    grid.innerHTML = provs.map((p, i) => {
+      const isHot    = i === 0;
+      const name     = provDisplayName(p.province);
+      const countStr = fmtCount(p.count);
+      const href     = `search.html?province=${encodeURIComponent(p.province)}`;
+      return `<div class="prov-pill${isHot?' hot':''}" onclick="location.href='${href}'" title="${p.province}: ${p.count.toLocaleString('en-ZA')} listings" style="cursor:pointer">
+        <div class="prov-name">${name}</div>
+        <div class="prov-count">${countStr}</div>
+        <div class="prov-label">listings</div>
+      </div>`;
+    }).join('');
+    ro.observe(grid);
+  } catch(e) {
+    console.warn('Province stats:',e);
+    // Graceful fallback: show pills with "-" counts
+    grid.innerHTML = [
+      'Gauteng','Western Cape','KZN','Eastern Cape','Limpopo',
+      'Mpumalanga','North West','Free State','N. Cape'
+    ].map((n,i) => `<div class="prov-pill${i===0?' hot':''}"><div class="prov-name">${n}</div><div class="prov-count">-</div><div class="prov-label">listings</div></div>`).join('');
+  }
+}
+
+// autocomplete on the make/model field + search button redirect
+
+function initQuickSearch() {
+  const input = document.querySelector('.fl-input[placeholder*="Toyota"]');
+  if (!input) return;
+
+  // Autocomplete dropdown
+  const dd = document.createElement('div');
+  dd.style.cssText = 'position:absolute;top:100%;left:0;right:0;background:#fff;border:1.5px solid var(--border);border-top:none;border-radius:0 0 var(--r-sm) var(--r-sm);box-shadow:var(--sh-md);z-index:100;max-height:240px;overflow-y:auto;display:none';
+  input.parentElement.style.position = 'relative';
+  input.parentElement.appendChild(dd);
+
+  let timer;
+  input.addEventListener('input', () => {
+    clearTimeout(timer);
+    const q = input.value.trim();
+    if (q.length < 2) { dd.style.display='none'; return; }
+    timer = setTimeout(async () => {
+      try {
+        const res  = await fetch(`${API}/api/quick-search?q=${encodeURIComponent(q)}`);
+        const data = await res.json();
+        if (!data.suggestions.length) { dd.style.display='none'; return; }
+        dd.innerHTML = data.suggestions.map(s =>
+          `<div style="padding:10px 16px;cursor:pointer;font-size:13.5px;border-bottom:1px solid var(--border);transition:background .15s"
+            onmouseover="this.style.background='#f5f7ff'" onmouseout="this.style.background=''"
+            onclick="location.href='search.html?make=${encodeURIComponent(s.make)}&model=${encodeURIComponent(s.model)}'">
+            <span style="font-weight:700">${s.make}</span> <span style="color:var(--muted)">${s.model}</span>
+          </div>`
+        ).join('');
+        dd.style.display = 'block';
+      } catch(e) {}
+    }, 280);
+  });
+
+  document.addEventListener('click', e => {
+    if (!input.parentElement.contains(e.target)) dd.style.display = 'none';
+  });
+
+  // SEARCH BUTTON → login.html
+  //   Requirement: clicking Search redirects to login.html.
+  //   We forward the search params as a "redirect" query param so
+  //   login.html can bounce the user back to search.html after sign-in.
+  const searchBtn = input.closest('.search-row')?.querySelector('#mainSearchBtn') ||
+                    document.getElementById('mainSearchBtn');
+  if (searchBtn) {
+    searchBtn.addEventListener('click', e => {
+      e.preventDefault();
+      const q     = input.value.trim();
+      const prov  = input.closest('.search-row')?.querySelector('select')?.value || '';
+      const params = new URLSearchParams();
+      if (q)    params.set('q', q);
+      if (prov) params.set('province', prov);
+      const target = params.toString() ? `search.html?${params}` : 'search.html';
+      location.href = `login.html?redirect=${encodeURIComponent(target)}`;
+    });
+  }
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadHeroStats();
+  loadFeaturedVehicles();
+  loadPopularBrands();
+  loadProvinceStats();   // ← NEW: real province counts from DB
+  initQuickSearch();
+});
+</script>
+
+
+</body></html>

@@ -1,0 +1,13 @@
+# Python virtual environment
+autoinsight-backend/venv/
+autoinsight-backend/__pycache__/
+autoinsight-backend/**/*.pyc
+
+# Local SQLite databases
+autoinsight-backend/*.sqlite
+autoinsight-backend/*.db
+
+# macOS files
+.DS_Store
+.tempmediaStorage/
+*click_feedback*

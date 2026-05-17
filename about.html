@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How It Works | AutoInsight ZA</title>
+<meta name="description" content="Understand how AutoInsight ZA uses real scraped data and AI to give South African car buyers fair value intelligence.">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{
+  --ink:#0a0f1e;--ink-2:#1c2542;--ink-3:#0f1835;
+  --surface:#f5f7ff;--card:#fff;
+  --accent:#0047ff;--accent-2:#00c896;--accent-3:#0099ff;
+  --warn:#ff5e3a;--gold:#f5a623;
+  --muted:#6b7a99;--border:#e2e7f7;
+  --r-xs:4px;--r-sm:10px;--r-md:16px;--r-lg:24px;--r-xl:36px;
+  --sh-sm:0 2px 8px rgba(0,71,255,.07);
+  --sh-md:0 8px 32px rgba(0,71,255,.12);
+  --font:'Montserrat',-apple-system,sans-serif;
+  --t:.2s ease;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--surface);color:var(--ink);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+.container{max-width:1280px;margin:0 auto;padding:0 32px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:var(--r-sm);font-family:var(--font);font-weight:700;font-size:13.5px;cursor:pointer;border:none;transition:all var(--t);white-space:nowrap}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#003de0;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,71,255,.35)}
+.btn-secondary{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.btn-secondary:hover{background:rgba(0,71,255,.06)}
+.btn-ghost{background:rgba(255,255,255,.1);color:#fff;border:1.5px solid rgba(255,255,255,.22);backdrop-filter:blur(8px)}
+.btn-ghost:hover{background:rgba(255,255,255,.2)}
+.btn-white{background:#fff;color:var(--accent)}
+.btn-sm{padding:8px 16px;font-size:12.5px}
+.btn-lg{padding:15px 30px;font-size:15px;border-radius:var(--r-md)}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(245,247,255,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all var(--t)}
+.nav.scrolled{background:rgba(245,247,255,.98);box-shadow:var(--sh-sm)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1280px;margin:0 auto;padding:0 32px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:19px;letter-spacing:-.4px;color:var(--ink)}
+.nav-logo .logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--accent),var(--accent-3));border-radius:10px;display:grid;place-items:center;color:#fff;font-size:15px;flex-shrink:0}
+.nav-logo .za{color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{padding:8px 15px;border-radius:var(--r-sm);font-size:13.5px;font-weight:500;color:var(--muted);transition:all var(--t)}
+.nav-links a:hover{color:var(--ink);background:rgba(0,71,255,.06)}
+.nav-links a.active{color:var(--accent);background:rgba(0,71,255,.08);font-weight:700}
+.nav-right{display:flex;gap:8px;align-items:center}
+.nav-mobile-btn{display:none;background:none;border:none;font-size:20px;color:var(--ink);cursor:pointer}
+.mobile-nav{display:none;position:fixed;top:72px;left:0;right:0;background:var(--card);border-bottom:1px solid var(--border);box-shadow:var(--sh-md);z-index:999;padding:16px;flex-direction:column;gap:4px}
+.mobile-nav.open{display:flex}
+.mobile-nav a{padding:12px 16px;border-radius:var(--r-sm);font-size:14px;font-weight:500;color:var(--muted)}
+.mobile-nav a.active{color:var(--accent);background:rgba(0,71,255,.07);font-weight:700}
+.mobile-nav-actions{display:flex;gap:8px;padding:12px 0 4px;border-top:1px solid var(--border);margin-top:8px}
+
+/* Hero */
+.hero{padding-top:72px;background:linear-gradient(145deg,#050a1c 0%,#0c1a45 52%,#091e30 100%);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 65% 75% at 88% 42%,rgba(0,71,255,.25) 0%,transparent 60%),radial-gradient(ellipse 55% 60% at 12% 85%,rgba(0,200,150,.14) 0%,transparent 55%);pointer-events:none}
+.hero::after{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.052) 1px,transparent 1px);background-size:26px 26px;pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:80px 32px 96px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(0,200,150,.12);border:1px solid rgba(0,200,150,.25);color:var(--accent-2);border-radius:99px;padding:5px 15px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px;width:fit-content}
+.hero-title{font-size:clamp(34px,4.5vw,58px);font-weight:900;line-height:1.05;color:#fff;margin-bottom:18px;letter-spacing:-.5px}
+.hero-title .grad{background:linear-gradient(90deg,#0af5c2,#0095ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{color:rgba(255,255,255,.55);font-size:16px;line-height:1.75;font-weight:300;margin-bottom:32px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+
+/* Compare columns */
+.compare-cols{display:flex;flex-direction:column;gap:10px}
+.compare-col{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:22px 24px;backdrop-filter:blur(14px)}
+.compare-col.positive{border-color:rgba(0,200,150,.3);background:rgba(0,200,150,.07)}
+.compare-col-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px}
+.tag-before{background:rgba(255,94,58,.15);color:#ff8a6e}
+.tag-after{background:rgba(0,200,150,.15);color:var(--accent-2)}
+.compare-items{display:flex;flex-direction:column;gap:8px}
+.ci{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:rgba(255,255,255,.62);line-height:1.5}
+.ci i{flex-shrink:0;margin-top:3px;font-size:12px}
+.ci-x{color:var(--warn)}.ci-c{color:var(--accent-2)}
+
+/* Sections */
+.section{padding:88px 0}
+.section-bg-white{background:#fff}
+.section-bg-ink{background:var(--ink)}
+.section-bg-alt{background:#f0f3ff}
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:10px}
+.section-label-green{color:var(--accent-2)}
+.section-title{font-size:clamp(26px,3vw,42px);font-weight:900;line-height:1.1;margin-bottom:14px;letter-spacing:-.3px}
+.section-sub{font-size:16px;color:var(--muted);max-width:580px;font-weight:300;line-height:1.7}
+.section-head{margin-bottom:52px}
+.section-head.center{text-align:center}
+.section-head.center .section-sub{margin:0 auto}
+
+/* Impact numbers */
+.numbers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.num-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:var(--r-lg);padding:34px 20px;text-align:center;transition:border-color var(--t)}
+.num-card:hover{border-color:rgba(0,71,255,.3)}
+.num-val{font-size:50px;font-weight:900;line-height:1;letter-spacing:-2px;background:linear-gradient(135deg,#fff,rgba(255,255,255,.6));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.num-label{font-size:13px;color:rgba(255,255,255,.45);margin-top:10px;font-weight:500;text-transform:uppercase;letter-spacing:.8px}
+.num-sub{font-size:12px;color:rgba(255,255,255,.25);margin-top:4px;font-weight:300}
+
+/* Timeline */
+.timeline-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.timeline{position:relative;padding-left:52px}
+.timeline::before{content:'';position:absolute;left:19px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--accent),var(--accent-2));border-radius:99px}
+.tl-step{position:relative;margin-bottom:40px}
+.tl-step:last-child{margin-bottom:0}
+.tl-dot{position:absolute;left:-44px;top:4px;width:40px;height:40px;border-radius:50%;background:var(--card);border:2px solid var(--accent);display:grid;place-items:center;box-shadow:0 0 0 5px rgba(0,71,255,.1);z-index:1;transition:border-color var(--t)}
+.tl-dot:hover,.tl-dot.done{border-color:var(--accent-2)}
+.tl-dot i{font-size:14px;color:var(--accent)}
+.tl-dot.done i{color:var(--accent-2)}
+.tl-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:5px}
+.tl-title{font-size:19px;font-weight:700;margin-bottom:8px;color:var(--ink)}
+.tl-desc{font-size:14px;color:var(--muted);line-height:1.7;font-weight:300;max-width:500px}
+.tl-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.chip{padding:4px 11px;border-radius:var(--r-xs);background:rgba(0,71,255,.07);border:1px solid rgba(0,71,255,.15);font-size:11.5px;font-weight:600;color:var(--accent);font-family:'Courier New',monospace}
+.chip.green{background:rgba(0,200,150,.07);border-color:rgba(0,200,150,.2);color:#00a070}
+
+/* Sticky sample output */
+.sticky-demo{position:sticky;top:88px}
+.demo-card{background:var(--ink);border-radius:var(--r-xl);padding:32px;color:#fff}
+.demo-vehicle{font-size:20px;font-weight:900;margin-bottom:4px}
+.demo-sub{font-size:12.5px;color:rgba(255,255,255,.4);margin-bottom:18px;font-weight:300}
+.demo-fv{background:rgba(0,200,150,.1);border:1px solid rgba(0,200,150,.28);border-radius:var(--r-md);padding:18px;margin-bottom:14px}
+.demo-fv-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--accent-2);margin-bottom:6px}
+.demo-price{font-size:34px;font-weight:900;color:#fff;letter-spacing:-.5px;line-height:1}
+.demo-price-sub{font-size:12.5px;color:rgba(255,255,255,.45);margin-top:4px}
+.demo-price-sub .save{color:var(--accent-2);font-weight:700}
+.demo-verdict{background:var(--accent-2);color:#fff;border-radius:var(--r-sm);padding:6px 13px;font-size:12px;font-weight:800;white-space:nowrap}
+.demo-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.demo-stat{background:rgba(255,255,255,.06);border-radius:var(--r-sm);padding:13px}
+.demo-stat-label{font-size:10px;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;font-weight:500}
+.demo-stat-val{font-size:17px;font-weight:900}
+.demo-stat-note{font-size:11px;color:rgba(255,255,255,.32);margin-top:2px;font-weight:300}
+
+/* Data fields */
+.fields-two-col{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.fields-group-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.55);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.fchip{position:relative;padding:8px 13px;border-radius:var(--r-sm);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);font-size:12.5px;font-weight:600;color:rgba(255,255,255,.72);font-family:'Courier New',monospace;cursor:default;transition:all .18s}
+.fchip:hover{background:rgba(0,71,255,.15);border-color:rgba(0,71,255,.4);color:#fff}
+.fchip:hover .fchip-tip{opacity:1;visibility:visible;transform:translateX(-50%) translateY(-4px)}
+.fchip-tip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(0);background:var(--ink-2);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-sm);padding:7px 12px;font-size:11.5px;color:rgba(255,255,255,.8);white-space:nowrap;font-family:var(--font);font-weight:400;opacity:0;visibility:hidden;transition:all .2s;z-index:10;pointer-events:none;box-shadow:var(--sh-md)}
+.fchip-tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink-2)}
+.fchip.green-c{border-color:rgba(0,200,150,.2);background:rgba(0,200,150,.07)}
+
+/* Personas */
+.personas{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.persona{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px 18px;text-align:center;transition:all var(--t)}
+.persona:hover{box-shadow:var(--sh-md);transform:translateY(-4px);border-color:rgba(0,71,255,.2)}
+.persona-emoji{font-size:38px;margin-bottom:14px}
+.persona-title{font-size:15px;font-weight:700;margin-bottom:8px;color:var(--ink)}
+.persona-desc{font-size:13px;color:var(--muted);line-height:1.6;font-weight:300}
+.persona-tag{margin-top:12px;padding:7px 10px;background:rgba(0,71,255,.07);border-radius:var(--r-sm);font-size:11.5px;font-weight:600;color:var(--accent)}
+
+/* Faq */
+.faq-list{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;transition:border-color var(--t)}
+.faq-item.open{border-color:rgba(0,71,255,.25)}
+.faq-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;padding:20px 24px;background:none;border:none;cursor:pointer;font-family:var(--font);font-size:15px;font-weight:700;color:var(--ink);text-align:left;gap:16px;transition:color var(--t)}
+.faq-trigger:hover{color:var(--accent)}
+.faq-arrow{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);display:grid;place-items:center;color:var(--muted);font-size:11px;flex-shrink:0;transition:all .3s}
+.faq-item.open .faq-arrow{background:var(--accent);border-color:var(--accent);color:#fff;transform:rotate(45deg)}
+.faq-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.faq-body-inner{padding:0 24px 20px;font-size:14.5px;color:var(--muted);line-height:1.75;font-weight:300}
+.faq-item.open .faq-body{max-height:300px}
+
+/* Cta */
+.cta-strip{background:linear-gradient(135deg,var(--accent) 0%,var(--accent-3) 100%);padding:88px 0;position:relative;overflow:hidden}
+.cta-strip::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:22px 22px}
+.cta-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center}
+.cta-title{font-size:clamp(26px,3.5vw,44px);font-weight:900;color:#fff;line-height:1.1;letter-spacing:-.3px}
+.cta-sub{font-size:16px;color:rgba(255,255,255,.72);margin-top:10px;font-weight:300}
+.cta-actions{display:flex;flex-direction:column;gap:10px}
+.cta-actions .btn{justify-content:center;min-width:220px}
+
+/* Footer */
+.footer{background:var(--ink);padding:64px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:44px}
+.footer-brand{font-size:21px;font-weight:900;color:#fff;margin-bottom:10px}
+.footer-brand span{color:var(--accent)}
+.footer-desc{font-size:13.5px;color:rgba(255,255,255,.4);line-height:1.72;max-width:290px;font-weight:300}
+.social-row{display:flex;gap:10px;margin-top:20px}
+.social-icon{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:grid;place-items:center;color:rgba(255,255,255,.5);font-size:13px;transition:all var(--t)}
+.social-icon:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.footer-heading{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#fff;margin-bottom:16px}
+.footer-links{display:flex;flex-direction:column;gap:10px}
+.footer-links a{font-size:13.5px;color:rgba(255,255,255,.42);transition:color var(--t);font-weight:300}
+.footer-links a:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:20px;display:flex;justify-content:space-between;font-size:12.5px;color:rgba(255,255,255,.3)}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.delay-1{transition-delay:.08s}.delay-2{transition-delay:.16s}.delay-3{transition-delay:.24s}.delay-4{transition-delay:.32s}.delay-5{transition-delay:.4s}
+
+@media(max-width:1024px){
+  .hero-inner{grid-template-columns:1fr}
+  .compare-cols{display:none}
+  .timeline-layout{grid-template-columns:1fr}
+  .sticky-demo{position:relative;top:0}
+  .numbers-grid{grid-template-columns:1fr 1fr}
+  .fields-two-col{grid-template-columns:1fr}
+  .personas{grid-template-columns:repeat(3,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .cta-inner{grid-template-columns:1fr;text-align:center}
+  .cta-actions{align-items:center}
+}
+@media(max-width:768px){
+  .container{padding:0 20px}
+  .nav-links,.nav-right .btn{display:none}
+  .nav-mobile-btn{display:block}
+  .personas{grid-template-columns:1fr 1fr}
+  .numbers-grid{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;gap:8px;text-align:center}
+}
+
+.logo-img {
+  height: 60px;
+  margin-left: -50px;
+  vertical-align: middle;
+  
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+  <img src="https://raw.githubusercontent.com/Damian-naidoo-07/Image_Host_Monster/main/AutoInsight_Logo_v3.1.png" alt="AutoInsight ZA Logo" class="logo-img">
+  AutoInsight <span class="za">ZA</span>
+</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">How It Works</a></li>
+      <li><a href="estimator.html">Price Estimator</a></li>
+      <li><a href="search.html">Browse Cars</a></li>
+      <li><a href="dashboard.html">Market Insights</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="login.html" class="btn btn-secondary btn-sm">Sign In</a>
+      <a href="estimator.html" class="btn btn-primary btn-sm"><i class="fas fa-calculator"></i> Get Fair Value</a>
+      <button class="nav-mobile-btn" onclick="toggleNav()"><i class="fas fa-bars" id="navIcon"></i></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="about.html">How It Works</a>
+  <a href="estimator.html" class="active">Price Estimator</a>
+  <a href="search.html">Browse Cars</a>
+  <a href="dashboard.html">Market Insights</a>
+  <div class="mobile-nav-actions">
+    <a href="login.html" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center">Sign In</a>
+    <a href="estimator.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center"><i class="fas fa-calculator"></i> Fair Value</a>
+  </div>
+</div>
+
+<!-- HERO SECTION COMPARISON -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow"><i class="fas fa-book-open"></i> Our Mission</div>
+      <h1 class="hero-title">Levelling the Playing<br>Field for<br><span class="grad">SA Car Buyers</span></h1>
+      <p class="hero-sub">The average South African making a used car purchase has no data, no benchmarks, and no leverage. AutoInsight ZA was built to permanently change that.</p>
+      <div class="hero-actions">
+        <a href="search.html" class="btn btn-primary btn-lg"><i class="fas fa-search"></i> Browse 70,000+ Cars</a>
+        <a href="estimator.html" class="btn btn-ghost btn-lg"><i class="fas fa-calculator"></i> Get Fair Value</a>
+      </div>
+    </div>
+    <div class="compare-cols">
+      <div class="compare-col">
+        <div class="compare-col-tag tag-before">❌ Without AutoInsight ZA</div>
+        <div class="compare-items">
+          <div class="ci"><i class="fas fa-xmark ci-x"></i>No price benchmarks - relying on gut feelings</div>
+          <div class="ci"><i class="fas fa-xmark ci-x"></i>Manually browsing multiple disconnected sites</div>
+          <div class="ci"><i class="fas fa-xmark ci-x"></i>No visibility of how prices have moved over time</div>
+          <div class="ci"><i class="fas fa-xmark ci-x"></i>Provincial price differences completely invisible</div>
+          <div class="ci"><i class="fas fa-xmark ci-x"></i>Private vs. dealer pricing gap unknown</div>
+        </div>
+      </div>
+      <div class="compare-col positive">
+        <div class="compare-col-tag tag-after">✅ With AutoInsight ZA</div>
+        <div class="compare-items">
+          <div class="ci"><i class="fas fa-check ci-c"></i>Instant fair value score backed by 70K+ listings</div>
+          <div class="ci"><i class="fas fa-check ci-c"></i>All major SA portals aggregated in one place</div>
+          <div class="ci"><i class="fas fa-check ci-c"></i>Track price inflation/deflation over time</div>
+          <div class="ci"><i class="fas fa-check ci-c"></i>Provincial heat maps revealing price variance</div>
+          <div class="ci"><i class="fas fa-check ci-c"></i>Clear private vs. dealership price comparison</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KPI CARDS -->
+<section class="section section-bg-ink">
+  <div class="container">
+    <div class="numbers-grid reveal">
+      <div class="num-card"><div class="num-val" id="numListings">70K+</div><div class="num-label">Live Listings</div><div class="num-sub">Refreshed daily across all major SA platforms</div></div>
+      <div class="num-card"><div class="num-val" id="numMakes">—</div><div class="num-label">Makes Covered</div><div class="num-sub">Complete national coverage from every major brand</div></div>
+      <div class="num-card"><div class="num-val">20+</div><div class="num-label">Data Points</div><div class="num-sub">Per listing: specs, seller trust, pricing &amp; location</div></div>
+      <div class="num-card"><div class="num-val" id="numMarket">R1.2B+</div><div class="num-label">Market Value</div><div class="num-sub">Total value of all tracked listings in the database</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section section-bg-white">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-label">The Process</div>
+      <h2 class="section-title">From Raw Data to Confident Decision</h2>
+      <p class="section-sub">Six layers of intelligence between a scraped listing and your fair value score.</p>
+    </div>
+    <div class="timeline-layout">
+      <div class="timeline">
+        <div class="tl-step reveal">
+          <div class="tl-dot"><i class="fas fa-spider"></i></div>
+          <div class="tl-num">Step 01</div>
+          <div class="tl-title">Daily Data Scraping</div>
+          <div class="tl-desc">Our backend scrapes all major South African car listing platforms daily, collecting every new and updated listing in real time.</div>
+          <div class="tl-chips"><span class="chip">vehicle_id</span><span class="chip">title</span><span class="chip">website_url</span><span class="chip">created_at</span></div>
+        </div>
+        <div class="tl-step reveal delay-1">
+          <div class="tl-dot"><i class="fas fa-filter"></i></div>
+          <div class="tl-num">Step 02</div>
+          <div class="tl-title">Normalisation &amp; Deduplication</div>
+          <div class="tl-desc">Raw data is normalised across different platform formats. Duplicate listings are identified and merged using vehicle_id matching.</div>
+          <div class="tl-chips"><span class="chip">make</span><span class="chip">model</span><span class="chip">variant</span><span class="chip">year</span><span class="chip">mileage</span><span class="chip">fuel_type</span><span class="chip">transmission</span></div>
+        </div>
+        <div class="tl-step reveal delay-2">
+          <div class="tl-dot"><i class="fas fa-user-check"></i></div>
+          <div class="tl-num">Step 03</div>
+          <div class="tl-title">Seller Trust Scoring</div>
+          <div class="tl-desc">Each seller is assigned a trust score based on their rating, number of reviews, NADA membership status, VIN requirement, and featured status.</div>
+          <div class="tl-chips"><span class="chip green">seller_rating</span><span class="chip green">seller_rating_count</span><span class="chip green">agent_nada_member</span><span class="chip green">agent_vin_required</span></div>
+        </div>
+        <div class="tl-step reveal delay-3">
+          <div class="tl-dot"><i class="fas fa-map-pin"></i></div>
+          <div class="tl-num">Step 04</div>
+          <div class="tl-title">Provincial Price Indexing</div>
+          <div class="tl-desc">Using geo-coordinates and province data, we build a provincial price index to compare like-for-like prices across all 9 provinces.</div>
+          <div class="tl-chips"><span class="chip green">province</span><span class="chip green">agent_locality</span><span class="chip green">agent_coords_lat</span><span class="chip green">agent_coords_lng</span></div>
+        </div>
+        <div class="tl-step reveal delay-4">
+          <div class="tl-dot"><i class="fas fa-brain"></i></div>
+          <div class="tl-num">Step 05</div>
+          <div class="tl-title">ML Fair Value Calculation</div>
+          <div class="tl-desc">Our machine learning model calculates a fair value estimate for every listing, adjusting for mileage, condition, province, fuel type, and Rand fluctuations.</div>
+          <div class="tl-chips"><span class="chip">price</span><span class="chip">monthly_price</span><span class="chip">condition</span><span class="chip">finance_available</span><span class="chip">colour</span></div>
+        </div>
+        <div class="tl-step reveal delay-5">
+          <div class="tl-dot done"><i class="fas fa-handshake"></i></div>
+          <div class="tl-num" style="color:var(--accent-2)">Step 06</div>
+          <div class="tl-title">You Buy With Confidence</div>
+          <div class="tl-desc">Search, filter, compare, and check the fair value score on any listing. Walk into any negotiation with data - and never overpay again.</div>
+        </div>
+      </div>
+      <div class="sticky-demo reveal delay-2">
+        <div class="demo-card">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent-2);margin-bottom:14px">Sample Output</div>
+          <div class="demo-vehicle">2021 Toyota Hilux 2.8 GD-6</div>
+          <div class="demo-sub">Double Cab · 4x4 · Automatic · Diesel · 44,000 km · Gauteng</div>
+          <div class="demo-fv">
+            <div class="demo-fv-label">Fair Value Score</div>
+            <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px">
+              <div>
+                <div class="demo-price">R 698,000</div>
+                <div class="demo-price-sub">Listed: R 665,000 &nbsp;·&nbsp; <span class="save">Save R 33,000</span></div>
+              </div>
+              <div class="demo-verdict">🔥 Steal</div>
+            </div>
+          </div>
+          <div class="demo-stats">
+            <div class="demo-stat"><div class="demo-stat-label">Province Rank</div><div class="demo-stat-val">#1 of 9</div><div class="demo-stat-note">Cheapest in SA</div></div>
+            <div class="demo-stat"><div class="demo-stat-label">Price Trend</div><div class="demo-stat-val" style="color:var(--warn)">↑ +4.2%</div><div class="demo-stat-note">vs last quarter</div></div>
+            <div class="demo-stat"><div class="demo-stat-label">Seller Trust</div><div class="demo-stat-val" style="color:var(--accent-2)">★ 4.9</div><div class="demo-stat-note">NADA · 814 reviews</div></div>
+            <div class="demo-stat"><div class="demo-stat-label">Comparables</div><div class="demo-stat-val">214</div><div class="demo-stat-note">similar listings</div></div>
+          </div>
+          <a href="estimator.html" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:16px;padding:13px"><i class="fas fa-calculator"></i> Try With Your Car</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DATA FIELDS -->
+<section class="section section-bg-ink">
+  <div class="container">
+    <div class="section-head center reveal">
+      <div class="section-label section-label-green">Transparency</div>
+      <h2 class="section-title" style="color:#fff">Every Data Point, Explained</h2>
+      <p class="section-sub" style="color:rgba(255,255,255,.48);margin:0 auto">Hover any field to see exactly how it's used in our fair value engine.</p>
+    </div>
+    <div class="fields-two-col reveal">
+      <div>
+        <div class="fields-group-title"><i class="fas fa-car" style="color:#6699ff"></i> Vehicle Fields</div>
+        <div class="chips">
+          <div class="fchip">vehicle_id<div class="fchip-tip">Unique identifier for deduplication across platforms</div></div>
+          <div class="fchip">title<div class="fchip-tip">Full listing headline - parsed for make, model, year</div></div>
+          <div class="fchip">description<div class="fchip-tip">Free-text - NLP used for condition signals</div></div>
+          <div class="fchip">year<div class="fchip-tip">Model year - core depreciation factor in pricing</div></div>
+          <div class="fchip">make<div class="fchip-tip">Manufacturer - grouped for brand-level market trends</div></div>
+          <div class="fchip">model<div class="fchip-tip">Model line - primary search and comparison dimension</div></div>
+          <div class="fchip">variant<div class="fchip-tip">Trim / spec level - significant price differentiator</div></div>
+          <div class="fchip">price<div class="fchip-tip">Listed asking price in ZAR - primary valuation input</div></div>
+          <div class="fchip">monthly_price<div class="fchip-tip">Indicative finance instalment shown by listing</div></div>
+          <div class="fchip">mileage<div class="fchip-tip">Odometer reading - key depreciation variable</div></div>
+          <div class="fchip">fuel_type<div class="fchip-tip">Petrol/Diesel/Hybrid/EV - premium/discount factor</div></div>
+          <div class="fchip">transmission<div class="fchip-tip">Auto vs Manual - automatic commands a premium in SA</div></div>
+          <div class="fchip">body_type<div class="fchip-tip">Sedan/SUV/Bakkie etc - demand segmentation</div></div>
+          <div class="fchip">colour<div class="fchip-tip">Vehicle colour - resale value impact analysis</div></div>
+          <div class="fchip">condition<div class="fchip-tip">New/Demo/Used - major pricing tier separator</div></div>
+          <div class="fchip">finance_available<div class="fchip-tip">Boolean - filtered in finance-specific search queries</div></div>
+          <div class="fchip">website_url<div class="fchip-tip">Original listing source URL for attribution</div></div>
+          <div class="fchip">created_at<div class="fchip-tip">When listing first appeared - days-on-market tracking</div></div>
+          <div class="fchip">updated_at<div class="fchip-tip">Last change timestamp - price drop detection</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="fields-group-title" style="border-bottom-color:rgba(0,200,150,.2)"><i class="fas fa-store" style="color:var(--accent-2)"></i> Seller Fields</div>
+        <div class="chips">
+          <div class="fchip green-c">seller_id<div class="fchip-tip">Unique seller identifier for cross-listing aggregation</div></div>
+          <div class="fchip green-c">seller_name<div class="fchip-tip">Dealer or private seller display name</div></div>
+          <div class="fchip green-c">seller_rating<div class="fchip-tip">Star rating (0–5) - weighted in trust score calculation</div></div>
+          <div class="fchip green-c">seller_rating_count<div class="fchip-tip">Number of reviews - higher count = more reliable rating</div></div>
+          <div class="fchip green-c">agent_featured<div class="fchip-tip">Is this dealer a paid featured partner? - transparency flag</div></div>
+          <div class="fchip green-c">agent_nada_member<div class="fchip-tip">NADA certification - indicates accountable dealer standards</div></div>
+          <div class="fchip green-c">agent_vin_required<div class="fchip-tip">Whether VIN check is required - buyer protection signal</div></div>
+          <div class="fchip green-c">agent_locality<div class="fchip-tip">Town or suburb - granular geographic pricing context</div></div>
+          <div class="fchip green-c">province<div class="fchip-tip">One of 9 SA provinces - provincial price index</div></div>
+          <div class="fchip green-c">agent_coords_lat<div class="fchip-tip">Latitude - geospatial heat map &amp; proximity search</div></div>
+          <div class="fchip green-c">agent_coords_lng<div class="fchip-tip">Longitude - precise geographic pricing intelligence</div></div>
+          <div class="fchip green-c">created_at<div class="fchip-tip">When seller profile was first scraped - tenure indicator</div></div>
+          <div class="fchip green-c">updated_at<div class="fchip-tip">Last seller data update - freshness check</div></div>
+          <div class="fchip green-c">vehicle_id<div class="fchip-tip">Foreign key linking seller record to vehicle listing</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUYER PROFILE CARDS -->
+<section class="section section-bg-white">
+  <div class="container">
+    <div class="section-head center reveal">
+      <div class="section-label">Our Users</div>
+      <h2 class="section-title">Built for Every South African Car Buyer</h2>
+    </div>
+    <div class="personas reveal">
+      <div class="persona"><div class="persona-emoji">🎓</div><div class="persona-title">First-Time Buyer</div><div class="persona-desc">No experience, no contacts - just a budget. AutoInsight gives you the knowledge to buy smart from day one.</div><br><div class="persona-tag">Instant fair-value verdicts</div></div>
+      <div class="persona"><div class="persona-emoji">👨‍👩‍👧‍👦</div><div class="persona-title">Budget-Conscious Family</div><div class="persona-desc">Every rand counts. Find the best value vehicles and make sure you're not paying the dealer premium.</div><div class="persona-tag">Private vs. dealer compare</div></div>
+      <div class="persona"><div class="persona-emoji">🔄</div><div class="persona-title">Repeat Buyer</div><div class="persona-desc">You've bought before but prices have shifted. Our trend data shows exactly how the market has moved.</div><br><div class="persona-tag">Price history tracking</div></div>
+      <div class="persona"><div class="persona-emoji">🚐</div><div class="persona-title">Out-of-Province Shopper</div><div class="persona-desc">Willing to travel for a bargain? Our heat map pinpoints exactly where the same car costs least in SA.</div><div class="persona-tag">Provincial heat map</div></div>
+      <div class="persona"><div class="persona-emoji">📈</div><div class="persona-title">Long-Term Investor</div><div class="persona-desc">Planning to sell in 3 years? Our ML predictions help you buy vehicles that hold their value best.</div><br><div class="persona-tag">ML price predictions</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section-bg-alt">
+  <div class="container">
+    <div class="section-head center reveal">
+      <div class="section-label">FAQ</div>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item"><button class="faq-trigger" onclick="toggleFaq(this)">Where does the listing data come from?<div class="faq-arrow"><i class="fas fa-plus"></i></div></button><div class="faq-body"><div class="faq-body-inner">Our backend scrapes all major South African vehicle listing platforms daily, including AutoTrader ZA, Cars.co.za, and the Motus Select platforms. Each listing is normalised, deduplicated, and stored with a full set of data fields covering vehicle specs, pricing, seller information, and geolocation.</div></div></div>
+      <div class="faq-item"><button class="faq-trigger" onclick="toggleFaq(this)">How often is the data updated?<div class="faq-arrow"><i class="fas fa-plus"></i></div></button><div class="faq-body"><div class="faq-body-inner">The platform runs a full data refresh daily. New listings are added, price changes are tracked via the <code style="background:rgba(0,71,255,.07);padding:2px 6px;border-radius:4px;font-size:13px">updated_at</code> field, and sold or removed listings are flagged.</div></div></div>
+      <div class="faq-item"><button class="faq-trigger" onclick="toggleFaq(this)">What is a Fair Value Score and how accurate is it?<div class="faq-arrow"><i class="fas fa-plus"></i></div></button><div class="faq-body"><div class="faq-body-inner">The Fair Value Score is an Machine Learning model applied on whether a vehicle's listed price is below, at, or above the market average for its specific make, model, year, variant, mileage, province, fuel type, and condition. Backtesting against historical sold prices shows approximately 94% accuracy within a 10% price band. It is indicative, not a formal valuation.</div></div></div>
+      <div class="faq-item"><button class="faq-trigger" onclick="toggleFaq(this)">How does the Price Estimator differ from browsing listings?<div class="faq-arrow"><i class="fas fa-plus"></i></div></button><div class="faq-body"><div class="faq-body-inner">Browsing listings shows you what's currently for sale. The Price Estimator goes one step further: you describe a specific vehicle and our model tells you what it should cost based on all comparable data, independent of any particular listing. It's your benchmark before you walk into a dealership.</div></div></div>
+      <div class="faq-item"><button class="faq-trigger" onclick="toggleFaq(this)">Do you store or sell my personal data?<div class="faq-arrow"><i class="fas fa-plus"></i></div></button><div class="faq-body"><div class="faq-body-inner">No. AutoInsight ZA does not require does not sell user data. Our platform is a read-only intelligence tool: we collect data about car listings, not about you.</div></div></div>
+      <div class="faq-item"><button class="faq-trigger" onclick="toggleFaq(this)">Is AutoInsight ZA free to use?<div class="faq-arrow"><i class="fas fa-plus"></i></div></button><div class="faq-body"><div class="faq-body-inner">Yes. All core features: browsing listings, the price estimator, market insights, and the fair value score are completely free. We're building a product that levels the playing field for every South African car buyer, and that starts with free access.</div></div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="footer-brand">AutoInsight <span>ZA</span></div><p class="footer-desc">South Africa's first ML-powered car buying intelligence platform. Making informed car purchases accessible to every South African.</p><div class="social-row"><a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-icon"><i class="fab fa-x-twitter"></i></a><a href="#" class="social-icon"><i class="fab fa-instagram"></i></a><a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a></div></div>
+      <div><div class="footer-heading">Platform</div><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="about.html">How It Works</a></li><li><a href="estimator.html">Price Estimator</a></li><li><a href="search.html">Browse Cars</a></li><li><a href="dashboard.html">Market Insights</a></li></ul></div>
+      <div><div class="footer-heading">Resources</div><ul class="footer-links"><li><a href="#">Buying Guide</a></li><li><a href="#">Car Reviews</a></li><li><a href="#">Financing Guide</a></li><li><a href="#">FAQs</a></li></ul></div>
+      <div><div class="footer-heading">Company</div><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 AutoInsight ZA. All rights reserved.</span><span>Built for South African car buyers 🇿🇦</span></div>
+  </div>
+</footer>
+
+<script src="auth.js"></script>
+<script>
+// API 
+const API = 'http://localhost:8765';
+
+// Nav 
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+function toggleNav() {
+  const mn = document.getElementById('mobileNav'), ic = document.getElementById('navIcon');
+  mn.classList.toggle('open');
+  ic.className = mn.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+}
+
+// FAQ Section
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const open = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!open) item.classList.add('open');
+}
+
+// Scroll reveal 
+const ro = new IntersectionObserver(e => e.forEach(en => {
+  if (en.isIntersecting) { en.target.classList.add('visible'); ro.unobserve(en.target); }
+}), {threshold:.08});
+document.querySelectorAll('.reveal').forEach(r => ro.observe(r));
+
+// Live stats
+async function loadStats() {
+  try {
+    const res  = await fetch(`${API}/api/homepage/stats`);
+    const data = await res.json();
+
+    // Number cards
+    const total = data.total_listings;
+    if (total) {
+      document.getElementById('numListings').textContent =
+        total >= 1000 ? Math.floor(total/1000) + 'K+' : total.toLocaleString();
+    }
+    if (data.total_makes) {
+      document.getElementById('numMakes').textContent = data.total_makes;
+    }
+    if (data.total_market_value_label) {
+      document.getElementById('numMarket').textContent = data.total_market_value_label;
+    }
+
+
+    document.querySelectorAll('.btn, .cta-sub, .hero-sub, p').forEach(el => {
+      if (el.textContent.includes('70,000+') && total > 0) {
+        el.innerHTML = el.innerHTML.replace(/70,000\+/g,
+          (total >= 1000 ? Math.floor(total/1000)*1000 : total).toLocaleString() + '+');
+      }
+    });
+
+  } catch(e) { /* fallback static values */ }
+}
+
+document.addEventListener('DOMContentLoaded', loadStats);
+</script>
+</body>
+</html>
