@@ -244,9 +244,9 @@ function updateDateRange(){
 <script>
 const BACKEND_API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? 'http://127.0.0.1:8765'
-  : 'https://autoinsight-backend-wp42.onrender.com';
+  : 'https://autoinsightscrapedamien.onrender.com';
 
-fetch(`${BACKEND_API}/api/dashboard`, { credentials: 'include' })
+fetch(`${BACKEND_API}/api/dashboard/summary`)
   .then(res => res.json())
   .then(data => {
     document.getElementById('liveListings').textContent = data.live_listings.toLocaleString();
