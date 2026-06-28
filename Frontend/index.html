@@ -707,10 +707,11 @@ ul{list-style:none}
 
 <script src="auth.js"></script>
 <script>
+// API url - points to local dev server when running on localhost, otherwise to deployed backend
 
 const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? 'http://127.0.0.1:8765'
-  : 'https://autoinsight-backend-wp42.onrender.com';
+  : 'https://autoinsightscrapedamien.onrender.com';
 
 // sticky nav scroll effect
 const nav=document.getElementById('mainNav');
@@ -968,4 +969,5 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 
-</body></html>
+</body>
+</html>

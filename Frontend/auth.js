@@ -4,7 +4,7 @@
 
 const BACKEND_API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? 'http://127.0.0.1:8765'
-  : 'https://autoinsight-backend-wp42.onrender.com';
+  : 'https://autoinsightscrapedamien.onrender.com';
 
 // Globally exposed helper to log out
 function logoutUser() {
