@@ -101,6 +101,11 @@ function updateNavbarToAuthenticated(user) {
         <i class="fas fa-sign-out-alt"></i> Sign Out
       </button>
     </div>
+    <div style="display:flex; margin-top: 8px;">
+      <a href="estimator.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center;gap:6px">
+        <i class="fas fa-calculator"></i> Get Fair Value
+      </a>
+    </div>
   `;
 
   // Desktop Navbar Integration
