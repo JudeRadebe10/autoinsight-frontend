@@ -36,9 +36,13 @@ async function checkAuthAndPopulateNavbar() {
       return;
     }
 
-    if (!response.ok) return;
+    if (!response.ok) {
+      console.log("AutoInsight: /api/auth/me failed with status", response.status);
+      return;
+    }
 
     const userData = await response.json();
+    console.log("AutoInsight: Successfully fetched user profile:", userData.email);
     
     // Save user detail state for custom settings access
     localStorage.setItem('user_role', userData.roles[0] || 'client');
@@ -111,14 +115,20 @@ function updateNavbarToAuthenticated(user) {
   // Desktop Navbar Integration
   const desktopNavRight = document.querySelector('.nav-right');
   if (desktopNavRight) {
-    // Find the Sign In link (which points to login.html)
-    const signInBtn = desktopNavRight.querySelector('a[href="login.html"]');
+    // Find the Sign In link (which might have been rewritten by Netlify or routing)
+    const signInBtn = Array.from(desktopNavRight.querySelectorAll('a')).find(el => el.textContent.trim() === 'Sign In');
     if (signInBtn) {
+      console.log("AutoInsight: Found Sign In button on desktop navbar. Replacing it...");
       // Replace only the Sign In button, keeping target estimator button
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = desktopMarkup.trim();
       desktopNavRight.replaceChild(tempDiv.firstChild, signInBtn);
+      console.log("AutoInsight: Desktop navbar updated successfully.");
+    } else {
+      console.log("AutoInsight: .nav-right found, but a[href='login.html'] was NOT found inside it.");
     }
+  } else {
+    console.log("AutoInsight: .nav-right class NOT found on this page.");
   }
 
   // Mobile Navbar Integration
